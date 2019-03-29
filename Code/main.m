@@ -11,9 +11,9 @@ clc;
 addpath('Data');
 addpath('Code');
 
-%% Loading the data and creating the new useful structure
+%% Loading the data for the SCI and creating the new useful structure
 
-% Loading the two MATLAB structures
+% Loading the two MATLAB structures for the SCI 
 load('FLOAT_NO_CRUTCHES.mat');
 load('NO_FLOAT_CRUTCHES.mat');
 
@@ -33,3 +33,4 @@ for i = 1:6
         csv_files_NO_FLOAT_CRUTCHES{i-3} = readtable(csv_files(i).name);
     end
 end
+
