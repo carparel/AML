@@ -6,3 +6,22 @@
 %                 - Martina Morea 
 %                 - Leonardo Pollina
 
+clear;
+clc;
+addpath('Data');
+
+%% Loading the data and creating the new useful structure
+
+% Loading the two MATLAB structures
+load('FLOAT_NO_CRUTCHES.mat');
+load('NO_FLOAT_CRUTCHES.mat');
+
+% Select the folder containing all the data for the project
+FolderName = uigetdir('select the directory with the data');
+
+% We load all the csv files. A structure with size 6X1 is going to be created
+% Pay attention that the 3 first files make reference to the GAIT FILES
+% related to the FLOAT_NO_CRUTCHES and the 3 last to the GAIT FILES related
+% to the NO_FLOAT_CRUTCHES
+csv_files = dir([FolderName filesep '**/*.csv']);
+
