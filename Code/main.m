@@ -25,3 +25,10 @@ FolderName = uigetdir('select the directory with the data');
 % to the NO_FLOAT_CRUTCHES
 csv_files = dir([FolderName filesep '**/*.csv']);
 
+for i = 1:6
+    if i <= 3
+        csv_files_FLOAT_NO_CRUTCHES{i} = readtable(csv_files(i).name);
+    else 
+        csv_files_NO_FLOAT_CRUTCHES{i-3} = readtable(csv_files(i).name);
+    end
+end
