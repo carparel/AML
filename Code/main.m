@@ -9,6 +9,7 @@
 clear;
 clc;
 addpath('Data');
+addpath('Code');
 
 %% Loading the data and creating the new useful structure
 
