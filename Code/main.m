@@ -8,29 +8,31 @@
 
 clear;
 clc;
-addpath('Data');
+addpath('Data/SCI');
+addpath('Data/Healthy');
 addpath('Code');
-
 %% Loading the data for the SCI and creating the new useful structure
 
-% Loading the two MATLAB structures for the SCI 
-load('FLOAT_NO_CRUTCHES.mat');
-load('NO_FLOAT_CRUTCHES.mat');
+% ATTENTION: the first time the window will pop up select the folder
+% containing the data of the SCI subjects. The second time select the
+% folder containing the data of the Healthy subects.
+[SCI_subjects, Healthy, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
 
-% Select the folder containing all the data for the project
-FolderName = uigetdir('select the directory with the data');
+% To stock the sampling frequency for the EMG
+Fs_EMG = SCI_subjects.FLOAT_NO_CRUTCHES.T_01.fsEMG;
+% To stock the sampling frequency for the Kinetics
+Fs_KIN = SCI_subjects.FLOAT_NO_CRUTCHES.T_01.fsKIN;
+%% Structuring the data
+SCI_EMG = create_EMG_struct(SCI_subjects,'SCI');
+Healthy_EMG = create_EMG_struct(Healthy,'Healthy');
 
-% We load all the csv files. A structure with size 6X1 is going to be created
-% Pay attention that the 3 first files make reference to the GAIT FILES
-% related to the FLOAT_NO_CRUTCHES and the 3 last to the GAIT FILES related
-% to the NO_FLOAT_CRUTCHES
-csv_files = dir([FolderName filesep '**/*.csv']);
+%% Computing the mean EMG signal and filtering
+SCI_EMG_NO_FLOAT_CRUTCHES = compute_mean_EMG_signal(SCI_EMG.NO_FLOAT_CRUTCHES);
+figure(1)
+filter_and_plot_EMG(SCI_EMG_NO_FLOAT_CRUTCHES,Fs_EMG,false);
 
-for i = 1:6
-    if i <= 3
-        csv_files_FLOAT_NO_CRUTCHES{i} = readtable(csv_files(i).name);
-    else 
-        csv_files_NO_FLOAT_CRUTCHES{i-3} = readtable(csv_files(i).name);
-    end
-end
+SCI_EMG_FLOAT_NO_CRUTCHES = compute_mean_EMG_signal(SCI_EMG.FLOAT_NO_CRUTCHES);
+figure(2)
+filter_and_plot_EMG(SCI_EMG_FLOAT_NO_CRUTCHES,Fs_EMG,true);
+
 

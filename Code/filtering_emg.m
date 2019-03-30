@@ -15,7 +15,7 @@ function [filtered_EMG] = filtering_emg(EMG_data,Fs,envelope)
 %            and - if required - enveloped
 
 
-EMG_data= double(EMG_data); 
+EMG_data = double(EMG_data); 
 
 % The meaningful EMG information stays between 50 Hz and 300 Hz. We take it
 % thus with some margins (20-350) in order not to lose any physiologically
@@ -32,11 +32,14 @@ bandpass_window(2) = high_pass_cutoff/(Fs/2);
 
 % Order of the Butterworth filter
 
-order = 4; %Literature-based choice
+% Literature-based choice
+order = 4; 
 
 % BandPass Filter
-[bp_B, bp_A] = butter(order, bandpass_window, 'bandpass');
-bandpassed_EMG = filtfilt(bp_B,bp_A,EMG_data);
+
+% butter() returns the transfer function H(z) coefficients of the filter B(z) and A(z) 
+[coeff_num_bp, coeff_denum_bp] = butter(order, bandpass_window, 'bandpass');
+bandpassed_EMG = filtfilt(coeff_num_bp,coeff_denum_bp,EMG_data);
 
 % Rectification: useful to compute the amplitude (in
 % absolute value) of the EMG signal, without considering its negative
@@ -44,14 +47,14 @@ bandpassed_EMG = filtfilt(bp_B,bp_A,EMG_data);
 
 rectified_EMG = abs(bandpassed_EMG);
 
-% Envelope: made with a LP filter with a cut-off frequency of 5 Hz in order
+% Envelope: made with a LowPass filter with a cut-off frequency of 5 Hz in order
 % to simplify and detect potentially meaningful features of the EMG signal.
 % Made only if requested by the input
 
 if envelope == true
     envelope_frequency = 5/(Fs/2); % Again need to be normalized for Fs/2
-    [env_B,env_A] =  butter(order, envelope_frequency);
-    filtered_EMG = filtfilt(env_B,env_A,rectified_EMG);
+    [coeff_num_env,coeff_denum_env] =  butter(order, envelope_frequency);
+    filtered_EMG = filtfilt(coeff_num_env,coeff_denum_env,rectified_EMG);
 else
     filtered_EMG = bandpassed_EMG;
 end
