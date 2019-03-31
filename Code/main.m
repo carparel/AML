@@ -16,12 +16,12 @@ addpath('Code');
 % ATTENTION: the first time the window will pop up select the folder
 % containing the data of the SCI subjects. The second time select the
 % folder containing the data of the Healthy subects.
-[SCI_subjects, Healthy, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
+[SCI_subjects, Healthy_subjects, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
 
 % To stock the sampling frequency for the EMG
-Fs_EMG = SCI_subjects.FLOAT_NO_CRUTCHES.T_01.fsEMG;
+Fs_EMG = SCI_subjects.FLOAT.T_01.fsEMG;
 % To stock the sampling frequency for the Kinetics
-Fs_KIN = SCI_subjects.FLOAT_NO_CRUTCHES.T_01.fsKIN;
+Fs_KIN = SCI_subjects.FLOAT.T_01.fsKIN;
 %% Structuring the data
 SCI_EMG = create_EMG_struct(SCI_subjects,'SCI');
 Healthy_EMG = create_EMG_struct(Healthy,'Healthy');

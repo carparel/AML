@@ -1,6 +1,12 @@
 function [SCI_subjects, Healthy, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data()
 % To load the data
 
+% Names of fields for building structures:
+conditions_healthy = {'FLOAT','NO_FLOAT'};
+conditions_SCI = {'FLOAT_NO_CRUTCHES','NO_FLOAT_CRUTCHES'};
+
+%% SCI Subjects
+
 % Select the folder containing the data for the SCI patients 
 FolderName = uigetdir('select the directory with the data');
 
@@ -18,36 +24,39 @@ for i = 1:length(csv_files)
     end
 end
 
+% Loading the MATLAB files for the SCI subjects
 mat_files_SCI = dir([FolderName filesep '**/*.mat']);
-% Loading the two MATLAB structures for the SCI 
 
-mat_files_FLOAT_NO_CRUTCHES_SCI = load(mat_files_SCI(1).name);
-mat_files_NO_FLOAT_CRUTCHES_SCI =load(mat_files_SCI(2).name);
+for i = 1:length(mat_files_SCI)
+    temporary_file = load(mat_files_SCI(i).name);
+    temporary_struct = temporary_file.(conditions_SCI{i});
+    SCI_subjects.(conditions_healthy{i}) = temporary_struct;
+end
 
-my_struct1 = mat_files_FLOAT_NO_CRUTCHES_SCI.FLOAT_NO_CRUTCHES;
-my_struct2 = mat_files_NO_FLOAT_CRUTCHES_SCI.NO_FLOAT_CRUTCHES;
-
-SCI_subjects.FLOAT_NO_CRUTCHES = my_struct1;
-SCI_subjects.NO_FLOAT_CRUTCHES = my_struct2;
+%% Healthy Subjects
 
 % Same thing but fot the healthy subjects
 FolderName = uigetdir('select the directory with the data');
 
+% Loading the two MATLAB structures for the Healthy Subjects 
 mat_files_H = dir([FolderName filesep '**/*.mat']);
-% Loading the two MATLAB structures for the SCI 
 
 nbr_files = length(mat_files_H);
 
 % since we have two files for each subject: with and without FLOAT
 idx_subjects = 1:2:nbr_files;
 
-for s = 1:length(idx_subjects)
-    mat_files_FLOAT_NO_CRUTCHES_H{s} = load(mat_files_H(idx_subjects(s)).name);
-    mat_files_NO_FLOAT_CRUTCHES_H{s} =load(mat_files_H(idx_subjects(s)+1).name);
+for condition = 1:length(conditions_healthy)
+    for s = 1:length(idx_subjects)
+        if strcmp(conditions_SCI{condition},'FLOAT_NO_CRUTCHES')
+            temporary_value_1 = load(mat_files_H(idx_subjects(s)).name); 
+            Healthy.(conditions_healthy{condition}).(['S' num2str(s) '_' conditions_healthy{condition}]) = temporary_value_1.(['S' num2str(s) '_' conditions_healthy{condition}]);
+        elseif strcmp(conditions_SCI{condition},'NO_FLOAT_CRUTCHES')
+            temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
+            Healthy.(conditions_healthy{condition}).(['S' num2str(s) '_' conditions_healthy{condition}]) = temporary_value_2.(['S' num2str(s) '_' conditions_healthy{condition}]);
+        end
+    end 
 end
-
-Healthy.NO_FLOAT =  mat_files_NO_FLOAT_CRUTCHES_H;
-Healthy.FLOAT = mat_files_FLOAT_NO_CRUTCHES_H;
 
 end
 
