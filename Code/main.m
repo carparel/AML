@@ -25,14 +25,25 @@ Fs_KIN = SCI_subjects.FLOAT_NO_CRUTCHES.T_01.fsKIN;
 %% Structuring the data
 SCI_EMG = create_EMG_struct(SCI_subjects,'SCI');
 Healthy_EMG = create_EMG_struct(Healthy,'Healthy');
+%% Plotting the filtered signal together with the raw
+filtered_EMG_envelope = create_EMG_struct_filtered(SCI_EMG,Fs_EMG,true);
+filtered_EMG_no_envelope = create_EMG_struct_filtered(SCI_EMG,Fs_EMG,false);
 
-%% Computing the mean EMG signal and filtering
-SCI_EMG_NO_FLOAT_CRUTCHES = compute_mean_EMG_signal(SCI_EMG.NO_FLOAT_CRUTCHES);
+filtered_EMG_envelope_healthy = create_EMG_struct_filtered(Healthy_EMG,Fs_EMG,true);
+filtered_EMG_no_envelope_healthy = create_EMG_struct_filtered(Healthy_EMG,Fs_EMG,false);
+
+% int this plot we have the EMG signal for SCI subjects for the four
+% muscles of interest
+% you have to give to the function the struct.chosen_trial
+
 figure(1)
-filter_and_plot_EMG(SCI_EMG_NO_FLOAT_CRUTCHES,Fs_EMG,false);
+plot_EMG(filtered_EMG_envelope.NO_FLOAT.T01,filtered_EMG_no_envelope.NO_FLOAT.T01,Fs_EMG);
 
-SCI_EMG_FLOAT_NO_CRUTCHES = compute_mean_EMG_signal(SCI_EMG.FLOAT_NO_CRUTCHES);
+% int this plot we have the EMG signal for healthy subjects for the four
+% muscles of interest
+% you have to give to the function the struct.chosen_trial
+
 figure(2)
-filter_and_plot_EMG(SCI_EMG_FLOAT_NO_CRUTCHES,Fs_EMG,true);
+plot_EMG(filtered_EMG_envelope_healthy.NO_FLOAT.T01,filtered_EMG_no_envelope_healthy.NO_FLOAT.T01,Fs_EMG);
 
 
