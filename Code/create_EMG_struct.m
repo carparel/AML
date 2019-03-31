@@ -73,20 +73,20 @@ end
 
 if strcmp(type,'Healthy')
     % EMG data for Realthy Subjects FLOAT
-    T01_LMG = raw_struct.FLOAT{3}.S3_FLOAT.T_01.Raw.EMG.LMG;
-    T01_RMG = raw_struct.FLOAT{3}.S3_FLOAT.T_01.Raw.EMG.RMG;
-    T01_LTA = raw_struct.FLOAT{3}.S3_FLOAT.T_01.Raw.EMG.LTA;
-    T01_RTA = raw_struct.FLOAT{3}.S3_FLOAT.T_01.Raw.EMG.RTA;
+    T01_LMG = raw_struct.FLOAT{4}.S4_FLOAT.T_01.Raw.EMG.LMG;
+    T01_RMG = raw_struct.FLOAT{4}.S4_FLOAT.T_01.Raw.EMG.RMG;
+    T01_LTA = raw_struct.FLOAT{4}.S4_FLOAT.T_01.Raw.EMG.LTA;
+    T01_RTA = raw_struct.FLOAT{4}.S4_FLOAT.T_01.Raw.EMG.RTA;
     
-    T02_LMG = raw_struct.FLOAT{3}.S3_FLOAT.T_02.Raw.EMG.LMG;
-    T02_RMG = raw_struct.FLOAT{3}.S3_FLOAT.T_02.Raw.EMG.RMG;
-    T02_LTA = raw_struct.FLOAT{3}.S3_FLOAT.T_02.Raw.EMG.LTA;
-    T02_RTA = raw_struct.FLOAT{3}.S3_FLOAT.T_02.Raw.EMG.RTA;
+    T02_LMG = raw_struct.FLOAT{4}.S4_FLOAT.T_02.Raw.EMG.LMG;
+    T02_RMG = raw_struct.FLOAT{4}.S4_FLOAT.T_02.Raw.EMG.RMG;
+    T02_LTA = raw_struct.FLOAT{4}.S4_FLOAT.T_02.Raw.EMG.LTA;
+    T02_RTA = raw_struct.FLOAT{4}.S4_FLOAT.T_02.Raw.EMG.RTA;
     
-    T03_LMG = raw_struct.FLOAT{3}.S3_FLOAT.T_03.Raw.EMG.LMG;
-    T03_RMG = raw_struct.FLOAT{3}.S3_FLOAT.T_03.Raw.EMG.RMG;
-    T03_LTA = raw_struct.FLOAT{3}.S3_FLOAT.T_03.Raw.EMG.LTA;
-    T03_RTA = raw_struct.FLOAT{3}.S3_FLOAT.T_03.Raw.EMG.RTA;
+    T03_LMG = raw_struct.FLOAT{4}.S4_FLOAT.T_03.Raw.EMG.LMG;
+    T03_RMG = raw_struct.FLOAT{4}.S4_FLOAT.T_03.Raw.EMG.RMG;
+    T03_LTA = raw_struct.FLOAT{4}.S4_FLOAT.T_03.Raw.EMG.LTA;
+    T03_RTA = raw_struct.FLOAT{4}.S4_FLOAT.T_03.Raw.EMG.RTA;
     
     Struct_EMG.FLOAT.T01.LMG = T01_LMG;
     Struct_EMG.FLOAT.T01.RMG = T01_RMG;
@@ -104,20 +104,20 @@ if strcmp(type,'Healthy')
     Struct_EMG.FLOAT.T03.RTA = T03_RTA;
     
     % EMG data for Realthy Subjects NO_FLOAT
-    T01_LMG = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_01.Raw.EMG.LMG;
-    T01_RMG = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_01.Raw.EMG.RMG;
-    T01_LTA = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_01.Raw.EMG.LTA;
-    T01_RTA = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_01.Raw.EMG.RTA;
+    T01_LMG = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_01.Raw.EMG.LMG;
+    T01_RMG = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_01.Raw.EMG.RMG;
+    T01_LTA = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_01.Raw.EMG.LTA;
+    T01_RTA = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_01.Raw.EMG.RTA;
     
-    T02_LMG = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_02.Raw.EMG.LMG;
-    T02_RMG = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_02.Raw.EMG.RMG;
-    T02_LTA = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_02.Raw.EMG.LTA;
-    T02_RTA = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_02.Raw.EMG.RTA;
+    T02_LMG = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_02.Raw.EMG.LMG;
+    T02_RMG = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_02.Raw.EMG.RMG;
+    T02_LTA = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_02.Raw.EMG.LTA;
+    T02_RTA = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_02.Raw.EMG.RTA;
     
-    T03_LMG = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_03.Raw.EMG.LMG;
-    T03_RMG = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_03.Raw.EMG.RMG;
-    T03_LTA = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_03.Raw.EMG.LTA;
-    T03_RTA = raw_struct.NO_FLOAT{3}.S3_NO_FLOAT.T_03.Raw.EMG.RTA;
+    T03_LMG = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_03.Raw.EMG.LMG;
+    T03_RMG = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_03.Raw.EMG.RMG;
+    T03_LTA = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_03.Raw.EMG.LTA;
+    T03_RTA = raw_struct.NO_FLOAT{4}.S4_NO_FLOAT.T_03.Raw.EMG.RTA;
     
     Struct_EMG.NO_FLOAT.T01.LMG = T01_LMG;
     Struct_EMG.NO_FLOAT.T01.RMG = T01_RMG;
