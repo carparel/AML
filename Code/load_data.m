@@ -50,10 +50,10 @@ for condition = 1:length(conditions_healthy)
     for s = 1:length(idx_subjects)
         if strcmp(conditions_SCI{condition},'FLOAT_NO_CRUTCHES')
             temporary_value_1 = load(mat_files_H(idx_subjects(s)).name); 
-            Healthy.(conditions_healthy{condition}).(['S' num2str(s) '_' conditions_healthy{condition}]) = temporary_value_1.(['S' num2str(s) '_' conditions_healthy{condition}]);
+            Healthy.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(s) '_' conditions_healthy{condition}]);
         elseif strcmp(conditions_SCI{condition},'NO_FLOAT_CRUTCHES')
             temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
-            Healthy.(conditions_healthy{condition}).(['S' num2str(s) '_' conditions_healthy{condition}]) = temporary_value_2.(['S' num2str(s) '_' conditions_healthy{condition}]);
+            Healthy.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(s) '_' conditions_healthy{condition}]);
         end
     end 
 end

@@ -1,4 +1,4 @@
-function [filtered_EMG] = filtering_emg(EMG_data,Fs,envelope)
+function [filtered_EMG] = filtering_EMG(EMG_data,Fs,envelope)
 
 % Function filtering the signal EMG
 %
@@ -60,3 +60,4 @@ else
 end
 
 end
+
