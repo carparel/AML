@@ -61,26 +61,37 @@ subject = 'S_4';
 marker_SCI = 'TOE';
 marker_Healthy = 'TOE';
 
-to_plot_SCI = SCI_subjects.(condition).(trial).Filtered.Kin;
-to_plot_Healthy = Healthy_subjects.(subject).(condition).(trial).Filtered.Kin;
-
 figure(1);
-plot_Kin(to_plot_SCI,to_plot_Healthy,marker_SCI,marker_Healthy,Fs_Kin);
+plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
+    Healthy_subjects.(subject).(condition).(trial).Filtered.Kin,marker_SCI,marker_Healthy,Fs_Kin);
 hold on;
 
 marker_SCI = 'ANK';
 marker_Healthy = 'ANK';
 
-to_plot_SCI = SCI_subjects.(condition).(trial).Filtered.Kin;
-to_plot_Healthy = Healthy_subjects.(subject).(condition).(trial).Filtered.Kin;
-
 figure(2);
-plot_Kin(to_plot_SCI,to_plot_Healthy,marker_SCI,marker_Healthy,Fs_Kin);
+plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ... 
+    Healthy_subjects.(subject).(condition).(trial).Filtered.Kin,marker_SCI,marker_Healthy,Fs_Kin);
 %% Detect gait events by visual inspection
-% 
-% Probably you should use Toe and Ankle graphs, which seem to be useful for
-% such detection! These are the two plots created just above. 
-% Knee and Hip look more like straight lines. 
-% 
-%
+% In order to detect the gait events we have considered the Y coordinate of
+% the markers ANKLE and TOE. The Hill Strike (HS) will correspond to the
+% first index of the plateau of the ankle, the Hill Off (HO) to the last
+% index of the plateau of the ankle and the same for the Toe (Toe Strike
+% and Toe Off).
+% We will thus only consider ANKLE and TOE.
+
+% Creation of the threshold structs - We saw that the thresholds must be
+% empirically set -- 
+[struct_threshold] = create_thresholds_struct;
+
+%This must be changed if we want to consider the healthy ones
+data_to_consider = Healthy_subjects.S_4; %To put Healthy if wanted
+% Note: If healthy, we have to put Healthy_subjects.S_1 depending on the
+% subject we want
+
+threshold_to_consider = struct_threshold; %To put Healthy if wanted
+leg = 'right'; % To put left if wanted
+
+[struct_events_Healthy_right] = detectGaitEvents(data_to_consider,'right');
+
 %% Automatised gait event algorithm
