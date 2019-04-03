@@ -28,7 +28,7 @@ Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 [Healthy_subjects,SCI_subjects] = structureEMG(Healthy_subjects,SCI_subjects,Fs_EMG);
 
 %% Plotting the filtered signal together with the raw
-% Choose the subject, the trial and the condition you want
+% Choose the subject, the trial and the condition you want to plot
 subject = 'S_4';
 condition = 'NO_FLOAT';
 trial = 'T_01';
@@ -50,9 +50,9 @@ plot_EMG(Healthy_subjects.(subject).(condition).(trial).Filtered.EMG.envelope,He
 %% Plot kin signals
 
 % Choose what to plot
-condition = 'FLOAT';
-trial = 'T_01';
 subject = 'S_4';
+condition = 'NO_FLOAT';
+trial = 'T_01';
 
 % ATTENTION: Do not indicate the position R/L of the marker.
 % If you want to plot the hip signal, you have to indicate ASI for SCI
@@ -72,7 +72,7 @@ marker_Healthy = 'ANK';
 figure(2);
 plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ... 
     Healthy_subjects.(subject).(condition).(trial).Filtered.Kin,marker_SCI,marker_Healthy,Fs_Kin);
-%% Detect gait events by visual inspection
+%% Detect gait events
 % In order to detect the gait events we have considered the Y coordinate of
 % the markers ANKLE and TOE. The Hill Strike (HS) will correspond to the
 % first index of the plateau of the ankle, the Hill Off (HO) to the last
@@ -85,7 +85,18 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
     %[struct_threshold] = create_thresholds_struct;
     %threshold_to_consider = struct_threshold; 
 
-% choose the leg to consider    
+% choose the leg to consider  
+
+%leg = 'left';
 leg = 'right'; 
 [Healthy_subjects]= append_gait_events(Healthy_subjects,leg);
+
+% choose the subject, the condition, the trial and the marker to plot
+subject = 'S_6';
+condition = 'FLOAT';
+trial = 'T_03';
+marker_Healthy = 'LTOE';
+
+plot_gait_events(Healthy_subjects,subject,condition,trial,marker_Healthy);
+
 %% Automatised gait event algorithm
