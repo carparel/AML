@@ -46,14 +46,13 @@ for condition = 1:length(conditions)
                 struct_events.(conditions{condition}).(trials{trial}).HO = HO;
             end
             
-            
-            if strcmp(markers{marker},'Toe') %If we consider the Heel, we take into account the TOE marker
+            if strcmp(markers{marker},'Toe') %If we consider the Toe, we take into account the TOE marker
                 marker_position_to_consider = datas.(conditions{condition}).(trials{trial}).Filtered.Kin.(markers_names{2});
                 signal = marker_position_to_consider(:,2);
-                if strcmp(condition,'FLOAT')
+                if strcmp(conditions{condition},'FLOAT')
                     threshold = 8;
                     [TS,TO] = plateau_endpoints(signal,threshold);
-                elseif strcmp(condition,'NO_FLOAT')
+                elseif strcmp(conditions{condition},'NO_FLOAT')
                     threshold =4;
                     [TS,TO] = plateau_endpoints(signal,threshold);
                 end
