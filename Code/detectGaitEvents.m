@@ -1,4 +1,4 @@
-function [struct_events] = detectGaitEvents(datas,leg)
+function [Healthy_subjects] = detectGaitEvents(Healthy_subjects,subject,leg)
 % 
 % This function is used in order to make a whole structure of events, for
 % each case (FLOAT,NO FLOAT) and each trial. Though, it is needed to have a
@@ -8,6 +8,7 @@ function [struct_events] = detectGaitEvents(datas,leg)
 %         - leg = if it's the right or left leg, in order to take the good
 %         markers
 % OUPUT : struct of events
+datas = Healthy_subjects.(subject);
 
 if strcmp(leg,'left')
     markers_names = {'LANK','LTOE'};
@@ -42,8 +43,8 @@ for condition = 1:length(conditions)
                     threshold =4;
                     [HS,HO] = plateau_endpoints(signal,threshold);
                 end
-                struct_events.(conditions{condition}).(trials{trial}).HS = HS; % We put the events in the structure
-                struct_events.(conditions{condition}).(trials{trial}).HO = HO;
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.HS = HS; % We put the events in the structure
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.HO = HO;
             end
             
             if strcmp(markers{marker},'Toe') %If we consider the Toe, we take into account the TOE marker
@@ -56,8 +57,8 @@ for condition = 1:length(conditions)
                     threshold =4;
                     [TS,TO] = plateau_endpoints(signal,threshold);
                 end
-                struct_events.(conditions{condition}).(trials{trial}).TS = TS;
-                struct_events.(conditions{condition}).(trials{trial}).TO = TO;
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.TS = TS;
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.TO = TO;
             end
         end
     end

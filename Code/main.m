@@ -82,16 +82,10 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 
 % Creation of the threshold structs - We saw that the thresholds must be
 % empirically set -- 
-[struct_threshold] = create_thresholds_struct;
+    %[struct_threshold] = create_thresholds_struct;
+    %threshold_to_consider = struct_threshold; 
 
-%This must be changed if we want to consider the healthy ones
-data_to_consider = Healthy_subjects.S_4; %To put Healthy if wanted
-% Note: If healthy, we have to put Healthy_subjects.S_1 depending on the
-% subject we want
-
-threshold_to_consider = struct_threshold; %To put Healthy if wanted
-leg = 'right'; % To put left if wanted
-
-[struct_events_Healthy_right] = detectGaitEvents(data_to_consider,'right');
-
+% choose the leg to consider    
+leg = 'right'; 
+[Healthy_subjects]= append_gait_events(Healthy_subjects,leg);
 %% Automatised gait event algorithm
