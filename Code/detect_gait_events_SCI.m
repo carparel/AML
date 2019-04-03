@@ -5,8 +5,6 @@ trials = {'T_01', 'T_02', 'T_03'};
 legs = {'Right', 'Left'};
 
 HS=[];
-HO=[];
-TS=[];
 TO=[];
 
 csv =[];
