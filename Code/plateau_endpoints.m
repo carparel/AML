@@ -16,9 +16,9 @@ else
 end
 
 
-figure;
-plot(signal);
-hold on
+% figure;
+% plot(signal);
+% hold on
 index = [1]; 
 idx_final = [];
 idx_initial = [];
@@ -42,8 +42,8 @@ for i = 1:length(index)-1
         idx_initial = [idx_initial index(i)];
     end
 end
-scatter(idx_final,signal(idx_final));
-scatter(idx_initial,signal(idx_initial));
+% scatter(idx_final,signal(idx_final));
+% scatter(idx_initial,signal(idx_initial));
 
 strike = idx_initial;
 off = idx_final;
