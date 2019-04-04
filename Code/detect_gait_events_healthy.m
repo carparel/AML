@@ -50,8 +50,8 @@ for condition = 1:length(conditions)
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_marker = HS; % We put the events in the structure
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_marker = HO;
                     
-                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_emg = (HS*coefficient_dilation_marker)/coefficient_dilation_emg; % We put the events in the structure
-                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_emg = (HO*coefficient_dilation_marker)/coefficient_dilation_emg;
+                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_emg = ceil((HS*coefficient_dilation_marker)/coefficient_dilation_emg); % We put the events in the structure
+                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_emg = ceil((HO*coefficient_dilation_marker)/coefficient_dilation_emg);
                 end
                 
             if strcmp(markers{marker},'Toe') %If we consider the Toe, we take into account the TOE marker
@@ -67,8 +67,8 @@ for condition = 1:length(conditions)
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_marker = TS;
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_marker = TO;
                 
-                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_emg = (TS*coefficient_dilation_marker)/coefficient_dilation_emg; % We put the events in the structure
-                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_emg = (TO*coefficient_dilation_marker)/coefficient_dilation_emg;
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_emg = ceil((TS*coefficient_dilation_marker)/coefficient_dilation_emg); % We put the events in the structure
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_emg = ceil((TO*coefficient_dilation_marker)/coefficient_dilation_emg);
             end
             end
         end
@@ -101,8 +101,8 @@ for condition = 1:length(conditions)
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_marker = HS; % We put the events in the structure
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_marker = HO;
                     
-                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_emg = (HS*coefficient_dilation_marker)/coefficient_dilation_emg; % We put the events in the structure
-                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_emg = (HO*coefficient_dilation_marker)/coefficient_dilation_emg;
+                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_emg = ceil((HS*coefficient_dilation_marker)/coefficient_dilation_emg); % We put the events in the structure
+                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_emg = ceil((HO*coefficient_dilation_marker)/coefficient_dilation_emg);
                 end
                 
             if strcmp(markers{marker},'Toe') %If we consider the Toe, we take into account the TOE marker
@@ -118,8 +118,8 @@ for condition = 1:length(conditions)
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_marker = TS;
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_marker = TO;
                 
-                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_emg = (TS*coefficient_dilation_marker)/coefficient_dilation_emg; % We put the events in the structure
-                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_emg = (TO*coefficient_dilation_marker)/coefficient_dilation_emg;
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_emg = ceil((TS*coefficient_dilation_marker)/coefficient_dilation_emg); % We put the events in the structure
+                Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_emg = ceil((TO*coefficient_dilation_marker)/coefficient_dilation_emg);
             end
             end
         end

@@ -105,6 +105,24 @@ leg = 'Left';
 plot_gait_events(Healthy_subjects,subject,condition,trial,marker_Healthy,leg);
 
 %% Visualising steps
-figure;
-plot(Healthy_subjects.S_4.FLOAT.T_02.Parsed{1, 3}.Right.Kin.RTOE)
+conditions = {'NO_FLOAT', 'FLOAT'};
+trials = {'T_01', 'T_02', 'T_03'};
+markers_SCI = {'LASI','RASI','LKNE','RKNE','LTOE','RTOE','LANK','RANK'};
+markers_H = {'LHIP','RHIP','LKNE','RKNE','LTOE','RTOE','LANK','RANK'};
+
+for condition = 1:length(conditions)
+    for trial = 1:length(trials)
+        temporary_struct = raw_struct.(conditions{condition}).(trials{trial}).Raw.Kin;
+        if strcmp(type,'SCI')
+            for marker = 1:length(markers_SCI)
+                temporary_struct.(markers_SCI{marker});
+            end
+        elseif strcmp(type,'Healthy')
+            for marker = 1:length(markers_H)
+                temporary_struct.(markers_H{marker});
+            end
+        end
+    end
+end
+SCI_subjects.FLOAT.T_03.Parsed{1, 1}.Right.Kin.LTOE
 %% Automatised gait event algorithm
