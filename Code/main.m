@@ -85,12 +85,8 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
     %[struct_threshold] = create_thresholds_struct;
     %threshold_to_consider = struct_threshold; 
 
-
-[Healthy_subjects]= append_gait_events(Healthy_subjects);
-
-fs_marker = 100; %sampling frequency for markers
-fs_emg = 1000;
-[SCI_subjects] = detect_gait_events_SCI(SCI_subjects,csv_files_NO_FLOAT_CRUTCHES,csv_files_FLOAT_NO_CRUTCHES,fs_marker,fs_emg);
+% SCI subjects
+[SCI_subjects] = detect_gait_events_SCI(SCI_subjects,csv_files_NO_FLOAT_CRUTCHES,csv_files_FLOAT_NO_CRUTCHES,Fs_Kin,Fs_EMG);
 
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
@@ -101,7 +97,7 @@ fs_emg = 1000;
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects);
 
 % choose the subject, the condition, the trial and the marker to plot
-subject = 'S_6';
+subject = 'S_4';
 condition = 'FLOAT';
 trial = 'T_03';
 marker_Healthy = 'LTOE';
