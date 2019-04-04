@@ -91,7 +91,6 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 
-
 % Healthy 
 [Healthy_subjects]= append_gait_events(Healthy_subjects);
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects);
@@ -101,7 +100,8 @@ subject = 'S_4';
 condition = 'FLOAT';
 trial = 'T_03';
 marker_Healthy = 'LTOE';
+leg = 'Left';
 
-plot_gait_events(Healthy_subjects,subject,condition,trial,marker_Healthy);
+plot_gait_events(Healthy_subjects,subject,condition,trial,marker_Healthy,leg);
 
 %% Automatised gait event algorithm
