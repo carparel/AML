@@ -15,13 +15,11 @@ else
     s = slope{2};
 end
 
-
-% figure;
-% plot(signal);
-% hold on
 index = [1]; 
-idx_final = [];
-idx_initial = [];
+off = [];
+strike = [];
+dist_strikes = [];
+dist_offs = [];
 
 for i = 1:length(signal)-1
     if strcmp('positive',s)
@@ -38,13 +36,35 @@ end
 
 for i = 1:length(index)-1
     if index(i+1)-index(i)>1
-        idx_final = [idx_final index(i+1)];
-        idx_initial = [idx_initial index(i)];
+        off = [off index(i+1)];
+        strike = [strike index(i)];
+        if length(strike)>1
+            dist_strikes = [dist_strikes strike(end)-strike(end-1)];
+        end
+        if length(off)>1
+            dist_offs = [dist_offs off(end)-off(end-1)];
+        end
     end
 end
-% scatter(idx_final,signal(idx_final));
-% scatter(idx_initial,signal(idx_initial));
 
-strike = idx_initial;
-off = idx_final;
+%the following part allows to remove the wrongly detected gait events, i.e.
+%the points that are to close to each other and thus can't truely reflect 
+%the position of a new gait cycle
+mean_dist_strikes = mean(dist_strikes);
+mean_dist_offs = mean(dist_offs);
+sufficient_dist_strikes = (dist_strikes(:))>0.8*mean_dist_strikes;
+sufficient_dist_offs = (dist_offs(:))>0.8*mean_dist_offs;
+
+for i = 2:length(dist_strikes)
+    if (dist_strikes(i))<0.8*mean_dist_strikes
+        strike(i) = [];
+    end
+end
+
+for i = 2:length(dist_offs)
+    if (dist_offs(i))<0.8*mean_dist_offs
+        off(i+1) = [];
+    end
+end
+
 end 
