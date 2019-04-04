@@ -15,10 +15,10 @@ for condition = 1:length(conditions)
         for leg = 1:length(legs)
 
             
-            if strcmp(legs{leg},'right')
+            if strcmp(legs{leg},'Right')
             markers = {'RASI','RKNE','RTOE','RANK'};
             emgs = {'RMG','RTA'};
-            elseif strcmp(legs{leg},'left')
+            elseif strcmp(legs{leg},'Left')
             markers = {'LASI','LKNE','LTOE','LANK'};
             emgs = {'LMG','LTA'};
             end
