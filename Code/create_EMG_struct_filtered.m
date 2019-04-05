@@ -14,6 +14,12 @@ for condition = 1:length(conditions)
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.Type = 'Filtered Data';
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,true);
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,false);
+            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Normalized.EMG.envelope.(muscles{muscle}) = normalize(Healthy_subjects.(subject).(conditions{condition}). ...
+                (trials{trial}).Filtered.EMG.envelope.(muscles{muscle}));
+            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Normalized.EMG.noenvelope.(muscles{muscle}) = normalize(Healthy_subjects.(subject).(conditions{condition}). ...
+                (trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));
+            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Rectified = abs(Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope. ...
+                (muscles{muscle}));
         end
     end
 end
@@ -25,6 +31,11 @@ for condition = 1:length(conditions)
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.Type = 'Filtered Data';
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,true);    
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,false);    
+            SCI_subjects.(conditions{condition}).(trials{trial}).Normalized.EMG.envelope.(muscles{muscle}) = normalize(SCI_subjects.(conditions{condition}).(trials{trial}). ...
+                Filtered.EMG.envelope.(muscles{muscle})); 
+            SCI_subjects.(conditions{condition}).(trials{trial}).Normalized.EMG.noenvelope.(muscles{muscle}) = normalize(SCI_subjects.(conditions{condition}).(trials{trial}). ...
+                Filtered.EMG.noenvelope.(muscles{muscle})); 
+            SCI_subjects.(conditions{condition}).(trials{trial}).Rectified = abs(SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));
         end
     end
 end
