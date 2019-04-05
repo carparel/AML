@@ -10,5 +10,6 @@ index_subject = [3,4,5,6];
     for i = 1:length(index_subject)
     subject = ['S_' num2str(index_subject(i))];
     [Healthy_subjects,SCI_subjects] = create_EMG_struct_filtered(Healthy_subjects,SCI_subjects,subject,Fs);
+    [Healthy_subjects,SCI_subjects] = normalize(Healthy_subjects,SCI_subjects,subject);
     end
 end

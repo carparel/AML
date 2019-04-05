@@ -1,0 +1,51 @@
+function [Healthy_subjects,SCI_subjects] = normalize(Healthy_subjects,SCI_subjects,subject);
+
+% This function removes artifacts and normalizes the signal with its maximum
+
+% Th = max(Healthy_subjects)/10;
+% for i=1:length(Healthy_subjects)
+%     if (abs(Healthy_subjects(i))<Th)
+%         Healthy_subjects(i)=0;
+%     end
+% end
+
+conditions = {'NO_FLOAT', 'FLOAT'};
+trials = {'T_01', 'T_02', 'T_03'};
+muscles = {'RMG','LMG','RTA','LTA'};
+
+for muscle = 1:length(muscles) 
+    for trial = 1:length(trials)
+        for condition = 1:length(conditions)
+            maximum_noenv(trial,condition).(muscle{muscles}) = max(Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));
+            maximum_env(trial,condition).(muscle{muscles}) = max(Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}));
+        end
+    end
+    absolute_maxima_noenv.(muscles{muscle}) = max(max(maximum_noenv));
+    absolute_maxima_env.(muscles{muscle}) = max(max(maximum_env));
+
+    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Normalized.EMG.noenvelope.(muscles{muscle}) = ... 
+    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle})/absolute_maxima_noenv.(muscles{muscle});
+
+    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Normalized.EMG.envelope.(muscles{muscle}) = ... 
+    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle})/absolute_maxima_env.(muscles{muscle});
+
+end
+
+for muscle = 1:length(muscles) 
+    for trial = 1:length(trials)
+        for condition = 1:length(conditions)
+            maximum_noenv(trial,condition).(muscles{muscle}) = max(SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));
+            maximum_env(trial,condition).(muscles{muscle}) = max(SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}));
+        end
+    end
+    absolute_maxima_noenv.(muscles{muscle}) = max(max(maximum_noenv));
+    absolute_maxima_env.(muscles{muscle}) = max(max(maximum_env));
+
+    SCI_subjects.(subject).(conditions{condition}).(trials{trial}).Normalized.EMG.noenvelope.(muscles{muscle}) = ... 
+    SCI_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle})/absolute_maxima_noenv.(muscles{muscle});
+
+    SCI_subjects.(subject).(conditions{condition}).(trials{trial}).Normalized.EMG.envelope.(muscles{muscle}) = ... 
+    SCI_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle})/absolute_maxima_env.(muscles{muscle});
+end
+
+end
