@@ -34,14 +34,14 @@ condition = 'NO_FLOAT';
 trial = 'T_01';
 
 figure(1)
-plot_EMG(SCI_subjects.(condition).(trial).Filtered.EMG.envelope,SCI_subjects.(condition).(trial).Filtered.EMG.noenvelope,Fs_EMG);
+plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG);
 
 % int this plot we have the EMG signal for healthy subjects for the four
 % muscles of interest
 % you have to give to the function the struct.chosen_trial
 
 figure(2)
-plot_EMG(Healthy_subjects.(subject).(condition).(trial).Filtered.EMG.envelope,Healthy_subjects.(subject).(condition).(trial).Filtered.EMG.noenvelope,Fs_EMG);
+plot_EMG(Healthy_subjects.(subject).(condition).(trial).Normalized.EMG.envelope,Healthy_subjects.(subject).(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG);
 
 %% Structuring the Kin data
 
