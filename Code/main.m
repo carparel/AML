@@ -92,8 +92,8 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 
 % Healthy 
-[Healthy_subjects]= append_gait_events(Healthy_subjects);
-[Healthy_subjects]= append_gait_cycles(Healthy_subjects);
+[Healthy_subjects]= append_gait_events(Healthy_subjects,Fs_Kin,Fs_EMG);
+[Healthy_subjects]= append_gait_cycles(Healthy_subjects,Fs_Kin,Fs_EMG);
 
 % choose the subject, the condition, the trial and the marker to plot
 subject = 'S_4';
