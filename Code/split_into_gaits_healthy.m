@@ -4,8 +4,8 @@ datas = Healthy_subjects.(subject);
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};
 legs = {'Right', 'Left'};
-markers = {'RASI','RKNE','RTOE','RANK'};
-markers = {'LASI','LKNE','LTOE','LANK'};
+markers = {'RHIP','RKNE','RTOE','RANK'};
+markers = {'LHIP','LKNE','LTOE','LANK'};
 emgs= {'RMG','RTA'};
 emgs = {'LMG','LTA'};
 envelopes = {'envelope','noenvelope'};
@@ -16,11 +16,13 @@ for condition = 1:length(conditions)
             
             
             if strcmp(legs{leg},'Right')
-                markers = {'RASI','RKNE','RTOE','RANK'};
-                emgs = {'RMG','RTA'};
+
+            markers = {'RHIP','RKNE','RTOE','RANK'};
+            emgs = {'RMG','RTA'};
             elseif strcmp(legs{leg},'Left')
-                markers = {'LASI','LKNE','LTOE','LANK'};
-                emgs = {'LMG','LTA'};
+            markers = {'LHIP','LKNE','LTOE','LANK'};
+            emgs = {'LMG','LTA'};
+
             end
             
             

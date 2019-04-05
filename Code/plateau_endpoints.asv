@@ -43,7 +43,9 @@ for i = 1:length(index)-1
         end
     end
 end
-
+if index(1)<=2
+    off(1) = [];%to make sure the first index detected is a real "off"
+end
 if index(end) < length(signal)
     strike = [strike index(end)]; %to detect last "strike"
 end
