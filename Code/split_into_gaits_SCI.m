@@ -4,10 +4,6 @@ function [SCI_subjects] = split_into_gaits_SCI(SCI_subjects)
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};
 legs = {'Right', 'Left'};
-markers = {'RHIP','RKNE','RTOE','RANK'};
-markers = {'LHIP','LKNE','LTOE','LANK'};
-emgs= {'RMG','RTA'};
-emgs = {'LMG','LTA'};
 envelopes = {'envelope','noenvelope'};
 
 
@@ -16,13 +12,12 @@ for condition = 1:length(conditions)
     for trial = 1:length(trials)
         for leg = 1:length(legs)
 
-            
-            if strcmp(legs{leg},'right')
-            markers = {'RHIP','RKNE','RTOE','RANK'};
-            emgs = {'RMG','RTA'};
-            elseif strcmp(legs{leg},'left')
-            markers = {'LHIP','LKNE','LTOE','LANK'};
-            emgs = {'LMG','LTA'};
+            if strcmp(legs{leg},'Right')
+                markers = {'RASI','RKNE','RTOE','RANK'};
+                emgs = {'RMG','RTA'};
+            elseif strcmp(legs{leg},'Left')
+                markers = {'LASI','LKNE','LTOE','LANK'};
+                emgs = {'LMG','LTA'};
             end
             
             
@@ -49,11 +44,11 @@ for condition = 1:length(conditions)
                             SCI_subjects.(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).EMG.noenvelope.(emgs{emg}) = ...
                                 old_signal((SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps)) : ...
                                 (SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)));
+                        end
                     end
                 end
             end
         end
     end
-end
 end
 end
