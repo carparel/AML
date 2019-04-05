@@ -1,4 +1,4 @@
-function [Healthy_subjects] = split_into_gaits_healthy(Healthy_subjects,subject)
+function [Healthy_subjects] = split_into_gaits_healthy(Healthy_subjects,subject,fs_KIN,fs_EMG)
 
 datas = Healthy_subjects.(subject);
 conditions = {'NO_FLOAT', 'FLOAT'};
