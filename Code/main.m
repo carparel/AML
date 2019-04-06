@@ -95,16 +95,61 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 [Healthy_subjects]= append_gait_events(Healthy_subjects,Fs_Kin,Fs_EMG);
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects,Fs_Kin,Fs_EMG);
 
-% choose the subject, the condition, the trial and the marker to plot
-subject = 'S_4';
-condition = 'FLOAT';
-trial = 'T_03';
-marker_Healthy = 'LTOE';
-leg = 'Left';
-
-plot_gait_events(Healthy_subjects,subject,condition,trial,marker_Healthy,leg);
-
 %% Visualising steps
-figure;
-plot(Healthy_subjects.S_4.FLOAT.T_02.Parsed{1, 3}.Right.Kin.RTOE)
-%% Automatised gait event algorithm
+% figure;
+% plot(Healthy_subjects.S_4.FLOAT.T_02.Parsed{1, 3}.Right.Kin.RTOE)
+%% EMG parameters detection
+
+% DECISION:
+% We are taking subject 4 for everything BUT NO_FLOAT LMG (is shit)
+% We are taking subject 5 for this LMG muscle.
+
+muscles_4 = {'RGM','RTA','LTA'};
+muscle_5 = 'LGM';
+conditions = {'NO_FLOAT','FLOAT'};
+trials = {'T_01','T_02','T_03'};
+
+for condition = 1:length(conditions)
+    new_struct = Healthy_subjects.('S_4').(conditions{condition});
+end
+
+for trial = 1:length(trials)
+    current = new_struct.(trials{trial}).Left.Parsed;
+    for gait = 1:3
+        current{1,gait}.EMG.envelope.LMG =  Healthy_subjects.S_5.NO_FLOAT.(trials{trial}).Left.Parsed{1,gait}.EMG.envelope.LMG;
+    end
+end
+%% We started to think about onset-offeset detection in EMG (WORK IN PROGRESS)
+
+trials = {'T_01','T_02','T_03'};
+legs = {'Right','Left'};
+muscles = {'RMG','LMG','RTA','LTA'};
+
+    for trial = 1:length(trials)
+        for leg = 1:length(legs)
+            
+            if strcmp(legs{leg},'Right')
+                muscles = {'RMG','RTA'};
+            else
+                muscles = {'LMG','LTA'};
+            end
+            
+            current = new_struct.(trials{trial}).(legs{leg}).Parsed;
+            
+            for gait = 1:length(current)
+                for muscle = 1:length(muscles)
+                    cavia2 = current{1,gait}.EMG.envelope.(muscles{muscle});
+%                     movcavia = movmean(cavia2,800);
+%                     mean_value = mean(movcavia);
+%                     [~,idx] = min(abs(movcavia - mean_value));
+                    figure();
+                    plot(cavia2)
+                    title([trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+%                     hold on
+%                     plot(idx, cavia2(idx),'o')
+                end
+            end
+        end
+    end
+ 
+
