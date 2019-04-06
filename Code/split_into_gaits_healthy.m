@@ -1,4 +1,4 @@
-function [Healthy_subjects] = split_into_gaits_healthy(Healthy_subjects,subject,fs_KIN,fs_EMG)
+function [Healthy_subjects] = split_into_gaits_healthy(Healthy_subjects,subject)
 
 datas = Healthy_subjects.(subject);
 conditions = {'NO_FLOAT', 'FLOAT'};
@@ -19,11 +19,16 @@ for condition = 1:length(conditions)
                 emgs = {'LMG','LTA'};
             end
             
+            nbr_events_right = length(datas.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+            nbr_events_left = length(datas.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
             
-            for nb_steps = 1:length(datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker)-1
+            min_nbr_events = min([nbr_events_right,nbr_events_left]);
+            
+            for nb_steps = 1:min_nbr_events-1
+                
                 for marker = 1:length(markers)
                     old_signal = datas.(conditions{condition}).(trials{trial}).Filtered.Kin.(markers{marker});
-                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).(legs{leg}).Parsed{nb_steps}.Kin.(markers{marker}) = ...
+                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).Kin.(markers{marker}) = ...
                         old_signal(datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps) : ...
                         datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps+1));
                 end
@@ -35,12 +40,12 @@ for condition = 1:length(conditions)
                     for envelope = 1:length(envelopes)
                         if strcmp(envelopes{envelope},'envelope')
                             old_signal = datas.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(emgs{emg});
-                            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).(legs{leg}).Parsed{nb_steps}.EMG.envelope.(emgs{emg}) = ...
+                            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).EMG.envelope.(emgs{emg}) = ...
                                 old_signal((datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps)) : ...
                                 (datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)));
                         elseif strcmp(envelopes{envelope},'noenvelope')
                             old_signal = datas.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(emgs{emg});
-                            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).(legs{leg}).Parsed{nb_steps}.EMG.noenvelope.(emgs{emg}) = ...
+                            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).EMG.noenvelope.(emgs{emg}) = ...
                                 old_signal((datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps)) : ...
                                 (datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)));
                         end

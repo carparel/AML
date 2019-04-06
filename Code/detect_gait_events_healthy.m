@@ -37,10 +37,12 @@ for condition = 1:length(conditions)
                 signal = marker_position_to_consider(:,2); % Just Y-Pos
                 if strcmp(conditions{condition},'FLOAT')
                     threshold = 8; % We have empirically found that the threshold for the FLOAT is 8, for the NO_FLOAT is 4
-                    [HS,HO] = plateau_endpoints(signal,threshold); % We determine Heel Strike and Heel Off
+                    %[HS,HO] = plateau_endpoints(signal,threshold); % We determine Heel Strike and Heel Off
+                    [HS,HO] = find_events(signal,conditions{condition});
                 elseif strcmp(conditions{condition},'NO_FLOAT')
                     threshold =4;
-                    [HS,HO] = plateau_endpoints(signal,threshold);
+                    %[HS,HO] = plateau_endpoints(signal,threshold);
+                    [HS,HO] = find_events(signal,conditions{condition});
                 end
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_marker = HS; % We put the events in the structure
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_marker = HO;
@@ -54,10 +56,12 @@ for condition = 1:length(conditions)
                 signal = marker_position_to_consider(:,2);
                 if strcmp(conditions{condition},'FLOAT')
                     threshold = 8;
-                    [TS,TO] = plateau_endpoints(signal,threshold);
+                    %[TS,TO] = plateau_endpoints(signal,threshold);
+                    [HS,HO] = find_events(signal,conditions{condition});
                 elseif strcmp(conditions{condition},'NO_FLOAT')
                     threshold =4;
-                    [TS,TO] = plateau_endpoints(signal,threshold);
+                    %[TS,TO] = plateau_endpoints(signal,threshold);
+                    [HS,HO] = find_events(signal,conditions{condition});
                 end
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_marker = TS;
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_marker = TO;
