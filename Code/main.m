@@ -1,9 +1,9 @@
 % AML-Project 2 - Courtine part
 %
 % Group Members : - Giovanna Aiello
-%                 - Gaia Carparelli 
+%                 - Gaia Carparelli
 %                 - Marion Claudet
-%                 - Martina Morea 
+%                 - Martina Morea
 %                 - Leonardo Pollina
 
 clear;
@@ -70,7 +70,7 @@ marker_SCI = 'ANK';
 marker_Healthy = 'ANK';
 
 figure(2);
-plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ... 
+plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
     Healthy_subjects.(subject).(condition).(trial).Filtered.Kin,marker_SCI,marker_Healthy,Fs_Kin);
 %% Detect gait events
 % In order to detect the gait events we have considered the Y coordinate of
@@ -81,9 +81,9 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 % We will thus only consider ANKLE and TOE.
 
 % Creation of the threshold structs - We saw that the thresholds must be
-% empirically set -- 
-    %[struct_threshold] = create_thresholds_struct;
-    %threshold_to_consider = struct_threshold; 
+% empirically set --
+%[struct_threshold] = create_thresholds_struct;
+%threshold_to_consider = struct_threshold;
 
 % SCI subjects
 [SCI_subjects] = detect_gait_events_SCI(SCI_subjects,csv_files_NO_FLOAT_CRUTCHES,csv_files_FLOAT_NO_CRUTCHES,Fs_Kin,Fs_EMG);
@@ -91,9 +91,9 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 
-% Healthy 
+% Healthy
 [Healthy_subjects]= append_gait_events(Healthy_subjects,Fs_Kin,Fs_EMG);
-[Healthy_subjects]= append_gait_cycles(Healthy_subjects,Fs_Kin,Fs_EMG);
+[Healthy_subjects]= append_gait_cycles(Healthy_subjects);
 
 %% Visualising steps
 % figure;
@@ -104,52 +104,8 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 % We are taking subject 4 for everything BUT NO_FLOAT LMG (is shit)
 % We are taking subject 5 for this LMG muscle.
 
-muscles_4 = {'RGM','RTA','LTA'};
-muscle_5 = 'LGM';
-conditions = {'NO_FLOAT','FLOAT'};
-trials = {'T_01','T_02','T_03'};
+new_struct = merge_EMG_subjects(Healthy_subjects);
+%% Let's say we got something for EMG
 
-for condition = 1:length(conditions)
-    new_struct = Healthy_subjects.('S_4').(conditions{condition});
-end
-
-for trial = 1:length(trials)
-    current = new_struct.(trials{trial}).Left.Parsed;
-    for gait = 1:3
-        current{1,gait}.EMG.envelope.LMG =  Healthy_subjects.S_5.NO_FLOAT.(trials{trial}).Left.Parsed{1,gait}.EMG.envelope.LMG;
-    end
-end
-%% We started to think about onset-offeset detection in EMG (WORK IN PROGRESS)
-
-trials = {'T_01','T_02','T_03'};
-legs = {'Right','Left'};
-muscles = {'RMG','LMG','RTA','LTA'};
-
-    for trial = 1:length(trials)
-        for leg = 1:length(legs)
-            
-            if strcmp(legs{leg},'Right')
-                muscles = {'RMG','RTA'};
-            else
-                muscles = {'LMG','LTA'};
-            end
-            
-            current = new_struct.(trials{trial}).(legs{leg}).Parsed;
-            
-            for gait = 1:length(current)
-                for muscle = 1:length(muscles)
-                    cavia2 = current{1,gait}.EMG.envelope.(muscles{muscle});
-%                     movcavia = movmean(cavia2,800);
-%                     mean_value = mean(movcavia);
-%                     [~,idx] = min(abs(movcavia - mean_value));
-                    figure();
-                    plot(cavia2)
-                    title([trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-%                     hold on
-%                     plot(idx, cavia2(idx),'o')
-                end
-            end
-        end
-    end
- 
+EMG_feat_table_Healthy = Extract_EMG_features_Healthy(new_struct,Fs_EMG);
 
