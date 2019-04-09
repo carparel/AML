@@ -109,10 +109,11 @@ plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(
 
 % Healthy
 [Healthy_subjects]= append_gait_events(Healthy_subjects,Fs_Kin,Fs_EMG);
+[Healthy_subjects] = cut_events(Healthy_subjects);
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects);
 
 %% Let's say we got something for EMG
-%EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.(subject),Fs_EMG);
+EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.(subject),Fs_EMG);
 %% Trying for SCI subjects
 
 %EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
@@ -122,6 +123,5 @@ plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(
 % the function doesn't work cause I still have to do AA. If you want to see
 % the parameters I found, run inside the function.
 
-subject_struct = Healthy_subjects.S_4;
-Kin_feat_table = Extract_Kin_features_Healthy(subject_struct,Fs_Kin);
+Kin_feat_table = Extract_Kin_features_Healthy(Healthy_subjects.(subject),Fs_Kin);
 
