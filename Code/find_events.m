@@ -5,11 +5,11 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 %TO TRY ALL THE PLOTS
 % conditions = {'FLOAT','NO_FLOAT'};
 % trials = {'T_01','T_02','T_03'};
-% subjects_nbr = 6;
+% subjects_nbr = 4;
 % markers = {'LANK','RANK','LTOE','RTOE'};
-
-
-% for s = 3:subjects_nbr
+% 
+% 
+% for s = 4:subjects_nbr
 %     for condition = 1:length(conditions)
 %         if strcmp(conditions{condition},'NO_FLOAT')
 %             % Experimental thresholds:
@@ -22,7 +22,7 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 %             thr_HS = 0.3;
 %             thr_TO = 0.3;
 %         end
-%
+% 
 %         for trial = 1:length(trials)
 %             for marker = 1:length(markers)
 %                 signal_matrix = Healthy_subjects.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Filtered.Kin.(markers{marker});
@@ -30,11 +30,11 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 %                 der1 = diff(signal);
 %                 der2 = diff(der1);
 %                 der2 = movmean(der2,20);
-%
+% 
 %                 if (signal(end) > 0)
 %                     [~,idx_TO] = findpeaks(der2,'MinPeakHeight',thr_TO,'MinPeakDistance',peak_distance); %HS when the gait "goes" down
 %                     [~,idx_HS] = findpeaks(-der2,'MinPeakHeight',thr_HS,'MinPeakDistance',peak_distance); %TO when the gait "goes" down
-%
+% 
 %                     figure()
 %                     plot(signal);
 %                     hold on;
@@ -45,7 +45,7 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 %                 else
 %                     [~,idx_TO] = findpeaks(-der2,'MinPeakHeight',thr_TO,'MinPeakDistance',peak_distance); %HS when the gait "goes" down
 %                     [~,idx_HS] = findpeaks(der2,'MinPeakHeight',thr_HS,'MinPeakDistance',peak_distance); %TO when the gait "goes" down
-%
+% 
 %                     figure()
 %                     plot(signal);
 %                     hold on;

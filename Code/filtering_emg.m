@@ -1,4 +1,4 @@
-function [filtered_EMG] = filtering_EMG(EMG_data,Fs,envelope)
+function [filtered_EMG] = filtering_EMG(EMG_data,type,Fs,envelope)
 
 % Function filtering the signal EMG
 %
@@ -50,9 +50,13 @@ rectified_EMG = abs(bandpassed_EMG);
 % Envelope: made with a LowPass filter with a cut-off frequency of 5 Hz in order
 % to simplify and detect potentially meaningful features of the EMG signal.
 % Made only if requested by the input
-
 if envelope == true
-    envelope_frequency = 5/(Fs/2); % Again need to be normalized for Fs/2
+    if strcmp(type,'Healthy')
+         Fs_envelope = 5;  
+    else
+        Fs_envelope = 3; 
+    end
+    envelope_frequency = Fs_envelope/(Fs/2); % Again need to be normalized for Fs/2
     [coeff_num_env,coeff_denum_env] =  butter(order, envelope_frequency);
     filtered_EMG = filtfilt(coeff_num_env,coeff_denum_env,rectified_EMG);
 else

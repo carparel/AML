@@ -7,7 +7,7 @@ conditions_SCI = {'FLOAT_NO_CRUTCHES','NO_FLOAT_CRUTCHES'};
 
 %% SCI Subjects
 
-% Select the folder containing the data for the SCI patients 
+% Select the folder containing the data for the SCI patients
 FolderName = uigetdir('select the directory with the data');
 
 % We load all the csv files. A structure with size 6X1 is going to be created
@@ -19,7 +19,7 @@ csv_files = dir([FolderName filesep '**/*.csv']);
 for i = 1:length(csv_files)
     if i <= 3
         csv_files_FLOAT_NO_CRUTCHES{i} = readtable(csv_files(i).name);
-    else 
+    else
         csv_files_NO_FLOAT_CRUTCHES{i-3} = readtable(csv_files(i).name);
     end
 end
@@ -38,7 +38,7 @@ end
 % Same thing but fot the healthy subjects
 FolderName = uigetdir('select the directory with the data');
 
-% Loading the two MATLAB structures for the Healthy Subjects 
+% Loading the two MATLAB structures for the Healthy Subjects
 mat_files_H = dir([FolderName filesep '**/*.mat']);
 
 nbr_files = length(mat_files_H);
@@ -48,15 +48,20 @@ idx_subjects = 1:2:nbr_files;
 
 for condition = 1:length(conditions_healthy)
     for s = 1:length(idx_subjects)
-        if strcmp(conditions_SCI{condition},'FLOAT_NO_CRUTCHES')
-            temporary_value_1 = load(mat_files_H(idx_subjects(s)).name); 
-            Healthy.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(s) '_' conditions_healthy{condition}]);
-        elseif strcmp(conditions_SCI{condition},'NO_FLOAT_CRUTCHES')
-            temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
-            Healthy.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(s) '_' conditions_healthy{condition}]);
+        if s == 1
+            l = 4;
         end
-    end 
-end
+        if strcmp(conditions_healthy{condition},'FLOAT')
+            temporary_value_1 = load(mat_files_H(idx_subjects(s)).name);
 
+            Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(l) '_' conditions_healthy{condition}]);
+        elseif strcmp(conditions_healthy{condition},'NO_FLOAT')
+            temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
+            Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(l) '_' conditions_healthy{condition}]);  
+        end
+            
+   end
+end
+    
 end
 
