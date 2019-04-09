@@ -1,4 +1,4 @@
-function [EMG_feat_table] = Extract_EMG_features_Healthy(new_struct,Fs_EMG)
+function [EMG_feat_table] = Extract_EMG_features_Healthy(struct_,Fs_EMG)
 % CIAO
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
@@ -33,31 +33,32 @@ for condition = 1:length(conditions)
             else
                 muscles = {'LMG','LTA'};
             end
-            current = new_struct.(conditions{condition}).(trials{trial}).Parsed;
+            current = struct_.(conditions{condition}).(trials{trial}).Parsed;
             for gait = 1:length(current)
                 for muscle = 1:length(muscles)
                     if (strcmp(muscles{muscle},'LTA') || strcmp(muscles{muscle},'RTA'))
-                        %                         figure()
+
                         current_signal = current{1,gait}.(legs{leg}).EMG.envelope.(muscles{muscle});
-                        %                         XMIN = 0;
-                        %                         XMAX = length(current_signal);
-                        %                         YMIN = -inf;
-                        %                         YMAX = +inf;
+                        figure()
+                        XMIN = 0;
+                        XMAX = length(current_signal);
+                        YMIN = -inf;
+                        YMAX = +inf;
+                        plot(current_signal);
+                        hold on;
                         idx = find(current_signal < 0.01);
-                        %                         plot(current_signal);
-                        %                         hold on;
                         onset1 = 1;
                         offset1 = idx(1);
                         onset2 = idx(end);
                         offset2 = length(current_signal);
-                        %                         plot(onset1,current_signal(onset1),'ro');
-                        %                         plot(offset1,current_signal(offset1),'bo');
-                        %                         plot(offset2,current_signal(offset2),'bo');
-                        %                         plot(onset2,current_signal(onset2),'ro');
-                        %                         axis([XMIN XMAX YMIN YMAX]);
-                        %                         legend('EMG signal','Onsets','Offsets')
-                        %                         title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-                        
+                        plot(onset1,current_signal(onset1),'ro');
+                        plot(offset1,current_signal(offset1),'bo');
+                        plot(offset2,current_signal(offset2),'bo');
+                        plot(onset2,current_signal(onset2),'ro');
+                        axis([XMIN XMAX YMIN YMAX]);
+                        legend('EMG signal','Onsets','Offsets')
+                        title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+
                         if strcmp(muscles{muscle},'LTA')
                             % Duration [s]
                             length_idx1 = offset1 - onset1;
@@ -113,23 +114,29 @@ for condition = 1:length(conditions)
                         end
                     else
                         current_signal = current{1,gait}.(legs{leg}).EMG.envelope.(muscles{muscle});
-                        movsignal = movmean(current_signal,500);
-                        %                         figure()
-                        %                         XMIN = 0;
-                        %                         XMAX = length(current_signal);
-                        %                         YMIN = -inf;
-                        %                         YMAX = +inf;
-                        %plot(current_signal)
-                        %hold on;
-                        threshold = 0.025;
+                        
+%                         figure()
+%                         XMIN = 0;
+%                         XMAX = length(current_signal);
+%                         YMIN = -inf;
+%                         YMAX = +inf;
+%                         plot(current_signal)
+%                         hold on;
+                        if (strcmp(muscles{muscle},'LMG') &&  strcmp(conditions{condition},'NO_FLOAT'))
+                            threshold = 0.01;
+                            movsignal = movmean(current_signal,250);
+                        else
+                            threshold = 0.025;
+                            movsignal = movmean(current_signal,500);
+                        end
                         [~,onset] = min(abs(movsignal(1:round(length(current_signal)/2)) - threshold));
                         [~,offset] = min(abs(movsignal(round((length(current_signal)/2)) + 1: end) - threshold));
                         offset = offset + round(length(current_signal)/2);
-                        %plot(onset,current_signal(onset),'o')
-                        %plot(offset,current_signal(offset),'o')
-                        %axis([XMIN XMAX YMIN YMAX]);
-                        %title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-                        
+%                         plot(onset,current_signal(onset),'ro')
+%                         plot(offset,current_signal(offset),'bo')
+%                         axis([XMIN XMAX YMIN YMAX]);
+%                         title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+%                         
                         if strcmp(muscles{muscle},'LMG')
                             % Duration [s]
                             length_idx = offset - onset;
