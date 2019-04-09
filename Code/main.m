@@ -18,6 +18,7 @@ addpath('Code');
 % containing the data of the SCI subjects. The second time select the
 % folder containing the data of the Healthy subects.
 [SCI_subjects, Healthy_subjects, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
+
 %% Global variables
 % To choose the healthy subject
 subject = 'S_4';
@@ -29,14 +30,15 @@ Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 %% Clean data
 markers = {'RHIP','RKNE','RTOE','RANK','LHIP','LKNE','LTOE','LANK'};
 muscles = {'RMG','RTA','LMG','LTA'};
-coeff = Fs_EMG/Fs_Kin;
+coeff_dilatation = Fs_EMG/Fs_Kin;
+
 for marker = 1: length(markers)
     temporary_Kin = Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker});
     Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker}) = temporary_Kin(100:end,:);
 end
 for muscle = 1: length(muscles)
     temporary_EMG = Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle});
-    Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle}) = temporary_EMG(100*coeff:end);
+    Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle}) = temporary_EMG(100*coeff_dilatation:end);
 end
 %% Structuring the EMG data
 
@@ -44,14 +46,12 @@ end
 %% Structuring the Kin data
 
 [Healthy_subjects,SCI_subjects] = structureKin(Healthy_subjects,SCI_subjects,Fs_Kin);
-
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
 % subject = 'S_4';
 condition = 'FLOAT';
 trial = 'T_03';
-
-% 
+ 
 figure(1)
 plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG);
 
@@ -90,16 +90,11 @@ plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(
 
 %% Detect gait events
 % In order to detect the gait events we have considered the Y coordinate of
-% the markers ANKLE and TOE. The Hill Strike (HS) will correspond to the
-% first index of the plateau of the ankle, the Hill Off (HO) to the last
+% the markers ANKLE and TOE. The Heel Strike (HS) will correspond to the
+% first index of the plateau of the ankle, the Heel Off (HO) to the last
 % index of the plateau of the ankle and the same for the Toe (Toe Strike
 % and Toe Off).
-% We will thus only consider ANKLE and TOE.
-
-% Creation of the threshold structs - We saw that the thresholds must be
-% empirically set --
-%[struct_threshold] = create_thresholds_struct;
-%threshold_to_consider = struct_threshold;
+% We will thus only consider ANKLE and TOE markers.
 
 % SCI subjects
 [SCI_subjects] = detect_gait_events_SCI(SCI_subjects,csv_files_NO_FLOAT_CRUTCHES,csv_files_FLOAT_NO_CRUTCHES,Fs_Kin,Fs_EMG);
@@ -112,13 +107,15 @@ plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(
 [Healthy_subjects] = cut_events(Healthy_subjects);
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects);
 
-%% Let's say we got something for EMG
+%% Extraction of EMG features 
+
+% For Healthy subjects
 EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.(subject),Fs_EMG);
-%% Trying for SCI subjects
 
-%EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
+% For SCI subjects
+EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
 
-%% Kin parameters
+%% Extraction of Kin features 
 
 % the function doesn't work cause I still have to do AA. If you want to see
 % the parameters I found, run inside the function.

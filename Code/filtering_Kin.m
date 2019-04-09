@@ -1,11 +1,11 @@
 function [lowpassed_Kin] = filtering_Kin(Kin_data,Fs)
-
-% Function filtering the signal of the markers -> kinetics signals
+% This function filters the signal from kinetic markers. We apply a low pass 
+% Butterworth filter of 4th order.
+% 
+% INPUT: - Kin_data = the signal corresponding to one marker. 
+%        - Fs = sampling frequency for the kinetic signals. 
 %
-% INPUTS: 
-%
-%
-% OUTPUTS:
+% OUTPUT: lowpassed_Kin = signal low-pass filtered. 
 
 Kin_data = double(Kin_data); 
 

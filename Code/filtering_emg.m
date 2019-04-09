@@ -1,19 +1,17 @@
 function [filtered_EMG] = filtering_EMG(EMG_data,type,Fs,envelope)
-
-% Function filtering the signal EMG
+% This function filters the signal EMG. We apply a band pass Butterworth 
+% filter of 4th order.
 %
 % INPUTS: - EMG_data = vector signal (1xTimePoints) representing the EMG
-%           for the single muscle taken into account (either TA or GM, for
-%           both Right and Left leg)
+%                      for the single muscle taken into account (either TA 
+%                      or GM, for both Right and Left leg)
 %         - Fs = sampling frequency of the EMG recording.
 %         - envelope = logical value (true or false) indicating whether the
-%           signal of the already filtered EMG will be rectified and
-%           enveloped with a 5 Hz signal or not
+%                      signal of the already filtered EMG will be rectified 
+%                      and enveloped with a 5 Hz signal or not
 %
-%
-% OUTPUTS: - filtered_emg = vector signal (1xTimePoints) being filtered
-%            and - if required - enveloped
-
+% OUTPUTS: - filtered_EMG = vector signal (1xTimePoints) being filtered
+%                           and - if required - enveloped
 
 EMG_data = double(EMG_data); 
 
@@ -31,12 +29,10 @@ bandpass_window(1) = low_pass_cutoff/(Fs/2);
 bandpass_window(2) = high_pass_cutoff/(Fs/2);
 
 % Order of the Butterworth filter
-
-% Literature-based choice
+% (Literature-based choice)
 order = 4; 
 
 % BandPass Filter
-
 % butter() returns the transfer function H(z) coefficients of the filter B(z) and A(z) 
 [coeff_num_bp, coeff_denum_bp] = butter(order, bandpass_window, 'bandpass');
 bandpassed_EMG = filtfilt(coeff_num_bp,coeff_denum_bp,EMG_data);
@@ -52,7 +48,7 @@ rectified_EMG = abs(bandpassed_EMG);
 % Made only if requested by the input
 if envelope == true
     if strcmp(type,'Healthy')
-         Fs_envelope = 5;  
+        Fs_envelope = 5;  
     else
         Fs_envelope = 3; 
     end

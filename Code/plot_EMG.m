@@ -1,7 +1,17 @@
 function [] = plot_EMG(EMG_envelope, EMG_no_envelope,fs)
-%UNTITLED5 Summary of this function goes here
-%   Detailed explanation goes here
+% This function plots the EMG for a certain trial for all the muscles
+% (RTA,LTA,RGM,LGM) in a subplot. The non-envelope and the envelope signal
+% are plotted in the same figure (hold on).
+%
+% INPUT: - EMG_envelope = the filtered signal with also the envelope (it is
+%                         a structure containing the 4 muscles).
+%        - EMG_no_envelope = the filtered signal without the envelope (it is
+%                            a structure containing the 4 muscles).
+%        - fs = sampling frequency for the EMG.
+%
+% OUTPUT: //
 
+%% Defining all the different signals (from the given structures)
 LMG_filtered_env = EMG_envelope.LMG;
 RMG_filtered_env = EMG_envelope.RMG;
 LTA_filtered_env = EMG_envelope.LTA;
@@ -19,7 +29,7 @@ XMAX = time_points(length(time_points));
 YMIN = -1;
 YMAX = +1;
 
-% Plotting
+%% Plotting
 subplot(2,2,1)
 plot(time_points,LMG_filtered_noenv,'k','LineWidth',1.2);
 hold on;

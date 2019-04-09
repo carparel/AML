@@ -1,7 +1,16 @@
 function [ Healthy_subjects, SCI_subjects] = create_Kin_struct_filtered(Healthy_subjects,SCI_subjects,subject,Fs)
-% BLABLABLABLA
-% 
+% This function fills the fields in the original structures (Healthy and 
+% SCI) corresponding to the filtered signals and the rectified ones.
 %
+% INPUT: - Healthy_subjects = Structure containing the data for healthy subjects
+%        - SCI_subjects = Structure containing the data for SCI subjects
+%        - subject = the number of the subject you want to analyse. It should be
+%                    a string such as 'S_4' or 'S_5'
+%        - Fs = sampling frequency of the Kin recording.
+%
+% OUTPUT: - Healthy_subjects = Updated structure with the filtered Kin                            
+%         - SCI_subjects = Updated structure with the filtered Kin
+  
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};
 markers_SCI = {'LASI','RASI','LKNE','RKNE','LTOE','RTOE','LANK','RANK'};

@@ -1,6 +1,19 @@
 function [SCI_subjects, Healthy, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data()
-% To load the data
-
+% This function is used to load the data from both the .csv and .mat files.
+%
+% INPUT: //
+%
+% OUTPUT: - SCI_subjects = structure containing all the data regarding the 
+%                          SCI subjects.
+%         - Healthy = structure containing all the data regarding the 
+%                     Healthy subjects.
+%         - csv_files_FLOAT_NO_CRUTCHES = table containing the data about the events detected
+%                                         for the SCI subjects in the condition of FLOAT_NO_CRUTCHES.
+%                                         This table will be  used to split in gait cycles.                       
+%         - csv_files_NO_FLOAT_CRUTCHES = table containing the data about the events detected
+%                                         for the SCI subjects in the condition of NO_FLOAT_CRUTCHES.
+%                                         This table will be  used to split in gait cycles.                                      
+                   
 % Names of fields for building structures:
 conditions_healthy = {'FLOAT','NO_FLOAT'};
 conditions_SCI = {'FLOAT_NO_CRUTCHES','NO_FLOAT_CRUTCHES'};
@@ -13,7 +26,7 @@ FolderName = uigetdir('select the directory with the data');
 % We load all the csv files. A structure with size 6X1 is going to be created
 % Pay attention that the 3 first files make reference to the GAIT FILES
 % related to the FLOAT_NO_CRUTCHES and the 3 last to the GAIT FILES related
-% to the NO_FLOAT_CRUTCHES
+% to the NO_FLOAT_CRUTCHES.
 csv_files = dir([FolderName filesep '**/*.csv']);
 
 for i = 1:length(csv_files)
@@ -32,7 +45,6 @@ for i = 1:length(mat_files_SCI)
     temporary_struct = temporary_file.(conditions_SCI{i});
     SCI_subjects.(conditions_healthy{i}) = temporary_struct;
 end
-
 %% Healthy Subjects
 
 % Same thing but fot the healthy subjects
@@ -40,26 +52,23 @@ FolderName = uigetdir('select the directory with the data');
 
 % Loading the two MATLAB structures for the Healthy Subjects
 mat_files_H = dir([FolderName filesep '**/*.mat']);
-
 nbr_files = length(mat_files_H);
 
 % since we have two files for each subject: with and without FLOAT
 idx_subjects = 1:2:nbr_files;
 
 for condition = 1:length(conditions_healthy)
-    for s = 1:length(idx_subjects)
-        if s == 1
-            l = 4;
-        end
-        if strcmp(conditions_healthy{condition},'FLOAT')
+   for s = 1:length(idx_subjects)
+      if s == 1
+         l = 4;
+      end
+      if strcmp(conditions_healthy{condition},'FLOAT')
             temporary_value_1 = load(mat_files_H(idx_subjects(s)).name);
-
             Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(l) '_' conditions_healthy{condition}]);
-        elseif strcmp(conditions_healthy{condition},'NO_FLOAT')
+      elseif strcmp(conditions_healthy{condition},'NO_FLOAT')
             temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
-            Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(l) '_' conditions_healthy{condition}]);  
-        end
-            
+            Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(l) '_' conditions_healthy{condition}]);
+      end
    end
 end
     

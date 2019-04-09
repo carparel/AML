@@ -1,6 +1,14 @@
 function [struct_Kin] = create_Kin_struct(raw_struct,type)
-% BLABLABLA
-
+% To have a more compact structure containing the Kin data (only the
+% markers we are interested in)
+%
+% INPUTS: - raw_struct = the structure containing all the fields. It's the
+%                        structure from which you want to sort some data.
+%         - type = a string parameter. It corresponds to the type of
+%                  subject you are considered, either 'SCI' or 'Healthy'.
+%
+% OUTPUT: - struct_Kin = the more compact structure containing the Kin data
+     
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};
 markers_SCI = {'LASI','RASI','LKNE','RKNE','LTOE','RTOE','LANK','RANK'};

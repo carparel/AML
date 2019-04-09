@@ -1,7 +1,12 @@
 function [Healthy_struct] = cut_events(Healthy_struct)
-%UNTITLED2 Summary of this function goes here
- % We check if the first index we have is a off or a strike
- 
+% This function cuts some of the event previously detected. It is important
+% to take into account the same number of strike and off points in order to
+% well detect the gait cycles and to easily extract the features after.
+%
+% INPUT: - Healthy_struct = structure containing the data about the healthy
+%                           subjects.
+%
+% OUTPUT: -Healthy_struct = updated structure with the Healthy subjects.
 
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};

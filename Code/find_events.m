@@ -1,8 +1,30 @@
 function [strike_idx, off_idx] = find_events(signal,condition)
-% Signal is already the desired vector (i.e. only Y coordinate).
-% The signal should already be CUT!!
+%  This function is used to detect the events (strike and off points) for
+%  the given signal. We use a method based on the second derivative of the
+%  signal, because these events are likely to correspond (or at least they
+%  are really close) to the points of maximum convexity and concavity of
+%  the signal (thus corresponding to the maxima and minima of the second
+%  derivative).
+%
+% INPUT: - signal = it is already the desired vector (the second component,
+%                  Y component, of the desired marker). The marker should  to
+%                  correspond either the ANKLE one or the TOE one. 
+%        - condition = a string value, one of the two possible conditions 
+%                      'NO_FLOAT' and 'FLOAT'. This is important because the
+%                      thresholds for the detection depend on the
+%                      condition.
+%
+% OUTPUT: - strike_idx = vector containing the strike points, i.e. they can
+%                       be heel strike or toe strike, depending on which
+%                       marker is considered.
+%         - off_idx = vector containing the off points, i.e. they can be
+%                     heel off or toe off, depending on which marker is 
+%                     considered.
 
-%TO TRY ALL THE PLOTS
+%% TO PLOT ALL CASES 
+% Uncomment these lines if you want to plot all the figures in order to assess
+% how good the detection of the events is.
+%
 % conditions = {'FLOAT','NO_FLOAT'};
 % trials = {'T_01','T_02','T_03'};
 % subjects_nbr = 4;
@@ -59,6 +81,7 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 %     end
 % end
 
+%% MAIN CODE OF THE FUNCTION
 
 if strcmp(condition,'NO_FLOAT')
     % Experimental thresholds:
@@ -79,12 +102,6 @@ der2 = movmean(der2,20);
 if (signal(end) > 0)
     [~,idx_off] = findpeaks(der2,'MinPeakHeight',thr_off,'MinPeakDistance',peak_distance); 
     [~,idx_strike] = findpeaks(-der2,'MinPeakHeight',thr_strike,'MinPeakDistance',peak_distance); 
-%     figure()
-%     plot(signal);
-%     hold on;
-%     plot(idx_TO+2,signal(idx_TO+2),'ro');
-%     plot(idx_HS+2,signal(idx_HS+2),'bo');
-%     legend('Signal','TO','HS')
     strike_idx = idx_strike + 2;
     off_idx = idx_off + 2;
 else
@@ -93,13 +110,6 @@ else
     strike_idx = idx_strike + 2;
     off_idx = idx_off + 2;
 end
-
-%     figure()
-%     plot(signal);
-%     hold on;
-%     plot(idx_TO+2,signal(idx_TO+2),'ro'); %HS
-%     plot(idx_HS+2,signal(idx_HS+2),'bo'); %TO
-%     legend('Signal','TO','HS')
 
 
 end

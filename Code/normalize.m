@@ -1,6 +1,9 @@
 function [Healthy_subjects,SCI_subjects] = normalize(Healthy_subjects,SCI_subjects,subject);
-
-% This function removes artifacts and normalizes the signal with its maximum
+% This function removes artifacts and normalizes the EMG signal. The 
+% normalization is performed by dividing with the maximum contraction
+% recorded over all trials (of the same subject). The rationale behind this
+% is that this value corresponds to the maximum contraction ever recorded
+% in the selected subject. 
 
 % Th = max(Healthy_subjects)/10;
 % for i=1:length(Healthy_subjects)
@@ -22,7 +25,6 @@ for muscle = 1:length(muscles)
     end
     absolute_maxima_noenv = max(max(maximum_noenv));
     absolute_maxima_env = max(max(maximum_env));
-    
     for trial = 1:length(trials)
         for condition = 1:length(conditions)
     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Normalized.EMG.noenvelope.(muscles{muscle}) = ... 
@@ -32,7 +34,6 @@ for muscle = 1:length(muscles)
     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle})/absolute_maxima_env;
         end
     end
-    
 end
 
 for muscle = 1:length(muscles) 
@@ -44,7 +45,6 @@ for muscle = 1:length(muscles)
     end
     absolute_maxima_noenv = max(max(maximum_noenv));
     absolute_maxima_env = max(max(maximum_env));
-    
     for trial = 1:length(trials)
         for condition = 1:length(conditions)
             SCI_subjects.(conditions{condition}).(trials{trial}).Normalized.EMG.noenvelope.(muscles{muscle}) = ... 
@@ -54,7 +54,6 @@ for muscle = 1:length(muscles)
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle})/absolute_maxima_env;
         end
     end
-    
-  end
+end
 
 end
