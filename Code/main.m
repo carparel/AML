@@ -93,19 +93,13 @@ plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 
 % Healthy
 [Healthy_subjects]= append_gait_events(Healthy_subjects,Fs_Kin,Fs_EMG);
+[Healthy_subjects] = cut_events(Healthy_subjects);
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects);
 
 %% Visualising steps
 % figure;
 % plot(Healthy_subjects.S_4.FLOAT.T_02.Parsed{1, 3}.Right.Kin.RTOE)
-%% EMG parameters detection
-
-% DECISION:
-% We are taking subject 4 for everything BUT NO_FLOAT LMG (is shit)
-% We are taking subject 5 for this LMG muscle.
-
-new_struct = merge_EMG_subjects(Healthy_subjects);
 %% Let's say we got something for EMG
 
-EMG_feat_table_Healthy = Extract_EMG_features_Healthy(new_struct,Fs_EMG);
+EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.S_4,Fs_EMG);
 

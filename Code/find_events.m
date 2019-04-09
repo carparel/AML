@@ -63,13 +63,13 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 if strcmp(condition,'NO_FLOAT')
     % Experimental thresholds:
     peak_distance = 100;
-    thr_HS = 0.5;
-    thr_TO = 0.5;
-else
+    thr_strike = 0.5;
+    thr_off = 0.5;
+elseif strcmp(condition,'FLOAT')
     % Experimental thresholds:
     peak_distance = 100;
-    thr_HS = 0.3;
-    thr_TO = 0.3;
+    thr_strike = 0.3;
+    thr_off = 0.3;
 end
 
 der1 = diff(signal);
@@ -77,21 +77,23 @@ der2 = diff(der1);
 der2 = movmean(der2,20);
 
 if (signal(end) > 0)
-    [~,idx_TO] = findpeaks(der2,'MinPeakHeight',thr_TO,'MinPeakDistance',peak_distance); %HS when the gait "goes" down
-    [~,idx_HS] = findpeaks(-der2,'MinPeakHeight',thr_HS,'MinPeakDistance',peak_distance); %TO when the gait "goes" down
-    
+    [~,idx_off] = findpeaks(der2,'MinPeakHeight',thr_off,'MinPeakDistance',peak_distance); 
+    [~,idx_strike] = findpeaks(-der2,'MinPeakHeight',thr_strike,'MinPeakDistance',peak_distance); 
 %     figure()
 %     plot(signal);
 %     hold on;
 %     plot(idx_TO+2,signal(idx_TO+2),'ro');
 %     plot(idx_HS+2,signal(idx_HS+2),'bo');
 %     legend('Signal','TO','HS')
-    strike_idx = idx_HS + 2;
-    off_idx = idx_TO + 2;
+    strike_idx = idx_strike + 2;
+    off_idx = idx_off + 2;
 else
-    [~,idx_TO] = findpeaks(-der2,'MinPeakHeight',thr_TO,'MinPeakDistance',peak_distance); %HS when the gait "goes" down
-    [~,idx_HS] = findpeaks(der2,'MinPeakHeight',thr_HS,'MinPeakDistance',peak_distance); %TO when the gait "goes" down
-    
+    [~,idx_off] = findpeaks(-der2,'MinPeakHeight',thr_off,'MinPeakDistance',peak_distance); 
+    [~,idx_strike] = findpeaks(der2,'MinPeakHeight',thr_strike,'MinPeakDistance',peak_distance); 
+    strike_idx = idx_strike + 2;
+    off_idx = idx_off + 2;
+end
+
 %     figure()
 %     plot(signal);
 %     hold on;
@@ -99,9 +101,7 @@ else
 %     plot(idx_HS+2,signal(idx_HS+2),'bo'); %TO
 %     legend('Signal','TO','HS')
 
-    strike_idx = idx_HS + 2;
-    off_idx = idx_TO + 2;
-end
 
 end
+
 
