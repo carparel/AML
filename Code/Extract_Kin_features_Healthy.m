@@ -56,7 +56,9 @@ for condition = 1:length(conditions)
                     % Hip
                     
                     vec_hip_knee = current{1,gait}.(legs{leg}).Kin.(markers{2}) - current{1,gait}.(legs{leg}).Kin.(markers{1});
+                    vec_hip_knee = [zeros(length(vec_hip_knee),1) vec_hip_knee(:,2:3)];                    
                     vec_n = [0,1,0];
+                    
                     for i = 1:length(vec_hip_knee(:,1))
                         % the angle btw a vector (in our case vector
                         % hip-knee and a plane (the plane XZ in this case
@@ -83,7 +85,6 @@ for condition = 1:length(conditions)
                     % their x coordinate to zero (equivalent to projecting
                     % them) for each time instant
                     
-                    vec_hip_knee = [zeros(length(vec_hip_knee),1) vec_hip_knee(:,2:3)];
                     vec_knee_ankle = [zeros(length(vec_knee_ankle),1) vec_knee_ankle(:,2:3)];
                     
                     for i = 1:length(vec_hip_knee(:,1))
