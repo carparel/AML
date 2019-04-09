@@ -58,15 +58,14 @@ for condition = 1:length(conditions)
                     
                     vec_hip_knee = current{1,gait}.(legs{leg}).Kin.(markers{2}) - current{1,gait}.(legs{leg}).Kin.(markers{1});
                     vec_hip_knee = [zeros(length(vec_hip_knee),1) vec_hip_knee(:,2:3)];                    
-                    %vec_n = [0,0,1];
-                    vec_n = [0,1,0];
+                    vec_n = [0,0,-1];
                     
                     for i = 1:length(vec_hip_knee(:,1))
-                        angle_hip(i) = asind(dot(vec_hip_knee(i,:),vec_n)/(norm(vec_hip_knee(i,:))*norm(vec_n)));
+                        angle_FE(i) = acosd(dot(vec_hip_knee(i,:),vec_n)/(norm(vec_hip_knee(i,:))*norm(vec_n)));
                     end
                     
-                    range_of_motion = max(angle)-min(angle);                    
-                    omega = mean(diff(angle));
+                    range_of_motion = max(angle_FE)-min(angle_FE);                    
+                    omega = mean(diff(angle_FE));
 
                     if strcmp(legs{leg},'Right')
                         ROM_hip_FE_R = [ROM_hip_FE_R range_of_motion];
@@ -82,11 +81,11 @@ for condition = 1:length(conditions)
                     vec_hip_knee_AA = [vec_hip_knee_AA(:,1) zeros(length(vec_hip_knee_AA),1) vec_hip_knee_AA(:,3)];                    
                     
                     for i = 1:length(vec_hip_knee_AA(:,1))
-                       angle(i) = acosd(dot(vec_hip_knee_AA(i,:),vec_n)/(norm(vec_hip_knee_AA(i,:))*norm(vec_n)));
+                       angle_AA(i) = acosd(dot(vec_hip_knee_AA(i,:),vec_n)/(norm(vec_hip_knee_AA(i,:))*norm(vec_n)));
                     end                 
                    
-                    range_of_motion = max(angle)-min(angle);                    
-                    omega = mean(diff(angle));                    
+                    range_of_motion = max(angle_AA)-min(angle_AA);                    
+                    omega = mean(diff(angle_AA));                    
 
                     if strcmp(legs{leg},'Right')
                         ROM_hip_AA_R = [ROM_hip_AA_R range_of_motion];
@@ -107,11 +106,11 @@ for condition = 1:length(conditions)
                     
                     for i = 1:length(vec_hip_knee(:,1))
                         % angle btw two vectors 
-                        angle_knee(i) = acosd(dot(vec_hip_knee(i,:),vec_knee_ankle(i,:))/(norm(vec_hip_knee(i,:))*(norm(vec_knee_ankle(i,:)))));
+                        angle_FE(i) = acosd(dot(vec_hip_knee(i,:),vec_knee_ankle(i,:))/(norm(vec_hip_knee(i,:))*(norm(vec_knee_ankle(i,:)))));
                     end
                     
-                    range_of_motion = max(angle)-min(angle);                    
-                    omega = mean(diff(angle));
+                    range_of_motion = max(angle_FE)-min(angle_FE);                    
+                    omega = mean(diff(angle_FE));
                     
                     if strcmp(legs{leg},'Right')
                         ROM_knee_FE_R = [ROM_knee_FE_R range_of_motion];
@@ -128,11 +127,11 @@ for condition = 1:length(conditions)
                     
                     for i = 1:length(vec_ankle_toe(:,1))
                         % angle btw two vectors 
-                        angle(i) = acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))));
+                        angle_FE(i) = acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))));
                     end                 
                     
-                    range_of_motion = max(angle)-min(angle);                    
-                    omega = mean(diff(angle));
+                    range_of_motion = max(angle_FE)-min(angle_FE);                    
+                    omega = mean(diff(angle_FE));
 
                     if strcmp(legs{leg},'Right')
                         ROM_ank_FE_R = [ROM_ank_FE_R range_of_motion];
