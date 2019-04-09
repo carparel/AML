@@ -6,7 +6,7 @@ function [Healthy_subjects,SCI_subjects]= structureKin(Healthy_subjects,SCI_subj
 % correctly loaded 
 
 number_sub = length(fieldnames(Healthy_subjects));
-index_subject = [3,4,5,6];
+index_subject = [4];
     for i = 1:length(index_subject)
     subject = ['S_' num2str(index_subject(i))];
     [Healthy_subjects,SCI_subjects] = create_Kin_struct_filtered(Healthy_subjects,SCI_subjects,subject,Fs);

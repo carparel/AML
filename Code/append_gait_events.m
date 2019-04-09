@@ -5,7 +5,7 @@ function [Healthy_subjects]= append_gait_events(Healthy_subjects,fs_KIN,fs_EMG)
 % correctly loaded 
 
 number_sub = length(fieldnames(Healthy_subjects));
-index_subject = [3,4,5,6];
+index_subject = [4];
     for i = 1:length(index_subject)
     subject = ['S_' num2str(index_subject(i))];
     [Healthy_subjects] = detect_gait_events_healthy(Healthy_subjects,subject,fs_KIN,fs_EMG);
