@@ -48,13 +48,13 @@ end
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
 % subject = 'S_4';
-% condition = 'FLOAT';
-% trial = 'T_01';
+condition = 'FLOAT';
+trial = 'T_03';
+
 % 
-% 
-% figure(1)
-% plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG);
-% 
+figure(1)
+plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG);
+
 % int this plot we have the EMG signal for healthy subjects for the four
 % muscles of interest
 % you have to give to the function the struct.chosen_trial
@@ -113,4 +113,7 @@ end
 
 %% Let's say we got something for EMG
 EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.(subject),Fs_EMG);
+%% Trying for SCI subjects
+
+EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
 

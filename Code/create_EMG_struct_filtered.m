@@ -12,8 +12,8 @@ for condition = 1:length(conditions)
         temporary_struct = Healthy_EMG.(conditions{condition}).(trials{trial});
         for muscle = 1:length(muscles)
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.Type = 'Filtered Data';
-            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,true);
-            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,false);
+            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'Healthy',Fs,true);
+            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'Healthy',Fs,false);
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Rectified = abs(Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope. ...
                 (muscles{muscle}));
         end
@@ -25,8 +25,8 @@ for condition = 1:length(conditions)
         temporary_struct = SCI_EMG.(conditions{condition}).(trials{trial});
         for muscle = 1:length(muscles)
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.Type = 'Filtered Data';
-            SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,true);    
-            SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),Fs,false);    
+            SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'SCI',Fs,true);    
+            SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'SCI',Fs,false);    
             SCI_subjects.(conditions{condition}).(trials{trial}).Rectified = abs(SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));
         end
     end
