@@ -112,10 +112,10 @@ plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects);
 
 %% Let's say we got something for EMG
-EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.(subject),Fs_EMG);
+%EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.(subject),Fs_EMG);
 %% Trying for SCI subjects
 
-EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
+%EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
 
 %% Kin parameters
 
