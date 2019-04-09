@@ -109,3 +109,11 @@ new_struct = merge_EMG_subjects(Healthy_subjects);
 
 EMG_feat_table_Healthy = Extract_EMG_features_Healthy(new_struct,Fs_EMG);
 
+%% Kin parameters
+
+% the function doesn't work cause I still have to do AA. If you want to see
+% the parameters I found, run inside the function.
+
+subject_struct = Healthy_subjects.S_4;
+Kin_feat_table = Extract_Kin_features_Healthy(subject_struct,Fs_Kin);
+

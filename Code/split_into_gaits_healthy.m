@@ -30,7 +30,7 @@ for condition = 1:length(conditions)
                     old_signal = datas.(conditions{condition}).(trials{trial}).Filtered.Kin.(markers{marker});
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).Kin.(markers{marker}) = ...
                         old_signal(datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps) : ...
-                        datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps+1));
+                        datas.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps+1),:);
                 end
                 
                 
