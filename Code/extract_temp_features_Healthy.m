@@ -22,10 +22,11 @@ for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
-        nbr_events_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
-        nbr_events_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
-        
-        min_nbr_events = min([nbr_events_right,nbr_events_left]);
+        nbr_events_HS_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+        nbr_events_HS_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
+        nbr_events_TO_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
+        nbr_events_TO_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
+        min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
         
         for leg = 1:length(legs) 
             
@@ -72,11 +73,12 @@ for condition = 1:length(conditions)
         end
         
             % Let's see which is the first heel strike, if right or left
+            heel_s = zeros(length(legs),min_nbr_events);
+            toe_o = zeros(length(legs),min_nbr_events);
+            
             for leg = 1:length(legs)
-                for i=1:min_nbr_events
-                    heel_s(leg,i) = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(i);
-                    toe_o(leg,i) = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(i);
-                end
+                    heel_s(leg,:) = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events)';
+                    toe_o(leg,:) = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(1:min_nbr_events)';
             end
             
             if heel_s(1,1) < heel_s(2,1)
@@ -89,6 +91,7 @@ for condition = 1:length(conditions)
                     duration= duration_idx / fsKin;
                 end
                 double_stance_duration = [double_stance_duration duration];
+                
             elseif heel_s(2,1) < heel_s(1,1)
                 for gait = 1:min_nbr_events-1
                     if mod(gait,2) == 1

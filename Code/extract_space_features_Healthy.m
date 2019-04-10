@@ -16,15 +16,19 @@ swing_length_right = [];
 swing_length_left = [];
 step_length_right = [];
 step_length_left = [];
+step_width = [];
 
 for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
-        nbr_events_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
-        nbr_events_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
+        nbr_events_HS_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+        nbr_events_HS_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
+        nbr_events_TO_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
+        nbr_events_TO_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
         
-        min_nbr_events = min([nbr_events_right,nbr_events_left]);
+        
+        min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
         
         for leg = 1:length(legs)
             
@@ -61,9 +65,13 @@ for condition = 1:length(conditions)
         end
         
         
+        % To compute the step length I need the hill strikes of both feet
+        % to be stored
         
-        rank = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
-        lank = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
+        rank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
+        lank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
+        rank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
+        lank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
         
         heel_s = zeros(length(legs),min_nbr_events);
         for leg = 1:length(legs)
@@ -73,26 +81,30 @@ for condition = 1:length(conditions)
         
         if heel_s(1,1) < heel_s(2,1)
             for gait = 1:min_nbr_events-1
-                length_step_left = abs(lank(heel_s(2,gait))-rank(heel_s(1,gait)))/10;
-                length_step_right = abs(rank(heel_s(1,gait+1))-lank(heel_s(2,gait)))/10;
+                length_step_left = abs(lank_y(heel_s(2,gait))-rank_y(heel_s(1,gait)))/10;
+                length_step_right = abs(rank_y(heel_s(1,gait+1))-lank_y(heel_s(2,gait)))/10;
                 step_length_left = [step_length_left length_step_left];
                 step_length_right = [step_length_right length_step_right];
+                width = abs(lank_x(heel_s(2,gait))-rank_x(heel_s(1,gait)))/10;
+                step_width = [step_width width];
             end
             
         elseif heel_s(2,1) < heel_s(1,1)
             for gait = 1:min_nbr_events-1
-                length_step_right = abs(rank(heel_s(1,gait))-lank(heel_s(2,gait)))/10;
-                length_step_left = abs(lank(heel_s(2,gait+1))-rank(heel_s(1,gait)))/10;
+                length_step_right = abs(rank_y(heel_s(1,gait))-lank_y(heel_s(2,gait)))/10;
+                length_step_left = abs(lank_y(heel_s(2,gait+1))-rank_y(heel_s(1,gait)))/10;
                 step_length_left = [step_length_left length_step_left];
                 step_length_right = [step_length_right length_step_right];
+                width = abs(rank_x(heel_s(1,gait))-lank_x(heel_s(2,gait)))/10;
+                step_width = [step_width width];
             end
             
         end
     end
 end
 
-names = {'Condition','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm'};
-space_feat_table = table(cond_',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left','VariableNames',names);
+names = {'Condition','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm'};
+space_feat_table = table(cond_',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width','VariableNames',names);
 end
 % Step length is the distance between the heel strike of one foot and the heel strike of the opposite foot
 

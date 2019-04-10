@@ -97,9 +97,11 @@ plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(
 
 % SCI subjects
 [SCI_subjects] = detect_gait_events_SCI(SCI_subjects,csv_files_NO_FLOAT_CRUTCHES,csv_files_FLOAT_NO_CRUTCHES,Fs_Kin,Fs_EMG);
+[SCI_subjects] = cut_events_SCI(SCI_subjects);
 
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
+
 
 % Healthy
 [Healthy_subjects]= append_gait_events(Healthy_subjects,Fs_Kin,Fs_EMG);
@@ -124,7 +126,12 @@ Kin_feat_table = Extract_Kin_features_Healthy(Healthy_subjects.S_4,Fs_Kin);
 Temporal_feat_table_Healthy = extract_temp_features_Healthy(Healthy_subjects.(subject),Fs_Kin);
 
 % For SCI subjects
-Temporal_feat_table_SCI = extract_temp_features_Healthy(SCI_subjects,Fs_Kin)
+Temporal_feat_table_SCI = extract_temp_features_Healthy(SCI_subjects,Fs_Kin);
 
 
 %% Extraction of Spatial features
+% For Healthy subjects 
+Spatial_feat_table_Healthy = extract_space_features_Healthy(Healthy_subjects.(subject));
+
+% For SCI subjects
+Spatial_feat_table_SCI = extract_space_features_Healthy(SCI_subjects);
