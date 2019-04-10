@@ -1,4 +1,4 @@
-function [Kin_feat_table] = Extract_Kin_features_SCI(new_struct,Fs_Kin)
+function [Kin_feat_table] = Extract_Kin_features(new_struct,type)
 
 % This function evaluates the ROM and w for hip, knee and ankle for both FE and
 % AA. 
@@ -52,11 +52,20 @@ w_hip_AA_L = [];
 for condition = 1:length(conditions)
     for trial = 1:length(trials)
         for leg = 1:length(legs)
-            if strcmp(legs{leg},'Right')
-                markers = {'RASI','RKNE','RTOE','RANK'};
+            if strcmp(type,'SCI')       
+                if strcmp(legs{leg},'Right')
+                    markers = {'RASI','RKNE','RTOE','RANK'};
+                else
+                    markers = {'LASI','LKNE','LTOE','LANK'};
+                end
             else
-                markers = {'LASI','LKNE','LTOE','LANK'};
+                if strcmp(legs{leg},'Right')
+                    markers = {'RHIP','RKNE','RTOE','RANK'};
+                else
+                    markers = {'LHIP','LKNE','LTOE','LANK'};
+                end
             end
+            
             current = new_struct.(conditions{condition}).(trials{trial}).Parsed;
             for gait = 1:length(current)
                     
