@@ -116,8 +116,8 @@ EMG_feat_table_SCI = Extract_EMG_features(SCI_subjects,'SCI',Fs_EMG);
 
 %% Extraction of Kin features 
 
-Kin_feat_table_Healthy = Extract_Kin_features_Healthy(Healthy_subjects.S_4,Fs_Kin);
-Kin_feat_table_SCI = Extract_Kin_features_SCI(SCI_subjects,Fs_Kin);
+Kin_feat_table_Healthy = Extract_Kin_features(Healthy_subjects.S_4,'Healthy');
+Kin_feat_table_SCI = Extract_Kin_features(SCI_subjects,'SCI');
 
 %% Extraction of Temporal features
 
