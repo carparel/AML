@@ -1,5 +1,14 @@
 function [Kin_feat_table] = Extract_Kin_features_Healthy(new_struct,Fs_Kin)
-% CIAO
+
+% This function evaluates the ROM and w for hip, knee and ankle for both FE and
+% AA. 
+% Inputs:
+% -Struct of the selected subject
+% -Aquisition frequency of the cameras
+% Outputs:
+% -Table containing for each column the selected feature (ROM or omega) for
+% each sample (gait cycles) on the raws.
+
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
 conditions = {'NO_FLOAT','FLOAT'};
@@ -13,7 +22,6 @@ ROM_ank_FE_R = [];
 ROM_knee_FE_R = [];
 ROM_hip_FE_R = [];
 
-ROM_ank_AA_R = [];
 ROM_knee_AA_R = [];
 ROM_hip_AA_R = [];
 
@@ -21,7 +29,6 @@ w_ank_FE_R = [];
 w_knee_FE_R = [];
 w_hip_FE_R = [];
 
-w_ank_AA_R = [];
 w_knee_AA_R = [];
 w_hip_AA_R = [];
 
@@ -55,49 +62,70 @@ for condition = 1:length(conditions)
                     
                     % Hip
                     % Flexion Extension
-                    
+                 
+                    % defining the segment vector
                     vec_hip_knee = current{1,gait}.(legs{leg}).Kin.(markers{2}) - current{1,gait}.(legs{leg}).Kin.(markers{1});
+                   
+                    % Since I want the angle only in the YZ plane, I set
+                    % their x coordinate to zero (equivalent to projecting
+                    % them) for each time instant                    
+                    
                     vec_hip_knee = [zeros(length(vec_hip_knee),1) vec_hip_knee(:,2:3)];                    
-                    vec_n = [0,0,-1];
+                    vec_n = [0,0,-1]; % This is the vertical axis with respect to I will evaluate the angles
                     
                     for i = 1:length(vec_hip_knee(:,1))
-                        angle_FE(i) = acosd(dot(vec_hip_knee(i,:),vec_n)/(norm(vec_hip_knee(i,:))*norm(vec_n)));
+                         % angle btw two vectors for each time instant
+                        angle_FE_1(i) = acosd(dot(vec_hip_knee(i,:),vec_n)/(norm(vec_hip_knee(i,:))*norm(vec_n)));
                     end
                     
-                    range_of_motion = max(angle_FE)-min(angle_FE);                    
-                    omega = mean(diff(angle_FE));
+                    % computing ROM and angular velocity
+                    range_of_motion_1 = max(angle_FE_1)-min(angle_FE_1);
+                    omega_1 = mean(diff(angle_FE_1));
 
+                    % stocking                    
                     if strcmp(legs{leg},'Right')
-                        ROM_hip_FE_R = [ROM_hip_FE_R range_of_motion];
-                        w_hip_FE_R = [w_hip_FE_R omega];
+                        ROM_hip_FE_R = [ROM_hip_FE_R range_of_motion_1];
+                        w_hip_FE_R = [w_hip_FE_R omega_1];
                     else
-                        ROM_hip_FE_L = [ROM_hip_FE_L range_of_motion];
-                        w_hip_FE_L = [w_hip_FE_L omega];
+                        ROM_hip_FE_L = [ROM_hip_FE_L range_of_motion_1];
+                        w_hip_FE_L = [w_hip_FE_L omega_1];
                     end                        
                     
                     % Adduction Abduction
-                    
+ 
+                     % defining the segment vector                   
                     vec_hip_knee_AA = current{1,gait}.(legs{leg}).Kin.(markers{2}) - current{1,gait}.(legs{leg}).Kin.(markers{1});
+                    
+                    % Since I want the angle only in the XZ plane, I set
+                    % their y coordinate to zero (equivalent to projecting
+                    % them) for each time instant                    
+                    
                     vec_hip_knee_AA = [vec_hip_knee_AA(:,1) zeros(length(vec_hip_knee_AA),1) vec_hip_knee_AA(:,3)];                    
                     
                     for i = 1:length(vec_hip_knee_AA(:,1))
-                       angle_AA(i) = acosd(dot(vec_hip_knee_AA(i,:),vec_n)/(norm(vec_hip_knee_AA(i,:))*norm(vec_n)));
+                        % angle btw two vectors for each time instant
+                        angle_AA_1(i) = acosd(dot(vec_hip_knee_AA(i,:),vec_n)/(norm(vec_hip_knee_AA(i,:))*norm(vec_n)));
                     end                 
                    
-                    range_of_motion = max(angle_AA)-min(angle_AA);                    
-                    omega = mean(diff(angle_AA));                    
+                    % computing ROM and angular velocity
+                    range_of_motion_2 = max(angle_AA_1)-min(angle_AA_1);                    
+                    omega_2 = mean(diff(angle_AA_1));                    
 
+                    % stocking
                     if strcmp(legs{leg},'Right')
-                        ROM_hip_AA_R = [ROM_hip_AA_R range_of_motion];
-                        w_hip_AA_R = [w_hip_AA_R omega];
+                        ROM_hip_AA_R = [ROM_hip_AA_R range_of_motion_2];
+                        w_hip_AA_R = [w_hip_AA_R omega_2];
                     else
-                        ROM_hip_AA_L = [ROM_hip_AA_L range_of_motion];
-                        w_hip_AA_L = [w_hip_AA_L omega];
+                        ROM_hip_AA_L = [ROM_hip_AA_L range_of_motion_2];
+                        w_hip_AA_L = [w_hip_AA_L omega_2];
                     end  
                     
                     % Knee
+                    % Flexion Extension
                     
+                    % defining the segment vector                  
                     vec_knee_ankle = current{1,gait}.(legs{leg}).Kin.(markers{4}) - current{1,gait}.(legs{leg}).Kin.(markers{2});                    
+                    
                     % Since I want the angle only in the YZ plane, I set
                     % their x coordinate to zero (equivalent to projecting
                     % them) for each time instant
@@ -105,54 +133,107 @@ for condition = 1:length(conditions)
                     vec_knee_ankle = [zeros(length(vec_knee_ankle),1) vec_knee_ankle(:,2:3)];
                     
                     for i = 1:length(vec_hip_knee(:,1))
-                        % angle btw two vectors 
-                        angle_FE(i) = acosd(dot(vec_hip_knee(i,:),vec_knee_ankle(i,:))/(norm(vec_hip_knee(i,:))*(norm(vec_knee_ankle(i,:)))));
+                        % angle btw two vectors for each time instant
+                        angle_FE_2(i) = acosd(dot(vec_hip_knee(i,:),vec_knee_ankle(i,:))/(norm(vec_hip_knee(i,:))*(norm(vec_knee_ankle(i,:)))));
                     end
                     
-                    range_of_motion = max(angle_FE)-min(angle_FE);                    
-                    omega = mean(diff(angle_FE));
-                    
+                    % computing ROM and angular velocity           
+                    range_of_motion_3 = max(angle_FE_2)-min(angle_FE_2);                    
+                    omega_3 = mean(diff(angle_FE_2));
+
+                    % stocking
                     if strcmp(legs{leg},'Right')
-                        ROM_knee_FE_R = [ROM_knee_FE_R range_of_motion];
-                        w_knee_FE_R = [w_knee_FE_R omega];
+                        ROM_knee_FE_R = [ROM_knee_FE_R range_of_motion_3];
+                        w_knee_FE_R = [w_knee_FE_R omega_3];
                     else
-                        ROM_knee_FE_L = [ROM_knee_FE_L range_of_motion];
-                        w_knee_FE_L = [w_knee_FE_L omega];
+                        ROM_knee_FE_L = [ROM_knee_FE_L range_of_motion_3];
+                        w_knee_FE_L = [w_knee_FE_L omega_3];
                     end 
                     
-                    % Foot
+                    % Adduction Abduction
+             
+                    % defining the segment vector
+                    vec_knee_ankle_AA = current{1,gait}.(legs{leg}).Kin.(markers{4}) - current{1,gait}.(legs{leg}).Kin.(markers{2});
                     
+                    % Since I want the angle only in the XZ plane, I set
+                    % their y coordinate to zero (equivalent to projecting
+                    % them) for each time instant                      
+                    vec_knee_ankle_AA = [vec_knee_ankle_AA(:,1) zeros(length(vec_knee_ankle_AA),1) vec_knee_ankle_AA(:,3)];                    
+                    
+                    for i = 1:length(vec_hip_knee_AA(:,1))
+                        % angle btw two vectors for each time instant
+                        angle_AA_2(i) = acosd(dot(vec_knee_ankle_AA(i,:),vec_n)/(norm(vec_knee_ankle_AA(i,:))*norm(vec_n)));
+                    end                 
+
+                    % computing ROM and angular velocity
+                    range_of_motion_4 = max(angle_AA_2)-min(angle_AA_2);                    
+                    omega_4 = mean(diff(angle_AA_2));                    
+
+                    % stocking
+                    if strcmp(legs{leg},'Right')
+                        ROM_knee_AA_R = [ROM_knee_AA_R range_of_motion_4];
+                        w_knee_AA_R = [w_knee_AA_R omega_4];
+                    else
+                        ROM_knee_AA_L = [ROM_knee_AA_L range_of_motion_4];
+                        w_knee_AA_L = [w_knee_AA_L omega_4];
+                    end  
+        
+                    
+                    % Foot
+                    % Flexion Extension
+                   
+                    % defining the segment vector
                     vec_ankle_toe = current{1,gait}.(legs{leg}).Kin.(markers{3}) - current{1,gait}.(legs{leg}).Kin.(markers{4});
+                    
+                    % Since I want the angle only in the YZ plane, I set
+                    % their x coordinate to zero (equivalent to projecting
+                    % them) for each time instant
                     vec_ankle_toe = [zeros(length(vec_ankle_toe),1) vec_ankle_toe(:,2:3)];
                     
                     for i = 1:length(vec_ankle_toe(:,1))
-                        % angle btw two vectors 
-                        angle_FE(i) = acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))));
-                    end                 
-                    
-                    range_of_motion = max(angle_FE)-min(angle_FE);                    
-                    omega = mean(diff(angle_FE));
-
-                    if strcmp(legs{leg},'Right')
-                        ROM_ank_FE_R = [ROM_ank_FE_R range_of_motion];
-                        w_ank_FE_R = [w_ank_FE_R omega];
-                    else
-                        ROM_ank_FE_L = [ROM_ank_FE_L range_of_motion];
-                        w_ank_FE_L = [w_ank_FE_L omega];
-                    end 
-                    
-                    if strcmp(conditions{condition},'NO_FLOAT')
-                       cond_ = [cond_ 11]; %the first 1 means Healthy, the second one that he's able to walk alone (NO_FLOAT)
-                    else
-                       cond_ = [cond_ 10];
+                        % angle btw two vectors for each time instant
+                        angle_FE_3(i) = 90 - acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))));
                     end
-            end
+                    
+                    % computing ROM and angular velocity
+                    range_of_motion_5 = max(angle_FE_3)-min(angle_FE_3);
+                    omega_5 = mean(diff(angle_FE_3));
+
+                    % stocking
+                    if strcmp(legs{leg},'Right')
+                        ROM_ank_FE_R = [ROM_ank_FE_R range_of_motion_5];
+                        w_ank_FE_R = [w_ank_FE_R omega_5];
+                    else
+                        ROM_ank_FE_L = [ROM_ank_FE_L range_of_motion_5];
+                        w_ank_FE_L = [w_ank_FE_L omega_5];
+                        
+                        if strcmp(conditions{condition},'NO_FLOAT')
+                           cond_ = [cond_ 11]; %the first 1 means Healthy, the second one that he's able to walk alone (NO_FLOAT)
+                        else
+                           cond_ = [cond_ 10];   
+                           
+                    end           
+                    
+                    end   
+            end                    
         end
     end                
 end
 
-names = {'Condition','ROM_ank_FE_R','ROM_knee_FE_R','ROM_hip_FE_R','ROM_ank_AA_R','ROM_knee_AA_R', 'ROM_hip_AA_R','w_ank_FE_R','w_knee_FE_R','w_hip_FE_R','w_ank_AA_R','w_knee_AA_R','w_hip_AA_R','ROM_ank_FE_L','ROM_knee_FE_L','ROM_hip_FE_L','ROM_ank_AA_L','ROM_knee_AA_L', 'ROM_hip_AA_L','w_ank_FE_L','w_knee_FE_L','w_hip_FE_L','w_ank_AA_L','w_knee_AA_L','w_hip_AA_L'};
-EMG_feat_table = table(cond_', ROM_ank_FE_R',ROM_knee_FE_R',ROM_hip_FE_R',ROM_ank_AA_R',ROM_knee_AA_R',ROM_hip_AA_R',w_ank_FE_R',w_knee_FE_R',w_hip_FE_R',w_ank_AA_R',w_knee_AA_R',w_hip_AA_R',ROM_ank_FE_L',ROM_knee_FE_L',ROM_hip_FE_L',ROM_ank_AA_L',ROM_knee_AA_L',ROM_hip_AA_L',w_ank_FE_L',w_knee_FE_L',w_hip_FE_L',w_ank_AA_L',w_knee_AA_L',w_hip_AA_L','VariableNames',names);
+%Filling the Table
+
+names = {'Condition','ROM_ank_FE_R','ROM_knee_FE_R','ROM_hip_FE_R',...
+    'ROM_knee_AA_R', 'ROM_hip_AA_R','w_ank_FE_R',...
+    'w_knee_FE_R','w_hip_FE_R','w_knee_AA_R','w_hip_AA_R',...
+    'ROM_ank_FE_L','ROM_knee_FE_L','ROM_hip_FE_L',...
+    'ROM_knee_AA_L', 'ROM_hip_AA_L','w_ank_FE_L','w_knee_FE_L',...
+    'w_hip_FE_L','w_knee_AA_L','w_hip_AA_L'};
+Kin_feat_table = table(cond_', ROM_ank_FE_R',ROM_knee_FE_R',ROM_hip_FE_R',...
+    ROM_knee_AA_R',ROM_hip_AA_R',w_ank_FE_R',...
+    w_knee_FE_R', w_hip_FE_R',w_knee_AA_R',w_hip_AA_R',...
+    ROM_ank_FE_L', ROM_knee_FE_L',ROM_hip_FE_L',...
+    ROM_knee_AA_L',ROM_hip_AA_L', w_ank_FE_L',w_knee_FE_L',...
+    w_hip_FE_L',w_knee_AA_L',w_hip_AA_L','VariableNames',names);
 
 end
 
