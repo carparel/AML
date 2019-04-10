@@ -106,25 +106,25 @@ plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(
 [Healthy_subjects] = cut_events(Healthy_subjects);
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects);
 
-%% Extraction of EMG features 
+%% Extraction of EMG features --> finally done
 
 % For Healthy subjects
-EMG_feat_table_Healthy = Extract_EMG_features_Healthy(Healthy_subjects.(subject),Fs_EMG);
+EMG_feat_table_Healthy = Extract_EMG_features(Healthy_subjects.(subject),'Healthy',Fs_EMG);
 
 % For SCI subjects
-EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
+EMG_feat_table_SCI = Extract_EMG_features(SCI_subjects,'SCI',Fs_EMG);
 
 %% Extraction of Kin features 
 
-Kin_feat_table = Extract_Kin_features_Healthy(Healthy_subjects.S_4,Fs_Kin);
+%Kin_feat_table = Extract_Kin_features_Healthy(Healthy_subjects.S_4,Fs_Kin);
 
 %% Extraction of Temporal features
 
 % For Healthy subjects 
-Temporal_feat_table_Healthy = extract_temp_features_Healthy(Healthy_subjects.(subject),Fs_Kin);
+%Temporal_feat_table_Healthy = extract_temp_features_Healthy(Healthy_subjects.(subject),Fs_Kin);
 
 % For SCI subjects
-Temporal_feat_table_SCI = extract_temp_features_Healthy(SCI_subjects,Fs_Kin)
+%Temporal_feat_table_SCI = extract_temp_features_Healthy(SCI_subjects,Fs_Kin);
 
 
 %% Extraction of Spatial features
