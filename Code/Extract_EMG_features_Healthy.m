@@ -39,25 +39,25 @@ for condition = 1:length(conditions)
                     if (strcmp(muscles{muscle},'LTA') || strcmp(muscles{muscle},'RTA'))
 
                         current_signal = current{1,gait}.(legs{leg}).EMG.envelope.(muscles{muscle});
-                        figure()
-                        XMIN = 0;
-                        XMAX = length(current_signal);
-                        YMIN = -inf;
-                        YMAX = +inf;
-                        plot(current_signal);
-                        hold on;
+%                         figure()
+%                         XMIN = 0;
+%                         XMAX = length(current_signal);
+%                         YMIN = -inf;
+%                         YMAX = +inf;
+%                         plot(current_signal);
+%                         hold on;
                         idx = find(current_signal < 0.01);
                         onset1 = 1;
                         offset1 = idx(1);
                         onset2 = idx(end);
                         offset2 = length(current_signal);
-                        plot(onset1,current_signal(onset1),'ro');
-                        plot(offset1,current_signal(offset1),'bo');
-                        plot(offset2,current_signal(offset2),'bo');
-                        plot(onset2,current_signal(onset2),'ro');
-                        axis([XMIN XMAX YMIN YMAX]);
-                        legend('EMG signal','Onsets','Offsets')
-                        title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+%                         plot(onset1,current_signal(onset1),'ro');
+%                         plot(offset1,current_signal(offset1),'bo');
+%                         plot(offset2,current_signal(offset2),'bo');
+%                         plot(onset2,current_signal(onset2),'ro');
+%                         axis([XMIN XMAX YMIN YMAX]);
+%                         legend('EMG signal','Onsets','Offsets')
+%                         title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
 
                         if strcmp(muscles{muscle},'LTA')
                             % Duration [s]

@@ -8,10 +8,9 @@
 
 clear;
 clc;
-addpath('Data');
-addpath('Data/SCI');
-addpath('Data/Healthy');
-addpath('Code');
+current_folder = genpath('AML');
+addpath(current_folder);
+
 %% Loading the data for the SCI and creating the new useful structure
 
 % ATTENTION: the first time the window will pop up select the folder
@@ -117,10 +116,7 @@ EMG_feat_table_SCI = Extract_EMG_features_Healthy(SCI_subjects,Fs_EMG);
 
 %% Extraction of Kin features 
 
-% the function doesn't work cause I still have to do AA. If you want to see
-% the parameters I found, run inside the function.
-
-Kin_feat_table = Extract_Kin_features_Healthy(Healthy_subjects.(subject),Fs_Kin);
+Kin_feat_table = Extract_Kin_features_Healthy(Healthy_subjects.S_4,Fs_Kin);
 
 %% Extraction of Temporal features
 
