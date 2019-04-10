@@ -87,22 +87,19 @@ for condition = 1:length(conditions)
                         duration_idx(gait) = toe_o(2,gait-1)-heel_s(1,gait);
                     end
                     duration= duration_idx / fsKin;
-                end 
+                end
                 double_stance_duration = [double_stance_duration duration];
-                 
             elseif heel_s(2,1) < heel_s(1,1)
-                 for gait = 1:min_nbr_events-1
+                for gait = 1:min_nbr_events-1
                     if mod(gait,2) == 1
                         duration_idx(gait) = toe_o(2,gait)-heel_s(1,gait);
                     elseif mod(gait,2) == 0
                         duration_idx(gait) = toe_o(1,gait-1)-heel_s(2,gait);
                     end
                     duration = duration_idx / fsKin;
-                    
-                 end 
+                end
                 double_stance_duration = [double_stance_duration duration];
-            end 
-            
+            end
     end
 end
 
