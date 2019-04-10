@@ -31,7 +31,7 @@ for condition = 1:length(conditions)
                     old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.Kin.(markers{marker});
                     SCI_subjects.(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).Kin.(markers{marker}) = ...
                         old_signal(SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps) : ...
-                        SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps+1));
+                        SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(nb_steps+1),:);
                 end
                 
                 
@@ -42,12 +42,12 @@ for condition = 1:length(conditions)
                             old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(emgs{emg});
                             SCI_subjects.(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).EMG.envelope.(emgs{emg}) = ...
                                 old_signal((SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps)) : ...
-                                (SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)));
+                                (SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)),:);
                         elseif strcmp(envelopes{envelope},'noenvelope')
                             old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(emgs{emg});
                             SCI_subjects.(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).EMG.noenvelope.(emgs{emg}) = ...
                                 old_signal((SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps)) : ...
-                                (SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)));
+                                (SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)),:);
                         end
                     end
                 end
