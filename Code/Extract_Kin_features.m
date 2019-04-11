@@ -16,7 +16,8 @@ conditions = {'NO_FLOAT','FLOAT'};
 
 % To initialize the vector in which we are going to stock our
 % features/variables
-cond_ = [];
+cond_H = [];
+cond_NO_F = [];
 
 ROM_ank_FE_R = [];
 ROM_knee_FE_R = [];
@@ -216,34 +217,46 @@ for condition = 1:length(conditions)
                         ROM_ank_FE_L = [ROM_ank_FE_L range_of_motion_5];
                         w_ank_FE_L = [w_ank_FE_L omega_5];
                         
-                        if strcmp(conditions{condition},'NO_FLOAT')
-                           cond_ = [cond_ 11]; %the first 1 means Healthy, the second one that he's able to walk alone (NO_FLOAT)
+                        if(strcmp(type,'Healthy'))
+                            if(strcmp(conditions{condition},'NO_FLOAT'))
+                                cond_H = [cond_H 1];
+                                cond_NO_F = [cond_NO_F 1];
+                            else
+                                cond_H = [cond_H 1];
+                                cond_NO_F = [cond_NO_F 0];
+                            end 
                         else
-                           cond_ = [cond_ 10];   
+                            if(strcmp(conditions{condition},'NO_FLOAT'))
+                                cond_H = [cond_H 0];
+                                cond_NO_F = [cond_NO_F 1];
+                            else
+                                cond_H = [cond_H 0];
+                                cond_NO_F = [cond_NO_F 0];
+                            end 
+                        end
                            
-                    end           
+                    end     
                     
-                    end   
+                end   
             end                    
         end
     end                
-end
+
 
 %Filling the Table
 
-names = {'Condition','ROM_ank_FE_R','ROM_knee_FE_R','ROM_hip_FE_R',...
+names = {'Condition_H_S','Condition_NF_F','ROM_ank_FE_R','ROM_knee_FE_R','ROM_hip_FE_R',...
     'ROM_knee_AA_R', 'ROM_hip_AA_R','w_ank_FE_R',...
     'w_knee_FE_R','w_hip_FE_R','w_knee_AA_R','w_hip_AA_R',...
     'ROM_ank_FE_L','ROM_knee_FE_L','ROM_hip_FE_L',...
     'ROM_knee_AA_L', 'ROM_hip_AA_L','w_ank_FE_L','w_knee_FE_L',...
     'w_hip_FE_L','w_knee_AA_L','w_hip_AA_L'};
-Kin_feat_table = table(cond_', ROM_ank_FE_R',ROM_knee_FE_R',ROM_hip_FE_R',...
+Kin_feat_table = table(cond_H', cond_NO_F', ROM_ank_FE_R',ROM_knee_FE_R',ROM_hip_FE_R',...
     ROM_knee_AA_R',ROM_hip_AA_R',w_ank_FE_R',...
     w_knee_FE_R', w_hip_FE_R',w_knee_AA_R',w_hip_AA_R',...
     ROM_ank_FE_L', ROM_knee_FE_L',ROM_hip_FE_L',...
     ROM_knee_AA_L',ROM_hip_AA_L', w_ank_FE_L',w_knee_FE_L',...
     w_hip_FE_L',w_knee_AA_L',w_hip_AA_L','VariableNames',names);
-
 end
 
 
