@@ -74,7 +74,7 @@ for condition = 1:length(conditions)
         rank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
         lank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
         rank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
-        lank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
+        lank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,1);
         
         heel_s = zeros(length(legs),min_nbr_events);
         for leg = 1:length(legs)
