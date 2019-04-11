@@ -1,4 +1,4 @@
-function [space_feat_table] = extract_space_features_Healthy(Healthy_struct)
+function [space_feat_table] = extract_space_features(struct,type)
 
 % BLABLABLA
 
@@ -31,31 +31,31 @@ for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
-        nbr_events_HS_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
-        nbr_events_HS_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
-        nbr_events_TO_right = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
-        nbr_events_TO_left = length(Healthy_struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
+        nbr_events_HS_right = length(struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+        nbr_events_HS_left = length(struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
+        nbr_events_TO_right = length(struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
+        nbr_events_TO_left = length(struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
         
         
         min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
         
-        rank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
-        lank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
-        rank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
-        lank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,1);
-        rank_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,3);
-        lank_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,3);
+        rank_y = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
+        lank_y = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
+        rank_x = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
+        lank_x = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,1);
+        rank_z = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,3);
+        lank_z = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,3);
         
-        rkne_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RKNE(:,3);
-        lkne_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LKNE(:,3);
+        rkne_z = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RKNE(:,3);
+        lkne_z = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LKNE(:,3);
         
-        rtoe_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RTOE(:,3);
-        ltoe_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LTOE(:,3);
+        rtoe_z = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RTOE(:,3);
+        ltoe_z = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LTOE(:,3);
         
         for leg = 1:length(legs)
             
-            heel_strikes = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
-            toe_offs = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
+            heel_strikes = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
+            toe_offs = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
             
             for gait = 1:min_nbr_events-1
                 if strcmp(legs{leg},'Right')
@@ -63,7 +63,7 @@ for condition = 1:length(conditions)
                     
                     % Stride length is the distance between HS of the same foot
                     
-                    current = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.(marker);
+                    current = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.(marker);
                     length_space_stride = abs(current(heel_strikes(gait+1),2)-current(heel_strikes(gait),2))/1000;
                     stride_length_right = [stride_length_right length_space_stride];
                     length_space_swing = abs(current(heel_strikes(gait+1),2)-current(toe_offs(gait),2))/10;
@@ -79,17 +79,28 @@ for condition = 1:length(conditions)
                     max_toe_clearance_right = [max_toe_clearance_right height_toe_right];
                     
                     % In order not to double the conditions
-                    if(strcmp(conditions{condition},'NO_FLOAT'))
-                        cond_H = [cond_H 0];
-                        cond_NO_F = [cond_NO_F 1];
-                    else
-                        cond_H = [cond_H 0];
-                        cond_NO_F = [cond_NO_F 0];
+                    if strcmp(type,'Healthy')
+                      if strcmp(conditions{condition},'NO_FLOAT')
+                                    cond_H = [cond_H 1];
+                                    cond_NO_F = [cond_NO_F 1];
+                               else
+                                    cond_H = [cond_H 1];
+                                    cond_NO_F = [cond_NO_F 0];
+                               end
+                    elseif strcmp(type,'SCI')
+                        if strcmp(conditions{condition},'NO_FLOAT')
+                                    cond_H = [cond_H 0];
+                                    cond_NO_F = [cond_NO_F 1];
+                               else
+                                    cond_H = [cond_H 0];
+                                    cond_NO_F = [cond_NO_F 0];
+                        end
                     end
+                                
                     
                 elseif strcmp(legs{leg},'Left')
                     marker = 'LANK';
-                    current = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.(marker);
+                    current = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.(marker);
                     length_space_stride = abs(current(heel_strikes(gait+1),2)-current(heel_strikes(gait),2))/1000;
                     stride_length_left = [stride_length_left length_space_stride];
                     length_space_swing = abs(current(heel_strikes(gait+1),2)-current(toe_offs(gait),2))/10;
@@ -115,7 +126,7 @@ for condition = 1:length(conditions)
         
         heel_s = zeros(length(legs),min_nbr_events);
         for leg = 1:length(legs)
-            heel_s(leg,:) = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events)';
+            heel_s(leg,:) = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events)';
         end
         
         
