@@ -31,25 +31,14 @@ Fs_EMG_H19 = Healthy_subjects_19.S_1.FLOAT.T_01.fsEMG;
 % To stock the sampling frequency for the Kinetics
 Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 
-%% Clean data for S_4 Healthy subject 2018
-markers = {'RHIP','RKNE','RTOE','RANK','LHIP','LKNE','LTOE','LANK'};
-muscles = {'RMG','RTA','LMG','LTA'};
-coeff_dilatation = Fs_EMG_S/Fs_Kin;
 
-subject = 'S_4';
-for marker = 1: length(markers)
-    temporary_Kin = Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker});
-    Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker}) = temporary_Kin(100:end,:);
-end
-for muscle = 1: length(muscles)
-    temporary_EMG = Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle});
-    Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle}) = temporary_EMG(100*coeff_dilatation:end);
-end
 %% Change typo in Subject 1 trial 1 NO_FLOAT 2019 Healthy
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNE = Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE;
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNE = Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE;
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE = [];
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE = [];
+
+
 %% Structuring the EMG data
 
 [Healthy_subjects_18,SCI_subjects] = structureEMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
@@ -60,6 +49,14 @@ Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE = [];
 [Healthy_subjects_18,SCI_subjects] = structureKin(Healthy_subjects_18,SCI_subjects,Fs_Kin,'2018');
 [Healthy_subjects_19,~] = structureKin(Healthy_subjects_19,SCI_subjects,Fs_Kin,'2019');
 
+%% Clean data for S_4 Healthy subject 2018
+
+coeff_dilatation_18 = Fs_EMG_H18/Fs_Kin; 
+[Healthy_subjects_18] = clean_data(Healthy_subjects_18,coeff_dilatation_18,'2018');
+
+coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin; 
+[Healthy_subjects_19] = clean_data(Healthy_subjects_19,coeff_dilatation_19,'2019');
+ 
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
 % subject = 'S_4';
