@@ -35,12 +35,13 @@ names_PCs = {'PC_1','PC_2','PC_3'};
 
 h = figure();
 imagesc(features_weights);
+colorbar;
+colormap('jet');
 yticks(1:1:length(names_variables));
 yticklabels(names_variables);
 xticks(1:1:3);
 xticklabels(names_PCs);
-colorbar;
-colormap('winter');
+title('Weights of all the features for the first 3 PCs','FontSize',15);
 set(h,'Position',[0 0 480 1920]);
 
 end
