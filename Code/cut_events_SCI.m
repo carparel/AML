@@ -14,6 +14,21 @@ for condition = 1:length(conditions)
     for trial = 1:length(trials)
         for leg = 1:length(legs)
             
+            
+            nbr_events_HS_right = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+            nbr_events_HS_left = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
+            nbr_events_TO_right = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
+            nbr_events_TO_left = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
+            
+            min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
+            
+            SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events);
+            SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(1:min_nbr_events);
+            
+            SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(1:min_nbr_events);
+            SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg(1:min_nbr_events);
+            
+            
             heel_strikes = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
             toe_offs = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
 
