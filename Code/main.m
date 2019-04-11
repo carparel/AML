@@ -142,3 +142,4 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 [whole_table,whole_matrix,whole_labels] = merge_condition_tables(healthy_matrix,healthy_labels,SCI_matrix,labels_SCI);
 %% Applying PCA
 [PCA_data,features_weights] = apply_PCA(whole_matrix);
+find_clusters(PCA_data,whole_labels);
