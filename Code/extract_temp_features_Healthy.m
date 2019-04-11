@@ -7,7 +7,8 @@ conditions = {'NO_FLOAT','FLOAT'};
 
 % To initialize the vector in which we are going to stock our
 % features/variables
-cond_ = [];
+cond_H = [];
+cond_NO_F  = [];
 
 gait_cycle_duration = [];
 cadence = [];
@@ -46,10 +47,12 @@ for condition = 1:length(conditions)
                     cadence = [cadence cadence_unit];
                     
                     
-                    if strcmp(conditions{condition},'NO_FLOAT')
-                        cond_ = [cond_ 11];
+                    if(strcmp(conditions{condition},'NO_FLOAT'))
+                        cond_H = [cond_H 0];
+                        cond_NO_F = [cond_NO_F 1];
                     else
-                        cond_ = [cond_ 10];
+                        cond_H = [cond_H 0];
+                        cond_NO_F = [cond_NO_F 0];
                     end
                 end
                                 
@@ -106,7 +109,7 @@ for condition = 1:length(conditions)
     end
 end
 
-names = {'Condition','gait_cycle_duration','cadence','stance_duration_right','swing_duration_right','stance_duration_left','swing_duration_left','double_stance_duration'};
-temp_feat_table = table(cond_',gait_cycle_duration',cadence',stance_duration_right',swing_duration_right',stance_duration_left',swing_duration_left',double_stance_duration','VariableNames',names);
+names = {'Condition_Healthy','Condition_NO_Float','gait_cycle_duration','cadence','stance_duration_right','swing_duration_right','stance_duration_left','swing_duration_left','double_stance_duration'};
+temp_feat_table = table(cond_H',cond_NO_F',gait_cycle_duration',cadence',stance_duration_right',swing_duration_right',stance_duration_left',swing_duration_left',double_stance_duration','VariableNames',names);
 end
 
