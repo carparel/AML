@@ -8,7 +8,8 @@ conditions = {'NO_FLOAT','FLOAT'};
 
 % To initialize the vector in which we are going to stock our
 % features/variables
-cond_ = [];
+cond_H = [];
+cond_NO_F = [];
 %Let's start with this ones..
 stride_length_right = [];
 stride_length_left = [];
@@ -45,10 +46,12 @@ for condition = 1:length(conditions)
                     length_space_swing = abs(current(heel_strikes(gait+1),2)-current(toe_offs(gait),2))/10;
                     swing_length_right = [swing_length_right length_space_swing];
                     % In order not to double the conditions
-                    if strcmp(conditions{condition},'NO_FLOAT')
-                        cond_ = [cond_ 11];
+                    if(strcmp(conditions{condition},'NO_FLOAT'))
+                        cond_H = [cond_H 0];
+                        cond_NO_F = [cond_NO_F 1];
                     else
-                        cond_ = [cond_ 10];
+                        cond_H = [cond_H 0];
+                        cond_NO_F = [cond_NO_F 0];
                     end
                     
                 elseif strcmp(legs{leg},'Left')
@@ -103,8 +106,8 @@ for condition = 1:length(conditions)
     end
 end
 
-names = {'Condition','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm'};
-space_feat_table = table(cond_',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width','VariableNames',names);
+names = {'Condition_Healthy','Condition_NO_Float','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm'};
+space_feat_table = table(cond_H',cond_NO_F',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width','VariableNames',names);
 end
 % Step length is the distance between the heel strike of one foot and the heel strike of the opposite foot
 
