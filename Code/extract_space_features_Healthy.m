@@ -18,6 +18,14 @@ swing_length_left = [];
 step_length_right = [];
 step_length_left = [];
 step_width = [];
+max_heel_clearance_right = [];
+max_heel_clearance_left = [];
+
+max_knee_clearance_right = [];
+max_knee_clearance_left = [];
+
+max_toe_clearance_right = [];
+max_toe_clearance_left = [];
 
 for condition = 1:length(conditions)
     
@@ -31,6 +39,19 @@ for condition = 1:length(conditions)
         
         min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
         
+        rank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
+        lank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
+        rank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
+        lank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,1);
+        rank_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,3);
+        lank_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,3);
+        
+        rkne_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RKNE(:,3);
+        lkne_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LKNE(:,3);
+        
+        rtoe_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RTOE(:,3);
+        ltoe_z = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LTOE(:,3);
+        
         for leg = 1:length(legs)
             
             heel_strikes = Healthy_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
@@ -39,12 +60,24 @@ for condition = 1:length(conditions)
             for gait = 1:min_nbr_events-1
                 if strcmp(legs{leg},'Right')
                     marker = 'RANK';
+                    
                     % Stride length is the distance between HS of the same foot
+                    
                     current = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.(marker);
                     length_space_stride = abs(current(heel_strikes(gait+1),2)-current(heel_strikes(gait),2))/1000;
                     stride_length_right = [stride_length_right length_space_stride];
                     length_space_swing = abs(current(heel_strikes(gait+1),2)-current(toe_offs(gait),2))/10;
                     swing_length_right = [swing_length_right length_space_swing];
+                    
+                    height_heel_right = max(rank_z(heel_strikes(gait):heel_strikes(gait+1)))/10;
+                    max_heel_clearance_right = [max_heel_clearance_right height_heel_right];
+                    
+                    height_knee_right = max(rkne_z(heel_strikes(gait):heel_strikes(gait+1)))/10;
+                    max_knee_clearance_right = [max_knee_clearance_right height_knee_right];
+                    
+                    height_toe_right = max(rtoe_z(heel_strikes(gait):heel_strikes(gait+1)))/10;
+                    max_toe_clearance_right = [max_toe_clearance_right height_toe_right];
+                    
                     % In order not to double the conditions
                     if(strcmp(conditions{condition},'NO_FLOAT'))
                         cond_H = [cond_H 0];
@@ -60,9 +93,17 @@ for condition = 1:length(conditions)
                     length_space_stride = abs(current(heel_strikes(gait+1),2)-current(heel_strikes(gait),2))/1000;
                     stride_length_left = [stride_length_left length_space_stride];
                     length_space_swing = abs(current(heel_strikes(gait+1),2)-current(toe_offs(gait),2))/10;
-                    % I don't super like these swings...but that's how it
-                    % is
                     swing_length_left = [swing_length_left length_space_swing];
+                    
+                    height_heel_left = max(lank_z(heel_strikes(gait):heel_strikes(gait+1)))/10;
+                    max_heel_clearance_left = [max_heel_clearance_left height_heel_left];
+                    
+                    height_knee_left = max(lkne_z(heel_strikes(gait):heel_strikes(gait+1)))/10;
+                    max_knee_clearance_left = [max_knee_clearance_left height_knee_left];
+                    
+                    height_toe_left = max(ltoe_z(heel_strikes(gait):heel_strikes(gait+1)))/10;
+                    max_toe_clearance_left = [max_toe_clearance_left height_toe_left];
+                    
                 end
             end
         end
@@ -71,10 +112,6 @@ for condition = 1:length(conditions)
         % To compute the step length I need the hill strikes of both feet
         % to be stored
         
-        rank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
-        lank_y = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
-        rank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,1);
-        lank_x = Healthy_struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,1);
         
         heel_s = zeros(length(legs),min_nbr_events);
         for leg = 1:length(legs)
@@ -106,8 +143,8 @@ for condition = 1:length(conditions)
     end
 end
 
-names = {'Condition_Healthy','Condition_NO_Float','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm'};
-space_feat_table = table(cond_H',cond_NO_F',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width','VariableNames',names);
+names = {'Condition_Healthy','Condition_NO_Float','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm','max_heel_clearance_right','max_heel_clearance_left','max_knee_clearance_right','max_knee_clearance_left','max_toe_clearance_right','max_toe_clearance_left'};
+space_feat_table = table(cond_H',cond_NO_F',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width',max_heel_clearance_right',max_heel_clearance_left',max_knee_clearance_right',max_knee_clearance_left',max_toe_clearance_right',max_toe_clearance_left','VariableNames',names);
 end
 % Step length is the distance between the heel strike of one foot and the heel strike of the opposite foot
 
