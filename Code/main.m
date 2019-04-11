@@ -70,8 +70,8 @@ coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin;
 % muscles of interest
 % you have to give to the function the struct.chosen_trial
 subject = 'S_1';
-condition = 'NO_FLOAT';
-trial = 'T_01';
+condition = 'FLOAT';
+trial = 'T_03';
 figure(2)
 %Remember to give the right frequency.. 
 plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelope,Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG_H19);

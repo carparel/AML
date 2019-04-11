@@ -39,12 +39,12 @@ for condition = 1:length(conditions)
                 for emg = 1:length(emgs)
                     for envelope = 1:length(envelopes)
                         if strcmp(envelopes{envelope},'envelope')
-                            old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(emgs{emg});
+                            old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Normalized.EMG.envelope.(emgs{emg});
                             SCI_subjects.(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).EMG.envelope.(emgs{emg}) = ...
                                 old_signal((SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps)) : ...
                                 (SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)),:);
                         elseif strcmp(envelopes{envelope},'noenvelope')
-                            old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(emgs{emg});
+                            old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Normalized.EMG.noenvelope.(emgs{emg});
                             SCI_subjects.(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).EMG.noenvelope.(emgs{emg}) = ...
                                 old_signal((SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps)) : ...
                                 (SCI_subjects.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(nb_steps+1)),:);

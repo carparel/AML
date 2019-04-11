@@ -49,9 +49,10 @@ for condition = 1:length(conditions)
                 for muscle = 1:length(muscles)
                     if (strcmp(muscles{muscle},'LTA') || strcmp(muscles{muscle},'RTA'))
                         if strcmp(type,'Healthy')
+                         
                             
                             current_signal = current{1,gait}.(legs{leg}).EMG.envelope.(muscles{muscle});
-                            idx = find(current_signal < 0.01);
+                            idx = find(current_signal < 0.15);
                             onset1 = 1; 
                             offset1 = idx(1);
                             onset2 = idx(end);
@@ -66,8 +67,8 @@ for condition = 1:length(conditions)
 %                             YMAX = +inf;
 %                             plot(current_signal);
 %                             hold on;
-
-
+% 
+% 
 %                             plot(onset1,current_signal(onset1),'ro');
 %                             plot(offset1,current_signal(offset1),'bo');
 %                             plot(offset2,current_signal(offset2),'bo');
@@ -142,7 +143,7 @@ for condition = 1:length(conditions)
                                 
 
 
-                                idx = find(current_signal < 0.01);
+                                idx = find(current_signal < 0.15);
                                 onset1 = 1;
                                 offset1 = idx(1);
                                 onset2 = idx(end);
@@ -277,10 +278,10 @@ for condition = 1:length(conditions)
                             current_signal = current{1,gait}.(legs{leg}).EMG.envelope.(muscles{muscle});
                                                        
                             if (strcmp(muscles{muscle},'LMG') &&  strcmp(conditions{condition},'NO_FLOAT'))
-                                threshold = 0.01;
+                                threshold = 0.1;
                                 movsignal = movmean(current_signal,250);
                             else
-                                threshold = 0.025;
+                                threshold = 0.22;
                                 movsignal = movmean(current_signal,500);
                             end
                             [~,onset] = min(abs(movsignal(1:round(length(current_signal)/2)) - threshold));
@@ -296,8 +297,7 @@ for condition = 1:length(conditions)
 %                             YMAX = +inf;
 %                             plot(current_signal)
 %                             hold on;
-%  
-                            
+%        
 %                             plot(onset,current_signal(onset),'ro')
 %                             plot(offset,current_signal(offset),'bo')
 %                             axis([XMIN XMAX YMIN YMAX]);
