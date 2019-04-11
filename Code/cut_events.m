@@ -1,4 +1,4 @@
-function [Healthy_struct] = cut_events(Healthy_struct)
+function [Healthy_struct] = cut_events(Healthy_struct,year)
 % This function cuts some of the event previously detected. It is important
 % to take into account the same number of strike and off points in order to
 % well detect the gait cycles and to easily extract the features after.
@@ -11,9 +11,12 @@ function [Healthy_struct] = cut_events(Healthy_struct)
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
 conditions = {'NO_FLOAT','FLOAT'}; 
-nbr_subjects = 4;
-
-for s = 4:nbr_subjects
+if year == '2018'
+    nbr_subjects = [4];
+else
+    nbr_subjects = [1, 2, 3];
+end
+for s = nbr_subjects(1):nbr_subjects
 for condition = 1:length(conditions)
     for trial = 1:length(trials)
         for leg = 1:length(legs)
