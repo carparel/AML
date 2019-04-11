@@ -1,19 +1,19 @@
-function [SCI_subjects, Healthy, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data(year)
+function [SCI_subjects, Healthy_18,Healthy_19, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data()
 % This function is used to load the data from both the .csv and .mat files.
 %
 % INPUT: //
 %
-% OUTPUT: - SCI_subjects = structure containing all the data regarding the 
+% OUTPUT: - SCI_subjects = structure containing all the data regarding the
 %                          SCI subjects.
-%         - Healthy = structure containing all the data regarding the 
+%         - Healthy = structure containing all the data regarding the
 %                     Healthy subjects.
 %         - csv_files_FLOAT_NO_CRUTCHES = table containing the data about the events detected
 %                                         for the SCI subjects in the condition of FLOAT_NO_CRUTCHES.
-%                                         This table will be  used to split in gait cycles.                       
+%                                         This table will be  used to split in gait cycles.
 %         - csv_files_NO_FLOAT_CRUTCHES = table containing the data about the events detected
 %                                         for the SCI subjects in the condition of NO_FLOAT_CRUTCHES.
-%                                         This table will be  used to split in gait cycles.                                      
-                   
+%                                         This table will be  used to split in gait cycles.
+
 % Names of fields for building structures:
 conditions_healthy = {'FLOAT','NO_FLOAT'};
 conditions_SCI = {'FLOAT_NO_CRUTCHES','NO_FLOAT_CRUTCHES'};
@@ -58,23 +58,30 @@ nbr_files = length(mat_files_H);
 idx_subjects = 1:2:nbr_files;
 
 for condition = 1:length(conditions_healthy)
-   for s = 1:length(idx_subjects)
-       if year == '2019'
-           l = s;
-       else
-           if s == 1
-               l = 4;
-           end
-       end
-      if strcmp(conditions_healthy{condition},'FLOAT')
-            temporary_value_1 = load(mat_files_H(idx_subjects(s)).name);
-            Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(l) '_' conditions_healthy{condition}]);
-      elseif strcmp(conditions_healthy{condition},'NO_FLOAT')
-            temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
-            Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(l) '_' conditions_healthy{condition}]);
-      end
-   end
+    for s = 1:length(idx_subjects)
+        
+        if s<4
+            if strcmp(conditions_healthy{condition},'FLOAT')
+                temporary_value_1 = load(mat_files_H(idx_subjects(s)).name);
+                Healthy_19.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(s) '_' conditions_healthy{condition}]);
+            elseif strcmp(conditions_healthy{condition},'NO_FLOAT')
+                temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
+                Healthy_19.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(s) '_' conditions_healthy{condition}]);
+            end
+        end
+        
+        if s == 4
+            if strcmp(conditions_healthy{condition},'FLOAT')
+                temporary_value_1 = load(mat_files_H(idx_subjects(s)).name);
+                Healthy_18.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(s) '_' conditions_healthy{condition}]);
+            elseif strcmp(conditions_healthy{condition},'NO_FLOAT')
+                temporary_value_2 = load(mat_files_H(idx_subjects(s)+1).name);
+                Healthy_18.(['S_' num2str(s)]).(conditions_healthy{condition}) = temporary_value_2.(['S' num2str(s) '_' conditions_healthy{condition}]);
+            end
+        end
+        
+    end
 end
-    
 end
+
 
