@@ -16,9 +16,8 @@ addpath(current_folder);
 % ATTENTION: the first time the window will pop up select the folder
 % containing the data of the SCI subjects. The second time select the
 % folder containing the data of the Healthy subects.
-year = '2019';
 
-[SCI_subjects, Healthy_subjects, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data(year);
+[SCI_subjects, Healthy_subjects_18,Healthy_subjects_19, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
 
 %% Global variables
 % To choose the healthy subject
@@ -26,40 +25,41 @@ year = '2019';
 
 % To stock the sampling frequency for the EMG SCI patients
 Fs_EMG_S = SCI_subjects.FLOAT.T_01.fsEMG;
-if year == '2018'
-    Fs_EMG_H = Fs_EMG_S;
-else
-    % To stock the sampling frequency for the EMG Healthy patients
-    Fs_EMG_H = Healthy_subjects.S_1.FLOAT.T_01.fsEMG;
-end
+Fs_EMG_H18 = Fs_EMG_S;
+Fs_EMG_H19 = Healthy_subjects_19.S_1.FLOAT.T_01.fsEMG;
 
 % To stock the sampling frequency for the Kinetics
 Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 
 %% Clean data for S_4 Healthy subject 2018
-% markers = {'RHIP','RKNE','RTOE','RANK','LHIP','LKNE','LTOE','LANK'};
-% muscles = {'RMG','RTA','LMG','LTA'};
-% coeff_dilatation = Fs_EMG_S/Fs_Kin;
-% 
-% for marker = 1: length(markers)
-%     temporary_Kin = Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker});
-%     Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker}) = temporary_Kin(100:end,:);
-% end
-% for muscle = 1: length(muscles)
-%     temporary_EMG = Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle});
-%     Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle}) = temporary_EMG(100*coeff_dilatation:end);
-% end
+markers = {'RHIP','RKNE','RTOE','RANK','LHIP','LKNE','LTOE','LANK'};
+muscles = {'RMG','RTA','LMG','LTA'};
+coeff_dilatation = Fs_EMG_S/Fs_Kin;
+
+subject = 'S_4';
+for marker = 1: length(markers)
+    temporary_Kin = Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker});
+    Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.Kin.(markers{marker}) = temporary_Kin(100:end,:);
+end
+for muscle = 1: length(muscles)
+    temporary_EMG = Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle});
+    Healthy_subjects_18.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle}) = temporary_EMG(100*coeff_dilatation:end);
+end
 %% Change typo in Subject 1 trial 1 NO_FLOAT 2019 Healthy
-Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.LKNE = Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE;
-Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.RKNE = Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE;
-Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE = [];
-Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE = [];
+Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNE = Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE;
+Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNE = Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE;
+Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE = [];
+Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE = [];
 %% Structuring the EMG data
 
-[Healthy_subjects,SCI_subjects] = structureEMG(Healthy_subjects,SCI_subjects,Fs_EMG_S,Fs_EMG_H,year);
+[Healthy_subjects_18,SCI_subjects] = structureEMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
+[Healthy_subjects_19,~] = structureEMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
+
 %% Structuring the Kin data
 
-[Healthy_subjects,SCI_subjects] = structureKin(Healthy_subjects,SCI_subjects,Fs_Kin,year);
+[Healthy_subjects_18,SCI_subjects] = structureKin(Healthy_subjects_18,SCI_subjects,Fs_Kin,'2018');
+[Healthy_subjects_19,~] = structureKin(Healthy_subjects_19,SCI_subjects,Fs_Kin,'2019');
+
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
 % subject = 'S_4';
@@ -77,7 +77,7 @@ condition = 'NO_FLOAT';
 trial = 'T_01';
 figure(2)
 %Remember to give the right frequency.. 
-plot_EMG(Healthy_subjects.(subject).(condition).(trial).Normalized.EMG.envelope,Healthy_subjects.(subject).(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG_H);
+plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelope,Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG_H19);
 
 %% Plot kin signals
 % 
@@ -120,33 +120,56 @@ plot_EMG(Healthy_subjects.(subject).(condition).(trial).Normalized.EMG.envelope,
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 
-% Healthy
-[Healthy_subjects]= append_gait_events(Healthy_subjects,Fs_Kin,Fs_EMG_H,year);
-[Healthy_subjects] = cut_events(Healthy_subjects,year);
-[Healthy_subjects]= append_gait_cycles(Healthy_subjects,year);
+% Healthy 2018
+[Healthy_subjects_18]= append_gait_events(Healthy_subjects_18,Fs_Kin,Fs_EMG_H18,'2018');
+[Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
+[Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
+% Healthy 2019
+[Healthy_subjects_19]= append_gait_events(Healthy_subjects_19,Fs_Kin,Fs_EMG_H19,'2019');
+[Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
+[Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
 %% Extraction of EMG features --> finally done
-% For Healthy subjects
-EMG_feat_table_Healthy = Extract_EMG_features(Healthy_subjects.(subject),'Healthy',Fs_EMG_H);
+% For Healthy subjects 2018
+subject = 'S_4';
+EMG_feat_table_Healthy_18 = Extract_EMG_features(Healthy_subjects_18.(subject),'Healthy',Fs_EMG_H18);
+% For Healthy subjects 2019
+subject = 'S_1';
+EMG_feat_table_Healthy_19 = Extract_EMG_features(Healthy_subjects_19.(subject),'Healthy',Fs_EMG_H19);
 
 % For SCI subjects
 EMG_feat_table_SCI = Extract_EMG_features(SCI_subjects,'SCI',Fs_EMG_S);
 
 %% Extraction of Kin features 
-Kin_feat_table_Healthy = Extract_Kin_features(Healthy_subjects.(subject),'Healthy');
+% For Healthy subjects 2018
+subject = 'S_4';
+Kin_feat_table_Healthy_18 = Extract_Kin_features(Healthy_subjects_18.(subject),'Healthy');
+% For Healthy subjects 2019
+subject = 'S_1';
+Kin_feat_table_Healthy_19 = Extract_Kin_features(Healthy_subjects_19.(subject),'Healthy');
+
+% For SCI subjects
 Kin_feat_table_SCI = Extract_Kin_features(SCI_subjects,'SCI');
 
 %% Extraction of Temporal features
-% For Healthy subjects 
-Temporal_feat_table_Healthy = extract_temp_features(Healthy_subjects.(subject),Fs_Kin,'Healthy');
+% For Healthy subjects 2018
+subject = 'S_4';
+Temporal_feat_table_Healthy_18 = extract_temp_features(Healthy_subjects_18.(subject),Fs_Kin,'Healthy');
+% For Healthy subjects 2019
+subject = 'S_1';
+Temporal_feat_table_Healthy_19 = extract_temp_features(Healthy_subjects_19.(subject),Fs_Kin,'Healthy');
 
 % For SCI subjects
 Temporal_feat_table_SCI = extract_temp_features(SCI_subjects,Fs_Kin,'SCI');
 
 
 %% Extraction of Spatial features
-% For Healthy subjects 
-Spatial_feat_table_Healthy = extract_space_features(Healthy_subjects.(subject),'Healthy');
+% For Healthy subjects 2018
+subject = 'S_4';
+Spatial_feat_table_Healthy_18 = extract_space_features(Healthy_subjects_18.(subject),'Healthy');
+% For Healthy subjects 2019
+subject = 'S_1';
+Spatial_feat_table_Healthy_19 = extract_space_features(Healthy_subjects_19.(subject),'Healthy');
 
 % For SCI subjects
 Spatial_feat_table_SCI = extract_space_features(SCI_subjects,'SCI');
