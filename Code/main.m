@@ -129,56 +129,16 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
-%% Extraction of EMG features --> finally done
-% For Healthy subjects 2018
-subject = 'S_4';
-EMG_feat_table_Healthy_18 = Extract_EMG_features(Healthy_subjects_18.(subject),'Healthy',Fs_EMG_H18);
-% For Healthy subjects 2019
-subject = 'S_1';
-EMG_feat_table_Healthy_19 = Extract_EMG_features(Healthy_subjects_19.(subject),'Healthy',Fs_EMG_H19);
-
-% For SCI subjects
-EMG_feat_table_SCI = Extract_EMG_features(SCI_subjects,'SCI',Fs_EMG_S);
-
-%% Extraction of Kin features 
-% For Healthy subjects 2018
-subject = 'S_4';
-Kin_feat_table_Healthy_18 = Extract_Kin_features(Healthy_subjects_18.(subject),'Healthy');
-% For Healthy subjects 2019
-subject = 'S_1';
-Kin_feat_table_Healthy_19 = Extract_Kin_features(Healthy_subjects_19.(subject),'Healthy');
-
-% For SCI subjects
-Kin_feat_table_SCI = Extract_Kin_features(SCI_subjects,'SCI');
-
-%% Extraction of Temporal features
-% For Healthy subjects 2018
-subject = 'S_4';
-Temporal_feat_table_Healthy_18 = extract_temp_features(Healthy_subjects_18.(subject),Fs_Kin,'Healthy');
-% For Healthy subjects 2019
-subject = 'S_1';
-Temporal_feat_table_Healthy_19 = extract_temp_features(Healthy_subjects_19.(subject),Fs_Kin,'Healthy');
-
-% For SCI subjects
-Temporal_feat_table_SCI = extract_temp_features(SCI_subjects,Fs_Kin,'SCI');
 
 
-%% Extraction of Spatial features
-% For Healthy subjects 2018
-subject = 'S_4';
-Spatial_feat_table_Healthy_18 = extract_space_features(Healthy_subjects_18.(subject),'Healthy');
-% For Healthy subjects 2019
-subject = 'S_1';
-Spatial_feat_table_Healthy_19 = extract_space_features(Healthy_subjects_19.(subject),'Healthy');
+%% Extraction of Healthy features 
+[struct_features_healthy,struct_labels_healthy] = create_struct_features_healthy(Healthy_subjects_18,Healthy_subjects_19);
+[~,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_features_healthy,struct_labels_healthy);
 
-% For SCI subjects
-Spatial_feat_table_SCI = extract_space_features(SCI_subjects,'SCI');
+[SCI_matrix,labels_SCI] = create_struct_features_SCI(SCI_subjects);
+
 %% Merging everything
 
-% Merging horizontally the features for each condition
-[whole_feat_table_H,whole_feat_matrix_H,labels_H] = merge_feat_tables(EMG_feat_table_Healthy,Kin_feat_table_Healthy,Temporal_feat_table_Healthy,Spatial_feat_table_Healthy);
-[whole_feat_table_SCI,whole_feat_matrix_SCI,labels_SCI] = merge_feat_tables(EMG_feat_table_SCI,Kin_feat_table_SCI,Temporal_feat_table_SCI,Spatial_feat_table_SCI);
-
-[whole_table,whole_matrix,whole_labels] = merge_condition_tables(whole_feat_matrix_H,labels_H,whole_feat_matrix_SCI,labels_SCI);
+[whole_table,whole_matrix,whole_labels] = merge_condition_tables(healthy_matrix,healthy_labels,SCI_matrix,labels_SCI);
 %% Applying PCA
 [PCA_data,features_weights] = apply_PCA(whole_matrix);
