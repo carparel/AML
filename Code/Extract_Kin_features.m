@@ -1,13 +1,13 @@
 function [Kin_feat_table] = Extract_Kin_features(new_struct,type)
-
 % This function evaluates the ROM and w for hip, knee and ankle for both FE and
 % AA. 
-% Inputs:
-% -Struct of the selected subject
-% -Aquisition frequency of the cameras
-% Outputs:
-% -Table containing for each column the selected feature (ROM or omega) for
-% each sample (gait cycles) on the raws.
+%
+% INPUT: - new_struc = Struct of the selected subject
+%        - type = Type (SCI or Healthy)
+%
+% OUTPUT: - Kin_feat_table = Table containing for each column the selected 
+%                            feature (ROM or omega) for each sample (gait cycles) 
+%                            on the rows.
 
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
@@ -76,12 +76,12 @@ for condition = 1:length(conditions)
                     % defining the segment vector
                     vec_hip_knee = current{1,gait}.(legs{leg}).Kin.(markers{2}) - current{1,gait}.(legs{leg}).Kin.(markers{1});
                    
-                    % Since I want the angle only in the YZ plane, I set
+                    % Since I want the angle only in the YZ plane, we set
                     % their x coordinate to zero (equivalent to projecting
                     % them) for each time instant                    
                     
                     vec_hip_knee = [zeros(length(vec_hip_knee),1) vec_hip_knee(:,2:3)];                    
-                    vec_n = [0,0,-1]; % This is the vertical axis with respect to I will evaluate the angles
+                    vec_n = [0,0,-1]; % This is the vertical axis with respect to we will evaluate the angles
                     
                     for i = 1:length(vec_hip_knee(:,1))
                          % angle btw two vectors for each time instant
@@ -106,7 +106,7 @@ for condition = 1:length(conditions)
                      % defining the segment vector                   
                     vec_hip_knee_AA = current{1,gait}.(legs{leg}).Kin.(markers{2}) - current{1,gait}.(legs{leg}).Kin.(markers{1});
                     
-                    % Since I want the angle only in the XZ plane, I set
+                    % Since I want the angle only in the XZ plane, we set
                     % their y coordinate to zero (equivalent to projecting
                     % them) for each time instant                    
                     
@@ -136,7 +136,7 @@ for condition = 1:length(conditions)
                     % defining the segment vector                  
                     vec_knee_ankle = current{1,gait}.(legs{leg}).Kin.(markers{4}) - current{1,gait}.(legs{leg}).Kin.(markers{2});                    
                     
-                    % Since I want the angle only in the YZ plane, I set
+                    % Since I want the angle only in the YZ plane, we set
                     % their x coordinate to zero (equivalent to projecting
                     % them) for each time instant
                     
@@ -165,7 +165,7 @@ for condition = 1:length(conditions)
                     % defining the segment vector
                     vec_knee_ankle_AA = current{1,gait}.(legs{leg}).Kin.(markers{4}) - current{1,gait}.(legs{leg}).Kin.(markers{2});
                     
-                    % Since I want the angle only in the XZ plane, I set
+                    % Since I want the angle only in the XZ plane, we set
                     % their y coordinate to zero (equivalent to projecting
                     % them) for each time instant                      
                     vec_knee_ankle_AA = [vec_knee_ankle_AA(:,1) zeros(length(vec_knee_ankle_AA),1) vec_knee_ankle_AA(:,3)];                    
@@ -195,7 +195,7 @@ for condition = 1:length(conditions)
                     % defining the segment vector
                     vec_ankle_toe = current{1,gait}.(legs{leg}).Kin.(markers{3}) - current{1,gait}.(legs{leg}).Kin.(markers{4});
                     
-                    % Since I want the angle only in the YZ plane, I set
+                    % Since I want the angle only in the YZ plane, we set
                     % their x coordinate to zero (equivalent to projecting
                     % them) for each time instant
                     vec_ankle_toe = [zeros(length(vec_ankle_toe),1) vec_ankle_toe(:,2:3)];

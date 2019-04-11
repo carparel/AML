@@ -136,3 +136,10 @@ Spatial_feat_table_Healthy = extract_space_features(Healthy_subjects.(subject),'
 
 % For SCI subjects
 Spatial_feat_table_SCI = extract_space_features(SCI_subjects,'SCI');
+%% Merging everything
+
+% Merging horizontally the features for each condition
+[whole_feat_table_H,whole_feat_matrix_H,labels_H] = merge_feat_tables(EMG_feat_table_Healthy,Kin_feat_table_Healthy,Temporal_feat_table_Healthy,Spatial_feat_table_Healthy);
+[whole_feat_table_SCI,whole_feat_matrix_SCI,labels_SCI] = merge_feat_tables(EMG_feat_table_SCI,Kin_feat_table_SCI,Temporal_feat_table_SCI,Spatial_feat_table_SCI);
+
+[whole_table,whole_matrix,whole_labels] = merge_condition_tables(whole_feat_matrix_H,labels_H,whole_feat_matrix_SCI,labels_SCI);
