@@ -1,4 +1,4 @@
-function [SCI_subjects, Healthy, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data()
+function [SCI_subjects, Healthy, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data(year)
 % This function is used to load the data from both the .csv and .mat files.
 %
 % INPUT: //
@@ -59,9 +59,13 @@ idx_subjects = 1:2:nbr_files;
 
 for condition = 1:length(conditions_healthy)
    for s = 1:length(idx_subjects)
-      if s == 1
-         l = 4;
-      end
+       if year == '2019'
+           l = s;
+       else
+           if s == 1
+               l = 4;
+           end
+       end
       if strcmp(conditions_healthy{condition},'FLOAT')
             temporary_value_1 = load(mat_files_H(idx_subjects(s)).name);
             Healthy.(['S_' num2str(l)]).(conditions_healthy{condition}) = temporary_value_1.(['S' num2str(l) '_' conditions_healthy{condition}]);

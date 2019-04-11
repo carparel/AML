@@ -8,7 +8,6 @@ function [EMG_feat_table] = Extract_EMG_features(struct_,type,Fs_EMG)
 %
 % OUTPUT: EMG_feat_table = table containing the extracted features
 % (columns) ...
-
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
 conditions = {'NO_FLOAT','FLOAT'};
