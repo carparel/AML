@@ -124,14 +124,10 @@ Kin_feat_table_SCI = Extract_Kin_features(SCI_subjects,'SCI');
 %% Extraction of Temporal features
 
 % For Healthy subjects 
-%Temporal_feat_table_Healthy = extract_temp_features_Healthy(Healthy_subjects.(subject),Fs_Kin);
+Temporal_feat_table_Healthy = extract_temp_features_Healthy(Healthy_subjects.(subject),Fs_Kin);
 
 % For SCI subjects
-<<<<<<< HEAD
 Temporal_feat_table_SCI = extract_temp_features_Healthy(SCI_subjects,Fs_Kin);
-=======
-%Temporal_feat_table_SCI = extract_temp_features_Healthy(SCI_subjects,Fs_Kin);
->>>>>>> c6587595050db769a72ada21159e46dce9acfc44
 
 
 %% Extraction of Spatial features
