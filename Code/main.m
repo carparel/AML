@@ -16,7 +16,7 @@ addpath(current_folder);
 % ATTENTION: the first time the window will pop up select the folder
 % containing the data of the SCI subjects. The second time select the
 % folder containing the data of the Healthy subects.
-year = '2018';
+year = '2019';
 
 [SCI_subjects, Healthy_subjects, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data(year);
 
@@ -49,6 +49,11 @@ Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 %     temporary_EMG = Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle});
 %     Healthy_subjects.(subject).NO_FLOAT.T_01.Raw.EMG.(muscles{muscle}) = temporary_EMG(100*coeff_dilatation:end);
 % end
+%% Change typo in Subject 1 trial 1 NO_FLOAT 2019 Healthy
+Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.LKNE = Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE;
+Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.RKNE = Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE;
+Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE = [];
+Healthy_subjects.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE = [];
 %% Structuring the EMG data
 
 [Healthy_subjects,SCI_subjects] = structureEMG(Healthy_subjects,SCI_subjects,Fs_EMG_S,Fs_EMG_H,year);
@@ -67,7 +72,7 @@ Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 % int this plot we have the EMG signal for healthy subjects for the four
 % muscles of interest
 % you have to give to the function the struct.chosen_trial
-subject = 'S_4';
+subject = 'S_1';
 condition = 'NO_FLOAT';
 trial = 'T_01';
 figure(2)
@@ -121,7 +126,6 @@ plot_EMG(Healthy_subjects.(subject).(condition).(trial).Normalized.EMG.envelope,
 [Healthy_subjects]= append_gait_cycles(Healthy_subjects,year);
 
 %% Extraction of EMG features --> finally done
-subject = 'S_4';
 % For Healthy subjects
 EMG_feat_table_Healthy = Extract_EMG_features(Healthy_subjects.(subject),'Healthy',Fs_EMG_H);
 
@@ -129,12 +133,10 @@ EMG_feat_table_Healthy = Extract_EMG_features(Healthy_subjects.(subject),'Health
 EMG_feat_table_SCI = Extract_EMG_features(SCI_subjects,'SCI',Fs_EMG_S);
 
 %% Extraction of Kin features 
-subject = 'S_4';
 Kin_feat_table_Healthy = Extract_Kin_features(Healthy_subjects.(subject),'Healthy');
 Kin_feat_table_SCI = Extract_Kin_features(SCI_subjects,'SCI');
 
 %% Extraction of Temporal features
-subject = 'S_4';
 % For Healthy subjects 
 Temporal_feat_table_Healthy = extract_temp_features(Healthy_subjects.(subject),Fs_Kin,'Healthy');
 
@@ -143,7 +145,6 @@ Temporal_feat_table_SCI = extract_temp_features(SCI_subjects,Fs_Kin,'SCI');
 
 
 %% Extraction of Spatial features
-subject = 'S_4';
 % For Healthy subjects 
 Spatial_feat_table_Healthy = extract_space_features(Healthy_subjects.(subject),'Healthy');
 
