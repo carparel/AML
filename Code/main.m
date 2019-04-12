@@ -41,6 +41,7 @@ Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE = [];
 
 %% Structuring the EMG data
 
+% We make sure to filter and normalize muscles with respect of max contraction
 [Healthy_subjects_18,SCI_subjects] = structureEMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
 [Healthy_subjects_19,~] = structureEMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
 
@@ -59,12 +60,12 @@ coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin;
  
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
-% subject = 'S_4';
-% condition = 'FLOAT';
-% trial = 'T_03';
-%  
-% figure(1)
-% plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG_S);
+
+condition = 'FLOAT';
+trial = 'T_03';
+ 
+figure(1)
+plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG_S);
 
 % int this plot we have the EMG signal for healthy subjects for the four
 % muscles of interest
@@ -113,7 +114,6 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 % SCI subjects
 [SCI_subjects] = detect_gait_events_SCI(SCI_subjects,csv_files_NO_FLOAT_CRUTCHES,csv_files_FLOAT_NO_CRUTCHES,Fs_Kin,Fs_EMG_S);
 [SCI_subjects] = cut_events_SCI(SCI_subjects);
-
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 

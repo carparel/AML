@@ -15,9 +15,14 @@ for i = 1:number_subjects
     
     if i < number_subjects % Means we're taking into account S1,S2,S3
         
+        % Extract EMG features
         EMG_feat_table_Healthy_19 = Extract_EMG_features(Healthy19.(subject),'Healthy',Fs_EMG_H19);
+        % Extract Kinetic features (Range of motion, angles, and angular
+        % velocity)
         Kin_feat_table_Healthy_19 = Extract_Kin_features(Healthy19.(subject),'Healthy');
+        % Extract temporal kinetic features
         Temporal_feat_table_Healthy_19 = extract_temp_features(Healthy19.(subject),Fs_Kin,'Healthy');
+        % Extract spatial kinetic features
         Spatial_feat_table_Healthy_19 = extract_space_features(Healthy19.(subject),'Healthy');
         [~,struct_features_healthy.(subject),struct_labels_healthy.(subject)] = merge_feat_tables(EMG_feat_table_Healthy_19,Kin_feat_table_Healthy_19,Temporal_feat_table_Healthy_19,Spatial_feat_table_Healthy_19);
         
