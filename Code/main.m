@@ -105,6 +105,17 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 % plot_Kin(SCI_subjects.(condition).(trial).Filtered.Kin, ...
 %     Healthy_subjects.(subject).(condition).(trial).Filtered.Kin,marker_SCI,marker_Healthy,Fs_Kin);
 
+%% Visual detection of gait events --> ground truth
+
+% ATTENTION: don't uncomment this lines if you don't want to repeat the visual detection.
+% struct_events = visual_detection(Healthy_subjects_18,Healthy_subjects_19);
+
+% TO LOAD the saved structure containing all the ground truth events
+% previously detected:
+struct_events = load('Ground_truth_events.mat');
+
+% To visualize the results of the visual inspection:
+% check_ground_truth_events(events_struct,Healthy_subjects_18,Healthy_subjects_19);
 %% Detect gait events
 %
 % In order to detect the gait events we have considered the Y coordinate of
