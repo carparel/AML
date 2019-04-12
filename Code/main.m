@@ -112,7 +112,7 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 
 % TO LOAD the saved structure containing all the ground truth events
 % previously detected:
-struct_events = load('Ground_truth_events.mat');
+load('Ground_truth_events.mat');
 
 % To visualize the results of the visual inspection:
 % check_ground_truth_events(events_struct,Healthy_subjects_18,Healthy_subjects_19);
@@ -132,11 +132,22 @@ struct_events = load('Ground_truth_events.mat');
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 
 % Healthy 2018
-[Healthy_subjects_18]= append_gait_events(Healthy_subjects_18,Fs_Kin,Fs_EMG_H18,'2018');
+% [Healthy_subjects_18]= append_gait_events(Healthy_subjects_18,Fs_Kin,Fs_EMG_H18,'2018');
+% [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
+% [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
+
+% Try with ground truth
+[Healthy_subjects_18]= append_gait_events_ground_truth(Healthy_subjects_18,struct_events,Fs_Kin,Fs_EMG_H18,'2018');
 [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
 [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
+
 % Healthy 2019
-[Healthy_subjects_19]= append_gait_events(Healthy_subjects_19,Fs_Kin,Fs_EMG_H19,'2019');
+% [Healthy_subjects_19]= append_gait_events(Healthy_subjects_19,Fs_Kin,Fs_EMG_H19,'2019');
+% [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
+% [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
+
+% Try with ground truth
+[Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
