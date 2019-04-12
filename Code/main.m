@@ -12,7 +12,7 @@ current_folder = genpath('AML');
 addpath(current_folder);
 
 %% Loading the data for the SCI and creating the new useful structure
-
+%
 % ATTENTION: the first time the window will pop up select the folder
 % containing the data of the SCI subjects. The second time select the
 % folder containing the data of the Healthy subects.
@@ -20,6 +20,7 @@ addpath(current_folder);
 [SCI_subjects, Healthy_subjects_18,Healthy_subjects_19, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
 
 %% Global variables
+%
 % To choose the healthy subject
 %subject = 'S_4';
 
@@ -33,6 +34,7 @@ Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 
 
 %% Change typo in Subject 1 trial 1 NO_FLOAT 2019 Healthy
+
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNE = Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE;
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNE = Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE;
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE = [];
@@ -104,6 +106,7 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 %     Healthy_subjects.(subject).(condition).(trial).Filtered.Kin,marker_SCI,marker_Healthy,Fs_Kin);
 
 %% Detect gait events
+%
 % In order to detect the gait events we have considered the Y coordinate of
 % the markers ANKLE and TOE. The Heel Strike (HS) will correspond to the
 % first index of the plateau of the ankle, the Heel Off (HO) to the last
@@ -126,9 +129,8 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
-
-
 %% Extraction of Healthy features 
+
 [struct_features_healthy,struct_labels_healthy] = create_struct_features_healthy(Healthy_subjects_18,Healthy_subjects_19);
 [~,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_features_healthy,struct_labels_healthy);
 
@@ -137,6 +139,12 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 %% Merging everything
 
 [whole_table,whole_matrix,whole_labels] = merge_condition_tables(healthy_matrix,healthy_labels,SCI_matrix,labels_SCI);
+
+%This is a bad sample, we remove it 
+whole_table(49,:) = [];
+whole_matrix(49,:) = [];
+whole_labels(49,:) = [];
 %% Applying PCA
+
 [PCA_data,features_weights] = apply_PCA(whole_matrix);
 find_clusters(PCA_data,whole_labels);

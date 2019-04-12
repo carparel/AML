@@ -31,7 +31,7 @@ for condition = 1:length(conditions)
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.Type = 'Filtered Data';
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'Healthy',Fs_EMG_H,true);
             Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'Healthy',Fs_EMG_H,false);
-            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Rectified = abs(Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope. ...
+            Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Rectified.(muscles{muscle}) = abs(Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope. ...
                 (muscles{muscle}));
         end
     end
@@ -44,7 +44,14 @@ for condition = 1:length(conditions)
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.Type = 'Filtered Data';
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'SCI',Fs_EMG_S,true);    
             SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = filtering_EMG(temporary_struct.(muscles{muscle}),'SCI',Fs_EMG_S,false);    
-            SCI_subjects.(conditions{condition}).(trials{trial}).Rectified = abs(SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));
+            SCI_subjects.(conditions{condition}).(trials{trial}).Rectified.(muscles{muscle}) = abs(SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));
+            if strcmp(muscles{muscle},'LMG')
+                SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.envelope.(muscles{muscle}) = fix_LMG(SCI_subjects.(conditions{condition}).(trials{trial}). ...
+                    Filtered.EMG.envelope.(muscles{muscle}),Fs_EMG_S);    
+                SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}) = fix_LMG(SCI_subjects.(conditions{condition}).(trials{trial}). ...
+                    Filtered.EMG.noenvelope.(muscles{muscle}),Fs_EMG_S);    
+                SCI_subjects.(conditions{condition}).(trials{trial}).Rectified.(muscles{muscle}) = abs(SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.EMG.noenvelope.(muscles{muscle}));  
+            end
         end
     end
 end
