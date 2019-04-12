@@ -90,7 +90,7 @@ for condition = 1:length(conditions)
                     
                     % computing ROM and angular velocity
                     range_of_motion_1 = max(angle_FE_1)-min(angle_FE_1);
-                    omega_1 = mean(diff(angle_FE_1));
+                    omega_1 = max(diff(angle_FE_1));
 
                     % stocking                    
                     if strcmp(legs{leg},'Right')
@@ -119,7 +119,7 @@ for condition = 1:length(conditions)
                    
                     % computing ROM and angular velocity
                     range_of_motion_2 = max(angle_AA_1)-min(angle_AA_1);                    
-                    omega_2 = mean(diff(angle_AA_1));                    
+                    omega_2 = max(diff(angle_AA_1));                    
 
                     % stocking
                     if strcmp(legs{leg},'Right')
@@ -149,7 +149,7 @@ for condition = 1:length(conditions)
                     
                     % computing ROM and angular velocity           
                     range_of_motion_3 = max(angle_FE_2)-min(angle_FE_2);                    
-                    omega_3 = mean(diff(angle_FE_2));
+                    omega_3 = max(diff(angle_FE_2));
 
                     % stocking
                     if strcmp(legs{leg},'Right')
@@ -177,7 +177,7 @@ for condition = 1:length(conditions)
 
                     % computing ROM and angular velocity
                     range_of_motion_4 = max(angle_AA_2)-min(angle_AA_2);                    
-                    omega_4 = mean(diff(angle_AA_2));                    
+                    omega_4 = max(diff(angle_AA_2));                    
 
                     % stocking
                     if strcmp(legs{leg},'Right')
@@ -207,7 +207,7 @@ for condition = 1:length(conditions)
                     
                     % computing ROM and angular velocity
                     range_of_motion_5 = max(angle_FE_3)-min(angle_FE_3);
-                    omega_5 = mean(diff(angle_FE_3));
+                    omega_5 = max(diff(angle_FE_3));
 
                     % stocking
                     if strcmp(legs{leg},'Right')
