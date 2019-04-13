@@ -115,7 +115,7 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 load('Ground_truth_events.mat');
 
 % To visualize the results of the visual inspection:
-% check_ground_truth_events(events_struct,Healthy_subjects_18,Healthy_subjects_19);
+%check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
 %% Detect gait events
 %
 % In order to detect the gait events we have considered the Y coordinate of
