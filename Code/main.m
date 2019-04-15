@@ -63,16 +63,16 @@ coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin;
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
 
-condition = 'FLOAT';
-trial = 'T_03';
- 
-figure(1)
-plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG_S);
+% condition = 'FLOAT';
+% trial = 'T_03';
+%  
+% figure(1)
+% plot_EMG(SCI_subjects.(condition).(trial).Normalized.EMG.envelope,SCI_subjects.(condition).(trial).Normalized.EMG.noenvelope,Fs_EMG_S);
 
 % int this plot we have the EMG signal for healthy subjects for the four
 % muscles of interest
 % you have to give to the function the struct.chosen_trial
-subject = 'S_1';
+subject = 'S_3';
 condition = 'FLOAT';
 trial = 'T_03';
 figure(2)
@@ -131,25 +131,32 @@ load('Ground_truth_events.mat');
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 
-% Healthy 2018
+% Healthy 2018 with algorithm
 % [Healthy_subjects_18]= append_gait_events(Healthy_subjects_18,Fs_Kin,Fs_EMG_H18,'2018');
 % [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
 % [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
 
-% Try with ground truth
+% Healthy 2018  with ground truth
 [Healthy_subjects_18]= append_gait_events_ground_truth(Healthy_subjects_18,struct_events,Fs_Kin,Fs_EMG_H18,'2018');
 [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
 [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
 
-% Healthy 2019
+% Healthy 2019 with algorithm
 % [Healthy_subjects_19]= append_gait_events(Healthy_subjects_19,Fs_Kin,Fs_EMG_H19,'2019');
 % [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 % [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
-% Try with ground truth
+% Healthy 2019 with ground truth
 [Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
+%% Check events for muscle 
+% figure;
+% current_muscle = Healthy_subjects_19.S_2.FLOAT.T_01.Raw.EMG.RMG;
+% plot(current_muscle);
+% hold on;
+% current_event_HS = Healthy_subjects_19.S_1.FLOAT.T_01.Event.Right.HS_emg;
+% plot( current_event_HS, current_muscle(current_event_HS),'ro');
 
 %% Extraction of Healthy features 
 

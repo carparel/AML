@@ -21,46 +21,55 @@ RMG_filtered_noenv = EMG_no_envelope.RMG;
 LTA_filtered_noenv = EMG_no_envelope.LTA;
 RTA_filtered_noenv = EMG_no_envelope.RTA;
 
-time_idx = 1:1:length(LMG_filtered_noenv);
-time_points = time_idx/fs; %in seconds
+time_idx_LMG = 1:1:length(LMG_filtered_noenv);
+time_points_LMG = time_idx_LMG/fs; %in seconds
+
+time_idx_RMG = 1:1:length(RMG_filtered_noenv);
+time_points_RMG = time_idx_RMG/fs; %in seconds
+
+time_idx_LTA = 1:1:length(LTA_filtered_noenv);
+time_points_LTA = time_idx_LTA/fs; %in seconds
+
+time_idx_RTA= 1:1:length(RTA_filtered_noenv);
+time_points_RTA = time_idx_RTA/fs; %in seconds
 
 XMIN = 0;
-XMAX = time_points(length(time_points));
+XMAX = time_points_LMG(length(time_points_LMG));
 YMIN = -1;
 YMAX = +1;
 
 %% Plotting
 subplot(2,2,1)
-plot(time_points,LMG_filtered_noenv,'k','LineWidth',1.2);
+plot(time_points_LMG,LMG_filtered_noenv,'k','LineWidth',1.2);
 hold on;
-plot(time_points,LMG_filtered_env,'r','LineWidth',1.2);
+plot(time_points_LMG,LMG_filtered_env,'r','LineWidth',1.2);
 xlabel('Time [s]');
 ylabel('Arbitrary units');
 title('LMG');
 axis([XMIN XMAX YMIN YMAX]);
 
 subplot(2,2,2)
-plot(time_points,RMG_filtered_noenv,'k','LineWidth',1.2);
+plot(time_points_RMG,RMG_filtered_noenv,'k','LineWidth',1.2);
 hold on;
-plot(time_points,RMG_filtered_env,'r','LineWidth',1.2);
+plot(time_points_RMG,RMG_filtered_env,'r','LineWidth',1.2);
 xlabel('Time [s]');
 ylabel('Arbitrary units');
 title('RMG');
 axis([XMIN XMAX YMIN YMAX]);
 
 subplot(2,2,3)
-plot(time_points,LTA_filtered_noenv,'k','LineWidth',1.2);
+plot(time_points_LTA,LTA_filtered_noenv,'k','LineWidth',1.2);
 hold on;
-plot(time_points,LTA_filtered_env,'r','LineWidth',1.2);
+plot(time_points_LTA,LTA_filtered_env,'r','LineWidth',1.2);
 xlabel('Time [s]');
 ylabel('Arbitrary units');
 title('LTA');
 axis([XMIN XMAX YMIN YMAX]);
 
 subplot(2,2,4)
-plot(time_points,RTA_filtered_noenv,'k','LineWidth',1.2);
+plot(time_points_RTA,RTA_filtered_noenv,'k','LineWidth',1.2);
 hold on;
-plot(time_points,RTA_filtered_env,'r','LineWidth',1.2);
+plot(time_points_RTA,RTA_filtered_env,'r','LineWidth',1.2);
 xlabel('Time [s]');
 ylabel('Arbitrary units');
 title('RTA');

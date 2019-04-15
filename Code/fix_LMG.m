@@ -12,7 +12,4 @@ end
 
 filtered_EMG = current;
 
-figure;
-plot(current);
-
 end
