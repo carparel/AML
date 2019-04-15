@@ -114,6 +114,7 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 % previously detected:
 load('Ground_truth_events.mat');
 
+
 % To visualize the results of the visual inspection:
 %check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
 %% Detect gait events for SCI subjects
@@ -148,8 +149,12 @@ load('Ground_truth_events.mat');
 
 % Healthy 2019 with ground truth
 [Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
+% correcting typo!!!!!
+Healthy_subjects_19.S_1.NO_FLOAT.T_03.Event.Left.HS_marker = [138;266;384;506];
+
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
+
 
 %% Check events for muscle 
 % figure;

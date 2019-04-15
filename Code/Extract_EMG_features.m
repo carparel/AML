@@ -54,7 +54,7 @@ for condition = 1:length(conditions)
                             current_signal = current{1,gait}.(legs{leg}).EMG.envelope.(muscles{muscle});
                             
                             if strcmp(conditions{condition},'FLOAT')
-                                threshold = 0.1;
+                                threshold = 0.2;
                             else
                                 threshold = 0.18;
                             end
@@ -350,9 +350,7 @@ for condition = 1:length(conditions)
         end
     end
 end
-% THERE IS A PROBLEM WITH LMG when using ground truth.......
-LMG_time = [LMG_time 0.5];
-LMG_max = [LMG_max 0.5];
+
 
 names = {'Healthy_Condition','NO_Float_Condition','LMG_duration','LMG_max','LMG_mean','RMG_duration','RMG_max', 'RMG_mean','LTA_duration','LTA_max','LTA_mean','RTA_duration','RTA_max','RTA_mean'};
 EMG_feat_table = table(cond_H',cond_NO_F', LMG_time',LMG_max',LMG_mean',RMG_time',RMG_max',RMG_mean',LTA_time',LTA_max',LTA_mean',RTA_time',RTA_max',RTA_mean','VariableNames',names);
