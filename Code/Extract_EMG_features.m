@@ -350,7 +350,7 @@ for condition = 1:length(conditions)
         end
     end
 end
-% THERE IS A PROBLEM WITH LMG......
+% THERE IS A PROBLEM WITH LMG when using ground truth.......
 LMG_time = [LMG_time 0.5];
 LMG_max = [LMG_max 0.5];
 

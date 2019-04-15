@@ -80,11 +80,13 @@ for condition = 1:length(conditions)
                 marker_position_to_consider = data.(conditions{condition}).(trials{trial}).Filtered.Kin.(markers_names{1});
                 signal = marker_position_to_consider(:,2); % Just Y-Pos
                 if strcmp(conditions{condition},'FLOAT')
-                    %[HS,HO] = plateau_endpoints(signal,threshold); % We determine Heel Strike and Heel Off
+                    
                     [HS,HO] = find_events(signal,conditions{condition});
+                    
                 elseif strcmp(conditions{condition},'NO_FLOAT')
-                   %[HS,HO] = plateau_endpoints(signal,threshold);
+                  
                     [HS,HO] = find_events(signal,conditions{condition});
+                    
                 end
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HS_marker = HS; % We put the events in the structure
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).HO_marker = HO;
@@ -97,11 +99,13 @@ for condition = 1:length(conditions)
                 marker_position_to_consider = data.(conditions{condition}).(trials{trial}).Filtered.Kin.(markers_names{2});
                 signal = marker_position_to_consider(:,2);
                 if strcmp(conditions{condition},'FLOAT')
-                    %[TS,TO] = plateau_endpoints(signal,threshold);
+              
                     [TS,TO] = find_events(signal,conditions{condition});
+                    
                 elseif strcmp(conditions{condition},'NO_FLOAT')
-                    %[TS,TO] = plateau_endpoints(signal,threshold);
+                    
                     [TS,TO] = find_events(signal,conditions{condition});
+                    
                 end
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TS_marker = TS;
                 Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(leg).TO_marker = TO;

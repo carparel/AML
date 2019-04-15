@@ -116,7 +116,7 @@ load('Ground_truth_events.mat');
 
 % To visualize the results of the visual inspection:
 %check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
-%% Detect gait events
+%% Detect gait events for SCI subjects
 %
 % In order to detect the gait events we have considered the Y coordinate of
 % the markers ANKLE and TOE. The Heel Strike (HS) will correspond to the
@@ -130,21 +130,21 @@ load('Ground_truth_events.mat');
 [SCI_subjects] = cut_events_SCI(SCI_subjects);
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
+%% Healthy subjects
 
 % Healthy 2018 with algorithm
 % [Healthy_subjects_18]= append_gait_events(Healthy_subjects_18,Fs_Kin,Fs_EMG_H18,'2018');
 % [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
 % [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
+% Healthy 2019 with algorithm
+% [Healthy_subjects_19]= append_gait_events(Healthy_subjects_19,Fs_Kin,Fs_EMG_H19,'2019');
+% [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
+% [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
 % Healthy 2018  with ground truth
 [Healthy_subjects_18]= append_gait_events_ground_truth(Healthy_subjects_18,struct_events,Fs_Kin,Fs_EMG_H18,'2018');
 [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
 [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
-
-% Healthy 2019 with algorithm
-% [Healthy_subjects_19]= append_gait_events(Healthy_subjects_19,Fs_Kin,Fs_EMG_H19,'2019');
-% [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
-% [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
 % Healthy 2019 with ground truth
 [Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
