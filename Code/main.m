@@ -150,6 +150,7 @@ load('Ground_truth_events.mat');
 [Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
+
 %% Check events for muscle 
 % figure;
 % current_muscle = Healthy_subjects_19.S_2.FLOAT.T_01.Raw.EMG.RMG;
