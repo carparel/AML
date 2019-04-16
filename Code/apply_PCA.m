@@ -41,15 +41,16 @@ names_variables = {'Left Gastrocnemius Medialis - Duration','Left Gastrocnemius 
 names_PCs = {'PC_1','PC_2','PC_3'};
 
 h = figure();
-imagesc(features_weights);
+imagesc(features_weights');
 colorbar;
 colormap('jet');
-yticks(1:1:length(names_variables));
-yticklabels(names_variables);
-xticks(1:1:3);
-xticklabels(names_PCs);
+xticks(1:1:length(names_variables));
+xticklabels(names_variables);
+xtickangle(90);
+yticks(1:1:3);
+yticklabels(names_PCs);
 title('Weights of all the features for the first 3 PCs','FontSize',15);
-set(h,'Position',[0 0 480 1920]);
+set(h,'Position',[0 0 1200 480]);
 
 end
 
