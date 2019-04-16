@@ -157,7 +157,9 @@ load('Ground_truth.mat');
 %% Computing Accuracy
 
 % Work in progress, don't uncomment this
-% accuracy = compute_accuracy(Healthy_subjects_18_alg,Healthy_subjects_18);
+ accuracy_18 = compute_accuracy(Healthy_subjects_18_alg,Healthy_subjects_18,'2018');
+ accuracy_19 = compute_accuracy(Healthy_subjects_19_alg,Healthy_subjects_19,'2019');
+ total_accuracy = mean([accuracy_18,accuracy_19]);
 
 %% Check events for muscle 
 % figure;
