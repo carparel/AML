@@ -112,7 +112,7 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 
 % TO LOAD the saved structure containing all the ground truth events
 % previously detected:
-load('Ground_truth_events.mat');
+load('Ground_truth.mat');
 
 
 % To visualize the results of the visual inspection:
@@ -149,9 +149,6 @@ load('Ground_truth_events.mat');
 
 % Healthy 2019 with ground truth
 [Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
-% correcting typo!!!!!
-Healthy_subjects_19.S_1.NO_FLOAT.T_03.Event.Left.HS_marker = [138;266;384;506];
-
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 

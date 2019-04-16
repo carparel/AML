@@ -27,13 +27,12 @@ for condition = 1:length(conditions)
                     
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg = round(strike*ratio_frequencies);
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HO_emg = round(off*ratio_frequencies); 
-                    
                 else
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TS_marker = strike;
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker = off; 
                     
                     Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TS_emg = round(strike*ratio_frequencies); 
-                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg = round(off*ratio_frequencies); 
+                    Healthy_subjects.(subject).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg = round(off*ratio_frequencies);                   
                     
                 end
                 
