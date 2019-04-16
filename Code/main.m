@@ -20,19 +20,20 @@ addpath(current_folder);
 [SCI_subjects, Healthy_subjects_18,Healthy_subjects_19, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
 
 %% Global variables
-%
-% To choose the healthy subject
-%subject = 'S_4';
 
 % To stock the sampling frequency for the EMG SCI patients
 Fs_EMG_S = SCI_subjects.FLOAT.T_01.fsEMG;
+% To stock the sampling frequency for the EMG Healthy 2018 patients
 Fs_EMG_H18 = Fs_EMG_S;
+% To stock the sampling frequency for the EMG Healthy 2019 patients
 Fs_EMG_H19 = Healthy_subjects_19.S_1.FLOAT.T_01.fsEMG;
 
 % To stock the sampling frequency for the Kinetics
 Fs_Kin = SCI_subjects.FLOAT.T_01.fsKIN;
 
-
+% Coefficient of dilation for 2018 and 2019 Healthy patients
+coeff_dilatation_18 = Fs_EMG_H18/Fs_Kin;
+coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin; 
 %% Change typo in Subject 1 trial 1 NO_FLOAT 2019 Healthy
 
 Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNE = Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.LKNEE;
@@ -43,25 +44,21 @@ Healthy_subjects_19.S_1.NO_FLOAT.T_01.Raw.Kin.RKNEE = [];
 
 %% Structuring the EMG data
 
-% We make sure to filter and normalize muscles with respect of max contraction
+%This filters and normalizes muscles with respect of max contraction
 [Healthy_subjects_18,SCI_subjects] = structureEMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
 [Healthy_subjects_19,~] = structureEMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
 
 %% Structuring the Kin data
 
+%This filters the marker signals
 [Healthy_subjects_18,SCI_subjects] = structureKin(Healthy_subjects_18,SCI_subjects,Fs_Kin,'2018');
 [Healthy_subjects_19,~] = structureKin(Healthy_subjects_19,SCI_subjects,Fs_Kin,'2019');
 
-%% Clean data for S_4 Healthy subject 2018
-
-coeff_dilatation_18 = Fs_EMG_H18/Fs_Kin; 
+%% Clean data by cutting edges
+ 
 [Healthy_subjects_18] = clean_data(Healthy_subjects_18,coeff_dilatation_18,'2018');
-
-coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin; 
 [Healthy_subjects_19] = clean_data(Healthy_subjects_19,coeff_dilatation_19,'2019');
  
-Healthy_subjects_18_alg = Healthy_subjects_18;
-Healthy_subjects_19_alg = Healthy_subjects_19;
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
 
@@ -110,6 +107,7 @@ plot_EMG(Healthy_subjects_19.(subject).(condition).(trial).Normalized.EMG.envelo
 %% Visual detection of gait events --> ground truth
 
 % ATTENTION: don't uncomment this lines if you don't want to repeat the visual detection.
+
 % struct_events = visual_detection(Healthy_subjects_18,Healthy_subjects_19);
 
 % TO LOAD the saved structure containing all the ground truth events
@@ -133,7 +131,7 @@ load('Ground_truth.mat');
 [SCI_subjects] = cut_events_SCI(SCI_subjects);
 %Split into gaits
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
-%% Healthy subjects
+%% Detect gait events for Healthy subjects using ground truth
 
 % Healthy 2018  with ground truth
 [Healthy_subjects_18]= append_gait_events_ground_truth(Healthy_subjects_18,struct_events,Fs_Kin,Fs_EMG_H18,'2018');
@@ -144,6 +142,10 @@ load('Ground_truth.mat');
 [Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
+%% Detect gait events for Healthy subjects using the algorithm
+% To duplicate the structure
+Healthy_subjects_18_alg = Healthy_subjects_18;
+Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % Healthy 2018 with algorithm
 [Healthy_subjects_18_alg]= append_gait_events(Healthy_subjects_18_alg,Fs_Kin,Fs_EMG_H18,'2018');
@@ -156,18 +158,10 @@ load('Ground_truth.mat');
 
 %% Computing Accuracy
 
-% Work in progress, don't uncomment this
  accuracy_18 = compute_accuracy(Healthy_subjects_18_alg,Healthy_subjects_18,'2018');
  accuracy_19 = compute_accuracy(Healthy_subjects_19_alg,Healthy_subjects_19,'2019');
+ 
  total_accuracy = mean([accuracy_18,accuracy_19]);
-
-%% Check events for muscle 
-% figure;
-% current_muscle = Healthy_subjects_19.S_2.FLOAT.T_01.Raw.EMG.RMG;
-% plot(current_muscle);
-% hold on;
-% current_event_HS = Healthy_subjects_19.S_1.FLOAT.T_01.Event.Right.HS_emg;
-% plot( current_event_HS, current_muscle(current_event_HS),'ro');
 
 %% Extraction of Healthy features 
 
