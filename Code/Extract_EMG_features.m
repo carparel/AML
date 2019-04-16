@@ -63,25 +63,41 @@ for condition = 1:length(conditions)
                             
                             % Uncomment to plot Healthy subjects LTA or RTA
                             
-%                             figure()
-%                             XMIN = 0;
-%                             XMAX = length(current_signal);
-%                             YMIN = -inf;
-%                             YMAX = +inf;
-%                             plot(current_signal);
-%                             hold on;
-%                             plot(movsignal);
-%
-%
-%                             plot(onset1,current_signal(onset1),'ro');
-%                             plot(offset1,current_signal(offset1),'bo');
-%                             plot(offset2,current_signal(offset2),'bo');
-%                             plot(onset2,current_signal(onset2),'ro');
-%
-%                             axis([XMIN XMAX YMIN YMAX]);
-%                             legend('EMG signal','Onsets','Offsets')
-%                             title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-%
+                            % Plot: detection on one Healthy TA
+                            % muscle that worked well
+                            if condition == 2
+                                if trial == 1
+                                    if leg == 1
+                                        if muscle == 2
+                                            if gait == 4
+                                                figure()
+                                                XMIN = 0;
+                                                XMAX = length(current_signal);
+                                                YMIN = -inf;
+                                                YMAX = +inf;
+                                                plot(current_signal,'k','Linewidth',2);
+                                                hold on;
+                                                plot(movsignal,'k--');
+                                                
+                                                
+                                                scatter(onset1,current_signal(onset1),'filled','ro');
+                                                scatter(offset1,current_signal(offset1),'filled','bo');
+                                                scatter(offset2,current_signal(offset2),'filled','bo');
+                                                scatter(onset2,current_signal(onset2),'filled','ro');
+                                                
+                                                axis([XMIN XMAX YMIN YMAX]);
+                                                legend('EMG signal','Moving average of EMG','Activity onsets','Activity offsets');
+                                                xlabel('Time (ms)');
+                                                ylabel('EMG signal (normalized)');
+                                                % title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+                                                title('Correct detection of TA muscle activity on EMG signal');
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                            
+                            
                             if strcmp(muscles{muscle},'LTA')
                                 if((onset1 == offset1) && (onset2 ==offset2))
                                     % Duration [s]
@@ -185,29 +201,33 @@ for condition = 1:length(conditions)
                                 onset2 = idx(end);
                                 offset2 = length(current_signal);
                                 
- 
+                                
                                 % Uncomment to plot SCI subject LTA (same
                                 % reasoning as for Healthy)
-%                                 figure()
-%                                 XMIN = 0;
-%                                 XMAX = length(current_signal);
-%                                 YMIN = -inf;
-%                                 YMAX = +inf;
-%                                 plot(current_signal);
-%                                 hold on;
-%                                 plot(movsignal);
-%
-%
-%                                 plot(onset1,current_signal(onset1),'ro');
-%                                 plot(offset1,current_signal(offset1),'bo');
-%                                 plot(offset2,current_signal(offset2),'bo');
-%                                 plot(onset2,current_signal(onset2),'ro');
-%
-%                                 axis([XMIN XMAX YMIN YMAX]);
-%                                 legend('EMG signal','Onsets','Offsets')
-%                                 title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-%
-%
+                                %if condition == 2
+                                
+                                %                        figure()
+                                %                          XMIN = 0;
+                                %                           XMAX = length(current_signal);
+                                %                            YMIN = -inf;
+                                %                             YMAX = +inf;
+                                %                              plot(current_signal);
+                                %                               hold on;
+                                %                                plot(movsignal);
+                                %
+                                %
+                                %                             plot(onset1,current_signal(onset1),'ro');
+                                %                              plot(offset1,current_signal(offset1),'bo');
+                                %                               plot(offset2,current_signal(offset2),'bo');
+                                %                                plot(onset2,current_signal(onset2),'ro');
+                                %
+                                %                              axis([XMIN XMAX YMIN YMAX]);
+                                %                               legend('EMG signal','Onsets','Offsets')
+                                %                                title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+                                %
+                                %end
+                                
+                                
                                 if((onset1 == offset1) && (onset2 ==offset2))
                                     % Duration [s]
                                     length_idx = offset2 - onset1;
@@ -266,26 +286,26 @@ for condition = 1:length(conditions)
                                 % taking into account one onset and onse
                                 % offset)
                                 
-%                                 figure()
-%                                 XMIN = 0;
-%                                 XMAX = length(current_signal);
-%                                 YMIN = -inf;
-%                                 YMAX = +inf;
-%                                 plot(current_signal);
-%                                 hold on;
-%
-%
-%
-%                                 plot(onset,current_signal(onset),'ro');
-%                                 plot(offset,current_signal(offset),'bo');
-%
-%
-%                                 axis([XMIN XMAX YMIN YMAX]);
-%                                 legend('EMG signal','Onsets','Offsets')
-%                                 title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-%
-%
-
+                                %                                 figure()
+                                %                                 XMIN = 0;
+                                %                                 XMAX = length(current_signal);
+                                %                                 YMIN = -inf;
+                                %                                 YMAX = +inf;
+                                %                                 plot(current_signal);
+                                %                                 hold on;
+                                %
+                                %
+                                %
+                                %                                 plot(onset,current_signal(onset),'ro');
+                                %                                 plot(offset,current_signal(offset),'bo');
+                                %
+                                %
+                                %                                 axis([XMIN XMAX YMIN YMAX]);
+                                %                                 legend('EMG signal','Onsets','Offsets')
+                                %                                 title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+                                %
+                                %
+                                
                                 % Duration [s]
                                 length_idx = offset - onset;
                                 RTA_duration = length_idx/Fs_EMG;
@@ -308,7 +328,7 @@ for condition = 1:length(conditions)
                         if (strcmp(type,'Healthy') || strcmp(type,'SCI'))
                             current_signal = current{1,gait}.(legs{leg}).EMG.envelope.(muscles{muscle});
                             
-              
+                            
                             idx = find(current_signal > max(current_signal)/4);
                             onset = idx(1);
                             offset = idx(end);
@@ -316,20 +336,60 @@ for condition = 1:length(conditions)
                             % Uncomment to plot RMG and LMG muscles (for
                             % either SCI or Healthy)
                             
-%                             figure()
-%                             XMIN = 0;
-%                             XMAX = length(current_signal);
-%                             YMIN = -inf;
-%                             YMAX = +inf;
-%                             plot(current_signal)
-%                             hold on;
-%                             
-%                             
-%                             plot(onset,current_signal(onset),'ro')
-%                             plot(offset,current_signal(offset),'bo')
-%                             axis([XMIN XMAX YMIN YMAX]);
-%                             title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-%                             
+                            % Plot: detection on SCI MG muscle that
+                            % doesn't work as expected
+                            if (strcmp(type,'SCI'))
+                                if condition == 2
+                                    if trial == 1
+                                        if gait == 4
+                                            if leg == 1
+                                                figure()
+                                                XMIN = 0;
+                                                XMAX = length(current_signal);
+                                                YMIN = -inf;
+                                                YMAX = +inf;
+                                                plot(current_signal,'k','Linewidth',2);
+                                                hold on
+                                                
+                                                scatter(onset,current_signal(onset),'filled','ro');
+                                                scatter(offset,current_signal(offset),'filled','bo');
+                                                axis([XMIN XMAX YMIN YMAX]);
+                                                %title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+                                                legend('EMG signal','Activity onset','Activity offset');
+                                                xlabel('Time (ms)');
+                                                ylabel('EMG signal (normalized)');
+                                                title('Incorrect detection of MG muscle activity on EMG signal');
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                            %Plot for ex: detection
+                            if condition == 1
+                                            figure()
+                                            XMIN = 0;
+                                            XMAX = length(current_signal);
+                                            YMIN = -inf;
+                                            YMAX = +inf;
+                                            plot(current_signal,'k','Linewidth',2);
+                                            hold on
+                                            
+                                            scatter(onset,current_signal(onset),'filled','ro');
+                                            scatter(offset,current_signal(offset),'filled','bo');
+                                            axis([XMIN XMAX YMIN YMAX]);
+                                            title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
+                                            legend('EMG signal','Activity onset','Activity offset');
+                                            xlabel('Time (ms)');
+                                            ylabel('EMG signal (normalized)');
+                                            %title('Detected phase of left MG muscle activity on EMG signal');
+                                            
+                                        end
+                                    %end
+                                %end
+                            %end
+                            
+                            
+                            
                             if strcmp(muscles{muscle},'LMG')
                                 % Duration [s]
                                 length_idx = offset - onset;
