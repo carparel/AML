@@ -60,6 +60,8 @@ coeff_dilatation_18 = Fs_EMG_H18/Fs_Kin;
 coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin; 
 [Healthy_subjects_19] = clean_data(Healthy_subjects_19,coeff_dilatation_19,'2019');
  
+Healthy_subjects_18_alg = Healthy_subjects_18;
+Healthy_subjects_19_alg = Healthy_subjects_19;
 %% Plotting the filtered signal together with the raw
 % Choose the subject, the trial and the condition you want to plot
 
@@ -133,15 +135,6 @@ load('Ground_truth.mat');
 [SCI_subjects] = split_into_gaits_SCI(SCI_subjects);
 %% Healthy subjects
 
-% Healthy 2018 with algorithm
-% [Healthy_subjects_18]= append_gait_events(Healthy_subjects_18,Fs_Kin,Fs_EMG_H18,'2018');
-% [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
-% [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
-% Healthy 2019 with algorithm
-% [Healthy_subjects_19]= append_gait_events(Healthy_subjects_19,Fs_Kin,Fs_EMG_H19,'2019');
-% [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
-% [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
-
 % Healthy 2018  with ground truth
 [Healthy_subjects_18]= append_gait_events_ground_truth(Healthy_subjects_18,struct_events,Fs_Kin,Fs_EMG_H18,'2018');
 [Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018');
@@ -152,6 +145,19 @@ load('Ground_truth.mat');
 [Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 
+% Healthy 2018 with algorithm
+[Healthy_subjects_18_alg]= append_gait_events(Healthy_subjects_18_alg,Fs_Kin,Fs_EMG_H18,'2018');
+[Healthy_subjects_18_alg] = cut_events(Healthy_subjects_18_alg,'2018');
+[Healthy_subjects_18_alg]= append_gait_cycles(Healthy_subjects_18_alg,'2018');
+% Healthy 2019 with algorithm
+[Healthy_subjects_19_alg]= append_gait_events(Healthy_subjects_19_alg,Fs_Kin,Fs_EMG_H19,'2019');
+[Healthy_subjects_19_alg] = cut_events(Healthy_subjects_19_alg,'2019');
+[Healthy_subjects_19_alg]= append_gait_cycles(Healthy_subjects_19_alg,'2019');
+
+%% Computing Accuracy
+
+% Work in progress, don't uncomment this
+% accuracy = compute_accuracy(Healthy_subjects_18_alg,Healthy_subjects_18);
 
 %% Check events for muscle 
 % figure;
@@ -178,5 +184,11 @@ whole_matrix(49,:) = [];
 whole_labels(49,:) = [];
 %% Applying PCA
 
-[PCA_data,features_weights] = apply_PCA(whole_matrix);
+% For all the parameters
+[PCA_data,~] = apply_PCA(whole_matrix);
+find_clusters(PCA_data,whole_labels);
+
+% Only for EMG
+EMG_matrix = whole_matrix(:,1:12);
+[PCA_data,~] = apply_PCA(EMG_matrix);
 find_clusters(PCA_data,whole_labels);
