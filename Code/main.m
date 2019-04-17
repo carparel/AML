@@ -132,6 +132,11 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 [struct_features_healthy,struct_labels_healthy] = create_struct_features_healthy(Healthy_subjects_18,Healthy_subjects_19);
 [~,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_features_healthy,struct_labels_healthy);
+
+%% Plotting joint angles
+
+plot_angles(Healthy_subjects_18,SCI_subjects);
+
 %% Extraction of SCI features 
 
 [SCI_matrix,labels_SCI] = create_struct_features_SCI(SCI_subjects);
