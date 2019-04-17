@@ -135,6 +135,11 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % To create the final matrix for Healthy subjects (samples x features)
 [~,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_features_healthy,struct_labels_healthy);
+
+%% Plotting joint angles
+
+plot_angles(Healthy_subjects_18,SCI_subjects);
+
 %% Extraction of SCI features 
 
 % To extract the gait features for SCI subjects and create the final matrix
