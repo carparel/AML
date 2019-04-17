@@ -1,13 +1,13 @@
 function [EMG_feat_table] = Extract_EMG_features(struct_,type,Fs_EMG)
-% This extracts the features from the EMG signals
+% This function extracts the EMG related features from the EMG data.
 %
-% INPUT: - struct_ = the data structure
-%        - type = corresponding to either Healthy or SCI
+% INPUT: - struct_ = the structure contaning all the data.
+%        - type = a string parameter. It corresponds to either 'Healthy' or
+%                 'SCI'.
 %        - Fs = sampling frequency for the EMG signals.
 %
-%
 % OUTPUT: EMG_feat_table = table containing the extracted features
-% (columns) ...
+
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
 conditions = {'NO_FLOAT','FLOAT'};

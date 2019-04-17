@@ -5,13 +5,18 @@ function [SCI_subjects] = detect_gait_events_SCI(SCI_subjects,csv_files_NO_FLOAT
 %
 % INPUT : - SCI_subjects = the structure containing all the data concerning
 %                          the SCI subjects.
+%         - csv_files_NO_FLOAT_CRUTCHES = .csv file containing the time
+%                                         events for SCI subjects in the
+%                                         condition NO_FLOAT.
+%         - csv_files_FLOAT_NO_CRUTCHES = .csv file containing the time
+%                                         events for SCI subjects in the
+%                                         condition FLOAT.
 %         - fs_Kin = the sampling frequency for the kinetic markers.
 %         - fs_EMG = the sampling frequency for the EMG markers.
 %
 % OUPUT : - SCI_subjects = the updated Healthy_subjects with the detected
 %                          events.
-%
-% DESCRIPTION TO BE CHANGED
+
 
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};
@@ -36,9 +41,7 @@ for condition = 1:length(conditions)
         % of time considered is the same, but the number of time points is
         % diminished (due to the filtering in frequencies). This  basically
         % means that each time index n the new matrix is divided by this "coefficient of dilation"
-        
-       
-        
+
         for leg = 1:length(legs)
             
             

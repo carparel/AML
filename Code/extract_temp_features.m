@@ -1,5 +1,13 @@
-function [temp_feat_table] = extract_temp_features(struct,fsKin,type)
-% BLABLA
+function [temp_feat_table] = extract_temp_features(struct_,fs_Kin,type)
+% This functions extracts the temporal features from the data.
+%
+% INPUT: - struct_ = structure containing all the data.
+%        - fs_Kin = sampling frequency for kin signals.
+%        - type = a string parameter. It is either 'SCI' or 'Healthy'.
+%
+% OUTPUT: - temp_feat_table = the resulting matrix containing all the
+%                             temporal features for all samples (all gait
+%                             cycles).
 
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
@@ -23,16 +31,16 @@ for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
-        nbr_events_HS_right = length(struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
-        nbr_events_HS_left = length(struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
-        nbr_events_TO_right = length(struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
-        nbr_events_TO_left = length(struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
+        nbr_events_HS_right = length(struct_.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+        nbr_events_HS_left = length(struct_.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
+        nbr_events_TO_right = length(struct_.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
+        nbr_events_TO_left = length(struct_.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
         min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
         
         for leg = 1:length(legs)
             
-            heel_strikes = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
-            toe_offs = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
+            heel_strikes = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
+            toe_offs = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
             
             for gait = 1:min_nbr_events-1
                 
@@ -41,7 +49,7 @@ for condition = 1:length(conditions)
                 
                 if strcmp(legs{leg},'Right')
                     duration_idx = heel_strikes(gait+1)-heel_strikes(gait);
-                    duration = duration_idx / fsKin;
+                    duration = duration_idx / fs_Kin;
                     cadence_unit = 120/duration;
                     
                     gait_cycle_duration = [gait_cycle_duration duration];
@@ -64,8 +72,8 @@ for condition = 1:length(conditions)
                     duration_stance_idx = abs(toe_offs(gait)-heel_strikes(gait));
                     duration_swing_idx = abs(heel_strikes(gait+1)-toe_offs(gait));
                     
-                    duration_stance = duration_stance_idx/ fsKin;
-                    duration_swing = duration_swing_idx / fsKin;
+                    duration_stance = duration_stance_idx/ fs_Kin;
+                    duration_swing = duration_swing_idx / fs_Kin;
                 end 
                 
                 
@@ -85,8 +93,8 @@ for condition = 1:length(conditions)
             toe_o = zeros(length(legs),min_nbr_events);
             
             for leg = 1:length(legs)
-                heel_s(leg,:) = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events)';
-                toe_o(leg,:) = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(1:min_nbr_events)';
+                heel_s(leg,:) = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events)';
+                toe_o(leg,:) = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(1:min_nbr_events)';
             end
             
             if heel_s(1,1) < heel_s(2,1)
@@ -96,7 +104,7 @@ for condition = 1:length(conditions)
                     elseif mod(gait,2) == 0
                         duration_idx(gait) = abs(toe_o(2,gait-1)-heel_s(1,gait));
                     end
-                    duration= duration_idx / fsKin;
+                    duration= duration_idx / fs_Kin;
                 end
                 double_stance_duration = [double_stance_duration duration];
                 
@@ -107,7 +115,7 @@ for condition = 1:length(conditions)
                     elseif mod(gait,2) == 0
                         duration_idx(gait) = abs(toe_o(1,gait-1)-heel_s(2,gait));
                     end
-                    duration = duration_idx / fsKin;
+                    duration = duration_idx / fs_Kin;
                 end
                 double_stance_duration = [double_stance_duration duration];
             end
