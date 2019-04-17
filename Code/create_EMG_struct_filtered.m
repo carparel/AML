@@ -6,10 +6,16 @@ function [Healthy_subjects,SCI_subjects] = create_EMG_struct_filtered(Healthy_su
 %        - SCI_subjects = Structure containing the data for SCI subjects
 %        - subject = the number of the subject you want to analyse. It should be
 %                    a string such as 'S_4' or 'S_5'
-%        - Fs = sampling frequency of the EMG recording.
+%        - Fs_EMG_S = sampling frequency of the EMG recording for SCI
+%                     subjects.
+%        - Fs_EMG_H = sampling frequency of the EMG recording for Healthy
+%                     subjects.
+%        - year = A string variable indicating the year to which the
+%                 healthy patients belong to. It can be either '2018' or 
+%                 '2019'.
 %
-% OUTPUT: - Healthy_subjects = Updated structure with the filtered EMG                            
-%         - SCI_subjects = Updated structure with the filtered EMG
+% OUTPUT: - Healthy_subjects = Updated original structure with the filtered EMG                            
+%         - SCI_subjects = Updated original structure with the filtered EMG
                               
 conditions = {'NO_FLOAT','FLOAT'};
 muscles = {'RMG','LMG','RTA','LTA'};

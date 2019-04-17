@@ -5,8 +5,11 @@ function [Healthy_subjects]= append_gait_events(Healthy_subjects,fs_KIN,fs_EMG,y
 %                              Healthy subjects
 %         - fs_Kin = sampling frequency for the markers
 %         - fs_EMG = sampling frequency for the EMG
+%         - year = A string variable indicating the year to which the
+%                  healthy patients belong to. It can be either '2018' or 
+%                  '2019'.
 %
-% OUTPUT: Healthy_subjects = updated structure
+% OUTPUT: - Healthy_subjects = updated original structure
 
 
 number_subjects = length(fieldnames(Healthy_subjects));

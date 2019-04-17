@@ -2,11 +2,16 @@ function [Healthy_struct] = cut_events(Healthy_struct,year)
 % This function cuts some of the event previously detected. It is important
 % to take into account the same number of strike and off points in order to
 % well detect the gait cycles and to easily extract the features after.
+% Also, we want to be sure to aleways have the heel strike as first event
+% and not the toe off. So also this was checked and solved if necessary.
 %
 % INPUT: - Healthy_struct = structure containing the data about the healthy
 %                           subjects.
+%        - year = A string variable indicating the year to which the
+%                 healthy patients belong to. It can be either '2018' or 
+%                 '2019'.
 %
-% OUTPUT: -Healthy_struct = updated structure with the Healthy subjects.
+% OUTPUT: - Healthy_struct = updated original structure.
 
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};

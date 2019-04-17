@@ -2,11 +2,13 @@ function [SCI_struct] = cut_events_SCI(SCI_struct)
 % This function cuts some of the event previously detected. It is important
 % to take into account the same number of strike and off points in order to
 % well detect the gait cycles and to easily extract the features after.
+% Also, we want to be sure to aleways have the heel strike as first event
+% and not the toe off. So also this was checked and solved if necessary.
 %
-% INPUT: - SCI_struct = structure containing the data about the SCI
-%                           subjects.
-%
-% OUTPUT: -SCI_struct = updated structure with the SCI subjects.
+% INPUT: - SCI_struct = structure containing the data about the SCI subjects.
+%                       
+% OUTPUT: - SCI_struct = updated original structure.
+
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
 conditions = {'NO_FLOAT','FLOAT'}; 

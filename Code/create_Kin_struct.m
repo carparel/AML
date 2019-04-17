@@ -1,7 +1,7 @@
 function [struct_Kin] = create_Kin_struct(raw_struct,type)
-% To have a more compact structure containing the Kin data (only the
-% markers we are interested in)
-%
+% This function is used in order to have a more compact structure containing
+% the Kin data (only the markers we are interested in).
+% 
 % INPUTS: - raw_struct = the structure containing all the fields. It's the
 %                        structure from which you want to sort some data.
 %         - type = a string parameter. It corresponds to the type of

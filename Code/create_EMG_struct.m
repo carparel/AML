@@ -1,6 +1,6 @@
 function [struct_EMG] = create_EMG_struct(raw_struct)
-% To have a more compact structure containing the EMG data (only the
-% muscles we are interested in)
+% This function is used in order to have a more compact structure containing 
+% the EMG data (only the muscles we are interested in).
 %
 % INPUTS: - raw_struct = the structure containing all the fields. It's the
 %                        structure from which you want to sort some data.
