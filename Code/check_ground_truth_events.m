@@ -1,6 +1,6 @@
 function [] = check_ground_truth_events(events_struct,Healthy_2018,Healthy_2019)
-% To show all the graphs for all trials in order to check if the visually 
-% detected events make sense or not. 
+% To show all the graphs for all trials in order to check if the visually
+% detected events make sense or not.
 %
 % INPUT: - events_struct = structure containing all the events (it is the
 %                          output of the function visual_detection() )
@@ -47,25 +47,76 @@ for year = 1:length(years)
                     end
                     
                     for marker = 1:length(markers)
-                        % The signal and the events
-                        current_marker_event = current_trial_event.Event.(legs{leg}).(markers{marker});
-                        current_marker_signal = current_trial_signal.(markers{marker});
-                        Y_coordinate = current_marker_signal(:,2);
-                        Z_coordinate = current_marker_signal(:,3);
-                        figure();             
-                        plot(Y_coordinate,'k-','LineWidth',1.2);
-                        hold on;
-                        plot(Z_coordinate,'r-','LineWidth',1.2);
-                        grid on;
                         
-                        plot(current_marker_event.OFF,Z_coordinate(current_marker_event.OFF),'bo');
-                        plot(current_marker_event.STRIKE,Z_coordinate(current_marker_event.STRIKE),'ro');
+                        % All "if" conditions: to choose and plot one specific trial
                         
-                        plot(current_marker_event.OFF,Y_coordinate(current_marker_event.OFF),'bo');
-                        plot(current_marker_event.STRIKE,Y_coordinate(current_marker_event.STRIKE),'ro');
+                        if year == 2
+                            if subject == 2
+                                if condition == 2
+                                    if trial == 3
+                                        if leg == 2
+                                            if marker == 2
+                                                current_marker_event = current_trial_event.Event.(legs{leg}).(markers{marker});
+                                                current_marker_signal = current_trial_signal.(markers{marker});
+                                                offset = 4000;
+                                                Y_coordinate = current_marker_signal(:,2);
+                                                Z_coordinate = current_marker_signal(:,3);
+                                                figure();
+                                                yyaxis left
+                                                ylabel({'Ankle marker position (mm)'},'FontSize',16);
+                                                plot(Y_coordinate+offset,'k-','LineWidth',1.2);
+                                                hold on;
+                                                yyaxis right
+                                                plot(Z_coordinate,'k-','LineWidth',2.4);
+                                                grid on;
+                                                
+                                                scatter(current_marker_event.OFF,Z_coordinate(current_marker_event.OFF),'filled','bo');
+                                                scatter(current_marker_event.STRIKE,Z_coordinate(current_marker_event.STRIKE),'filled','ro');
+                                                
+                                                scatter(current_marker_event.OFF,Y_coordinate(current_marker_event.OFF)+offset,'filled','bo');
+                                                scatter(current_marker_event.STRIKE,Y_coordinate(current_marker_event.STRIKE)+offset,'filled','ro');
+                                                
+                                                legend({'signal Y','signal Z','Off','Strike'},'FontSize',18);
+                                                xticklabels({'0','1','2','3','4','5','6','7'});
+                                                xlabel({'Time [s]'},'FontSize',14);
+                                                yyaxis left
+                                                ylabel({'Ankle marker Z position [mm]'},'FontSize',14);
+                                                yyaxis right
+                                                ylabel({'Ankle marker Y position [mm]'},'FontSize',14);
+                                                yticklabels({'-4000','-3000','-2000','-1000','0','1000','2000','3000'});
+                                                title({'Events detection by visual inspection'},'Fontsize',24);
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
                         
-                        legend('signal Y','signal Z','Off','Strike');
-                        title({[years{year} '; ' ['S_' num2str(subjects(subject))] ' ;'  types{condition} ' ; ' trials_title{trial} '; Leg = ' legs{leg} '; Marker =' markers{marker}],'Find the strike points'});
+                        % Comment all "if" conditions to check all the
+                        % trials for all subjects
+                                                %current_marker_event = current_trial_event.Event.(legs{leg}).(markers{marker});
+                                                %current_marker_signal = current_trial_signal.(markers{marker});
+                                                %offset = 4000;
+                                                %Y_coordinate = current_marker_signal(:,2);
+                                                %Z_coordinate = current_marker_signal(:,3);
+                                                %figure();
+                                                %yyaxis left
+                                                %ylabel({'Ankle marker position (mm)'},'FontSize',16);
+                                                %plot(Y_coordinate+offset,'k-','LineWidth',1.2);
+                                                %hold on;
+                                                %yyaxis right
+                                                %plot(Z_coordinate,'k-','LineWidth',2.4);
+                                                %grid on;
+                                                
+                                                %scatter(current_marker_event.OFF,Z_coordinate(current_marker_event.OFF),'filled','bo');
+                                                %scatter(current_marker_event.STRIKE,Z_coordinate(current_marker_event.STRIKE),'filled','ro');
+                                                
+                                                %scatter(current_marker_event.OFF,Y_coordinate(current_marker_event.OFF)+offset,'filled','bo');
+                                                %scatter(current_marker_event.STRIKE,Y_coordinate(current_marker_event.STRIKE)+offset,'filled','ro');
+                                                
+                                                %legend({'signal Y','signal Z','Off','Strike'},'FontSize',14);
+                                                %title({'Events detection by visual inspection'},'Fontsize',18);
+                        
                     end
                 end
             end
