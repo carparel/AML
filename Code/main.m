@@ -64,8 +64,9 @@ load('Ground_truth.mat');
 
 % To visualize the results of the visual inspection:
 % check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
-%% 
-% To duplicate the structure
+%% Duplicate Healthy subjects structures 
+% To duplicate the structure in order to use it to detect events with the
+% algorithm
 Healthy_subjects_18_alg = Healthy_subjects_18;
 Healthy_subjects_19_alg = Healthy_subjects_19;
 %% Detect gait events for SCI subjects
@@ -83,16 +84,18 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % Splitting into gaits for Healthy 2018 subjects with ground truth events
 [Healthy_subjects_18]= append_gait_events_ground_truth(Healthy_subjects_18,struct_events,Fs_Kin,Fs_EMG_H18,'2018');
+
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_18] = cut_events(Healthy_subjects_18,'2018'); 
+[Healthy_subjects_18] = cut_events_Healthy(Healthy_subjects_18,'2018'); 
 [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
 
 % Splitting into gaits for Healthy 2019 subjects with ground truth events
 [Healthy_subjects_19]= append_gait_events_ground_truth(Healthy_subjects_19,struct_events,Fs_Kin,Fs_EMG_H19,'2019');
+
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_19] = cut_events(Healthy_subjects_19,'2019');
+[Healthy_subjects_19] = cut_events_Healthy(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 %% Detect gait events for Healthy subjects using the algorithm
 
@@ -105,16 +108,18 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % Splitting into gaits for Healthy 2018 subjects with algorithm
 [Healthy_subjects_18_alg]= append_gait_events(Healthy_subjects_18_alg,Fs_Kin,Fs_EMG_H18,'2018');
+
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_18_alg] = cut_events(Healthy_subjects_18_alg,'2018');
+[Healthy_subjects_18_alg] = cut_events_Healthy(Healthy_subjects_18_alg,'2018');
 [Healthy_subjects_18_alg]= append_gait_cycles(Healthy_subjects_18_alg,'2018');
 
 % Splitting into gaits for Healthy 2019 subjects with algorithm
 [Healthy_subjects_19_alg]= append_gait_events(Healthy_subjects_19_alg,Fs_Kin,Fs_EMG_H19,'2019');
+
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_19_alg] = cut_events(Healthy_subjects_19_alg,'2019');
+[Healthy_subjects_19_alg] = cut_events_Healthy(Healthy_subjects_19_alg,'2019');
 [Healthy_subjects_19_alg]= append_gait_cycles(Healthy_subjects_19_alg,'2019');
 
 %% Computing Algorithm Accuracy
@@ -132,13 +137,14 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % To extract the gait features for both 2018 and 2019 structures for each subject separately
 [struct_features_healthy,struct_labels_healthy] = create_struct_features_healthy(Healthy_subjects_18,Healthy_subjects_19);
+
 % To create the final matrix for Healthy subjects (samples x features)
 [~,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_features_healthy,struct_labels_healthy);
 %% Extraction of SCI features 
 
 % To extract the gait features for SCI subjects and create the final matrix
 % for SCI subjects (samples x features)
-[SCI_matrix,labels_SCI] = create_struct_features_SCI(SCI_subjects);
+[SCI_matrix,labels_SCI] = create_struct_features_SCI(SCI_subjects,Fs_EMG_S,Fs_Kin);
 
 %% Merging everything
 

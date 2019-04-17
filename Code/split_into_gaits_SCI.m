@@ -6,12 +6,12 @@ trials = {'T_01', 'T_02', 'T_03'};
 legs = {'Right', 'Left'};
 envelopes = {'envelope','noenvelope'};
 
-
-
 for condition = 1:length(conditions)
+    
     for trial = 1:length(trials)
+        
         for leg = 1:length(legs)
-
+            
             if strcmp(legs{leg},'Right')
                 markers = {'RASI','RKNE','RTOE','RANK'};
                 emgs = {'RMG','RTA'};
@@ -20,13 +20,12 @@ for condition = 1:length(conditions)
                 emgs = {'LMG','LTA'};
             end
             
+            % Events on the righ and left leg are the same so we are just
+            % randomly choosing the right to iterate
             nbr_events_right = length(SCI_subjects.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
-            nbr_events_left = length(SCI_subjects.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
             
-            min_nbr_events = min([nbr_events_right,nbr_events_left]);
-            
-            for nb_steps = 1:min_nbr_events-1
-                
+            for nb_steps = 1: nbr_events_right-1
+                % Splitting Kin signals into gaits based on the events 
                 for marker = 1:length(markers)
                     old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Filtered.Kin.(markers{marker});
                     SCI_subjects.(conditions{condition}).(trials{trial}).Parsed{nb_steps}.(legs{leg}).Kin.(markers{marker}) = ...
@@ -37,6 +36,7 @@ for condition = 1:length(conditions)
                 
                 
                 for emg = 1:length(emgs)
+                    % Splitting EMG envelope signals into gaits based on the events 
                     for envelope = 1:length(envelopes)
                         if strcmp(envelopes{envelope},'envelope')
                             old_signal = SCI_subjects.(conditions{condition}).(trials{trial}).Normalized.EMG.envelope.(emgs{emg});
