@@ -1,8 +1,24 @@
 function [healthy_table,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_subjects,struct_labels)
-% CIAO
+% This function merges (vertically) the matrices containing the features 
+% for different Healthy subjects.
+%
+% INPUT: - struct_subjects = structure containing the matrices with all the
+%                            features of the different subjects. Thus, the 
+%                            fields of this structure are the subjects,
+%                            such as 'S_1'.
+%        - struct_labels = structure containing the labels for each subject
+%                          for each gait cycle (each sample).
+%
+% OUTPUT: - healthy_table = final table containing all the samples (gait
+%                           cycles) from all the healthy subjects. The
+%                           columns are labeled.
+%         _ healthy_matrix = same as healthy_table, but it is a simple
+%                            matrix.
+%         - healthy_labels = whole vector of labels for all gait cycles for
+%                            healthy subjects.
+
 
 healthy_matrix = [struct_subjects.S_1;struct_subjects.S_2;struct_subjects.S_3;struct_subjects.S_4];
-
 
 % Defining the labels to keep trace of the characteristics of each gait
 % cycle

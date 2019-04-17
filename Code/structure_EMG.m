@@ -2,9 +2,6 @@ function [Healthy_subjects,SCI_subjects]= structure_EMG(Healthy_subjects,SCI_sub
 % This function appends to the original structure all the EMG data
 % filtered for the markers we are interested about. Inside the Filtered
 % data, the EMG signals are divided into envelope and noenvelope
-
-% Subject 1 and 2 are not included for the moment because they are not
-% correctly loaded 
 %
 % INPUT: - Healthy_subjects = structure containing all the data from the
 %                             Healthy subjects.

@@ -1,5 +1,16 @@
 function [] = visual_inspection_events(subjects_struct,subject,condition,trial)
-% BLABLABLA
+% This function plots the kin signals in a ZY space for all time points, in
+% order to see a sort of projection of the dynamics on this plane. 
+
+% INPUT: - subjects_struct = structure containing all the data related to the
+%                            Healthy subjects 
+%        - subject = a string parameter representing the specific subject
+%                    to consider. It should be something like 'S_4'.
+%        - condition = the condition for the subject, either FLOAT or
+%                      NO_FLOAT.
+%        - trial = a string parameter. It corresponds to the number of the
+%                  specific trial, like 'T_01'.
+%        
 
 current_trial = subjects_struct.(subject).(condition).(trial).Filtered.Kin;
 

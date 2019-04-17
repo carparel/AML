@@ -1,6 +1,17 @@
 function [Healthy_subjects] = insert_ground_truth_events(Healthy_subjects,subject,year_events,freq_KIN,freq_EMG)
-%UNTITLED5 Summary of this function goes here
-%   Detailed explanation goes here
+% This function inserts in the original structures the events found by
+% visual inspection. 
+%
+% INPUT: - Healthy_subjects = original structure containing the data relted
+%          healthy subjects for a specific year.
+%        - subject = a string parameter. It indicated the number of the
+%                    subject. Is should be something like 'S_4'.
+%        - year_events = the structure containing the events detected by
+%                        visual inspection for a specific year.
+%        - freq_KIN = sampling frequency for the kin signals.
+%        - freq_EMG = sampling frequency for the EMG signals.
+%
+% OUTPT: - Healthy_subjects = updated original structures.
 
 conditions = {'FLOAT','NO_FLOAT'};
 trials = {'T_01','T_02','T_03'};

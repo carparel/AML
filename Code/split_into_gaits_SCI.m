@@ -1,5 +1,11 @@
 function [SCI_subjects] = split_into_gaits_SCI(SCI_subjects)
-
+% This functions divides the signal into gait cycles for the SCI subjects
+% based on the gait events previously found. 
+%
+% INPUT: - SCI_subjects = structure containing all the data related to the
+%                         SCI subjects.
+%
+% OUTPUT: -SCI_subjects = updated structure. 
 
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};

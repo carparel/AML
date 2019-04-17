@@ -1,16 +1,19 @@
-function [Healthy_subjects,SCI_subjects] = normalize(Healthy_subjects,SCI_subjects,subject);
+function [Healthy_subjects,SCI_subjects] = normalize(Healthy_subjects,SCI_subjects,subject)
 % This function removes artifacts and normalizes the EMG signal. The 
 % normalization is performed by dividing with the maximum contraction
 % recorded over all trials (of the same subject). The rationale behind this
 % is that this value corresponds to the maximum contraction ever recorded
 % in the selected subject. 
-
-% Th = max(Healthy_subjects)/10;
-% for i=1:length(Healthy_subjects)
-%     if (abs(Healthy_subjects(i))<Th)
-%         Healthy_subjects(i)=0;
-%     end
-% end
+%
+% INPUT: - Healthy_subjects = the structure containing all the data related 
+%                             Healthy subjects.
+%        - SCI_subjects = the structure containing all the data related 
+%                         SCI subjects. 
+%        - subject = a string parameter. It has to be the number of the
+%                    subject, such as 'S_4'.
+%
+% OUTPUT: - Healthy_subjects = updated original Healthy structure.
+%         - SCI_subjects = updated original SCI structure.
 
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};
