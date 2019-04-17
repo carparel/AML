@@ -10,8 +10,8 @@ function [] = visual_inspection_events(subjects_struct,subject,condition,trial)
 %                      NO_FLOAT.
 %        - trial = a string parameter. It corresponds to the number of the
 %                  specific trial, like 'T_01'.
-%        
-
+% 
+% OUTPUT: //
 current_trial = subjects_struct.(subject).(condition).(trial).Filtered.Kin;
 
 % Markers left leg:
