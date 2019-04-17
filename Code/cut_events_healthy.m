@@ -31,6 +31,23 @@ for s = nbr_subjects(1):nbr_subjects(end)
         
         for trial = 1:length(trials)
             
+            for leg = 1:length(legs)
+                % Checking that we start with and heel strike and not a toe
+                % off, if not the case we solve the problem
+                heel_strikes = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
+                toe_offs = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
+                heel_strikes_emg = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg;
+                toe_offs_emg = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg;
+                
+                if heel_strikes(1) > toe_offs(1)
+                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker = heel_strikes(1:length(toe_offs)-1);
+                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg = heel_strikes_emg(1:length(toe_offs)-1);
+                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker = toe_offs(2:end);
+                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg = toe_offs_emg(2:end);
+                end
+                
+            end
+            
             nbr_events_HS_left = length(Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
             nbr_events_HS_right = length(Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
             nbr_events_TO_right = length(Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
@@ -48,22 +65,9 @@ for s = nbr_subjects(1):nbr_subjects(end)
                 % Cutting events for the EMG signals 
                 Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(1:min_nbr_events);
                 Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg(1:min_nbr_events);
-                
-                % Checking that we start with and heel strike and not a toe
-                % off, if not the case we solve the problem
-                heel_strikes = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
-                toe_offs = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
-                heel_strikes_emg = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg;
-                toe_offs_emg = Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg;
-                
-                if heel_strikes(1) > toe_offs(1)
-                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker = heel_strikes(1:length(toe_offs)-1);
-                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg = heel_strikes_emg(1:length(toe_offs)-1);
-                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker = toe_offs(2:end);
-                    Healthy_struct.(['S_' num2str(s)]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg = toe_offs_emg(2:end);
-                end
-                
             end
+            
+            
         end
     end
 end
