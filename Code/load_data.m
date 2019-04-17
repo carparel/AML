@@ -21,8 +21,9 @@ conditions_SCI = {'FLOAT_NO_CRUTCHES','NO_FLOAT_CRUTCHES'};
 %% SCI Subjects
 
 % Select the folder containing the data for the SCI patients
+f = msgbox('Select the folder containing data for SCI patients');
+pause(1.5);
 FolderName = uigetdir('select the directory with the data');
-
 % We load all the csv files. A structure with size 6X1 is going to be created
 % Pay attention that the 3 first files make reference to the GAIT FILES
 % related to the FLOAT_NO_CRUTCHES and the 3 last to the GAIT FILES related
@@ -48,8 +49,9 @@ end
 %% Healthy Subjects
 
 % Same thing but fot the healthy subjects
+msgbox('Select the folder containing data for Healthy patients');
+pause(1.5);
 FolderName = uigetdir('select the directory with the data');
-
 % Loading the two MATLAB structures for the Healthy Subjects
 mat_files_H = dir([FolderName filesep '**/*.mat']);
 nbr_files = length(mat_files_H);
