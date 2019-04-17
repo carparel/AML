@@ -1,4 +1,4 @@
-function [Kin_feat_table] = Extract_Kin_features(new_struct,type)
+function [Kin_feat_table] = extract_Kin_features(new_struct,type)
 % This function evaluates the ROM and w for hip, knee and ankle for both
 % Flexion-Extension (FE) and Abduction-Adduction (AA).
 %

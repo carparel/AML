@@ -18,10 +18,10 @@ function [SCI_matrix,labels_SCI] = create_struct_features_SCI(SCI_subjects,Fs_EM
 %                       condition.
 
 % Extract EMG features
-EMG_feat_table_SCI = Extract_EMG_features(SCI_subjects,'SCI',Fs_EMG);
+EMG_feat_table_SCI = extract_EMG_features(SCI_subjects,'SCI',Fs_EMG);
 
 % Extract Kinetic features (Range of motion, angles, and angular velocity)
-Kin_feat_table_SCI = Extract_Kin_features(SCI_subjects,'SCI');
+Kin_feat_table_SCI = extract_Kin_features(SCI_subjects,'SCI');
 
 % Extract temporal kinetic features
 Temporal_feat_table_SCI = extract_temp_features(SCI_subjects,Fs_Kin,'SCI');

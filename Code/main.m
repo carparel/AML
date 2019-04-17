@@ -87,7 +87,7 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_18] = cut_events_Healthy(Healthy_subjects_18,'2018'); 
+[Healthy_subjects_18] = cut_events_healthy(Healthy_subjects_18,'2018'); 
 [Healthy_subjects_18]= append_gait_cycles(Healthy_subjects_18,'2018');
 
 % Splitting into gaits for Healthy 2019 subjects with ground truth events
@@ -95,7 +95,7 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_19] = cut_events_Healthy(Healthy_subjects_19,'2019');
+[Healthy_subjects_19] = cut_events_healthy(Healthy_subjects_19,'2019');
 [Healthy_subjects_19]= append_gait_cycles(Healthy_subjects_19,'2019');
 %% Detect gait events for Healthy subjects using the algorithm
 
@@ -111,7 +111,7 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_18_alg] = cut_events_Healthy(Healthy_subjects_18_alg,'2018');
+[Healthy_subjects_18_alg] = cut_events_healthy(Healthy_subjects_18_alg,'2018');
 [Healthy_subjects_18_alg]= append_gait_cycles(Healthy_subjects_18_alg,'2018');
 
 % Splitting into gaits for Healthy 2019 subjects with algorithm
@@ -119,7 +119,7 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 % Cutting events in order to have same number of strike and off points for
 % right and left leg
-[Healthy_subjects_19_alg] = cut_events_Healthy(Healthy_subjects_19_alg,'2019');
+[Healthy_subjects_19_alg] = cut_events_healthy(Healthy_subjects_19_alg,'2019');
 [Healthy_subjects_19_alg]= append_gait_cycles(Healthy_subjects_19_alg,'2019');
 
 %% Computing Algorithm Accuracy

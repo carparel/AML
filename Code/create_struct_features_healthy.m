@@ -31,11 +31,11 @@ for i = 1:number_subjects
     if i < number_subjects % It means we're taking into account S1,S2,S3
         
         % Extract EMG features
-        EMG_feat_table_Healthy_19 = Extract_EMG_features(Healthy19.(subject),'Healthy',Fs_EMG_H19);
+        EMG_feat_table_Healthy_19 = extract_EMG_features(Healthy19.(subject),'Healthy',Fs_EMG_H19);
         
         % Extract Kinetic features (Range of motion, angles, and angular
         % velocity)
-        Kin_feat_table_Healthy_19 = Extract_Kin_features(Healthy19.(subject),'Healthy');
+        Kin_feat_table_Healthy_19 = extract_Kin_features(Healthy19.(subject),'Healthy');
         
         % Extract temporal kinetic features
         Temporal_feat_table_Healthy_19 = extract_temp_features(Healthy19.(subject),Fs_Kin,'Healthy');
@@ -49,11 +49,11 @@ for i = 1:number_subjects
     else
         
         % Extract EMG features
-        EMG_feat_table_Healthy_18 = Extract_EMG_features(Healthy18.(subject),'Healthy',Fs_EMG_H18);
+        EMG_feat_table_Healthy_18 = extract_EMG_features(Healthy18.(subject),'Healthy',Fs_EMG_H18);
         
         % Extract Kinetic features (Range of motion, angles, and angular
         % velocity)
-        Kin_feat_table_Healthy_18 = Extract_Kin_features(Healthy18.(subject),'Healthy');
+        Kin_feat_table_Healthy_18 = extract_Kin_features(Healthy18.(subject),'Healthy');
         
         % Extract temporal kinetic features
         Temporal_feat_table_Healthy_18 = extract_temp_features(Healthy18.(subject),Fs_Kin,'Healthy');

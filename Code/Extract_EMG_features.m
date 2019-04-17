@@ -1,4 +1,4 @@
-function [EMG_feat_table] = Extract_EMG_features(struct_,type,Fs_EMG)
+function [EMG_feat_table] = extract_EMG_features(struct_,type,Fs_EMG)
 % This function extracts the EMG related features from the EMG data.
 %
 % INPUT: - struct_ = the structure contaning all the data.

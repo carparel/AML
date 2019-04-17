@@ -1,4 +1,4 @@
-function [Healthy_struct] = cut_events_Healthy(Healthy_struct,year)
+function [Healthy_struct] = cut_events_healthy(Healthy_struct,year)
 % This function cuts some of the event previously detected. It is important
 % to take into account the same number of strike and off points in order to
 % well detect the gait cycles and to easily extract the features after.
