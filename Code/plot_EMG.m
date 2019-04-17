@@ -1,4 +1,4 @@
-function [] = plot_EMG(EMG_envelope, EMG_no_envelope,fs)
+function [] = plot_EMG(EMG_envelope, EMG_no_envelope,fs_EMG)
 % This function plots the EMG for a certain trial for all the muscles
 % (RTA,LTA,RGM,LGM) in a subplot. The non-envelope and the envelope signal
 % are plotted in the same figure (hold on).
@@ -7,7 +7,7 @@ function [] = plot_EMG(EMG_envelope, EMG_no_envelope,fs)
 %                         a structure containing the 4 muscles).
 %        - EMG_no_envelope = the filtered signal without the envelope (it is
 %                            a structure containing the 4 muscles).
-%        - fs = sampling frequency for the EMG.
+%        - fs_EMG = sampling frequency for the EMG.
 %
 % OUTPUT: //
 
@@ -22,16 +22,16 @@ LTA_filtered_noenv = EMG_no_envelope.LTA;
 RTA_filtered_noenv = EMG_no_envelope.RTA;
 
 time_idx_LMG = 1:1:length(LMG_filtered_noenv);
-time_points_LMG = time_idx_LMG/fs; %in seconds
+time_points_LMG = time_idx_LMG/fs_EMG; %in seconds
 
 time_idx_RMG = 1:1:length(RMG_filtered_noenv);
-time_points_RMG = time_idx_RMG/fs; %in seconds
+time_points_RMG = time_idx_RMG/fs_EMG; %in seconds
 
 time_idx_LTA = 1:1:length(LTA_filtered_noenv);
-time_points_LTA = time_idx_LTA/fs; %in seconds
+time_points_LTA = time_idx_LTA/fs_EMG; %in seconds
 
 time_idx_RTA= 1:1:length(RTA_filtered_noenv);
-time_points_RTA = time_idx_RTA/fs; %in seconds
+time_points_RTA = time_idx_RTA/fs_EMG; %in seconds
 
 XMIN = 0;
 XMAX = time_points_LMG(length(time_points_LMG));

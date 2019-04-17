@@ -1,4 +1,13 @@
 function [Healthy_subjects] = split_into_gaits_healthy(Healthy_subjects,subject)
+% This functions divides the signal into gait cycles for the Healthy subjects
+% based on the gait events previously found. 
+%
+% INPUT: - Healthy_subjects = structure containing all the data related to the
+%                             Healthy subjects.
+%        - subject = a string parameter corresponding to the number of the
+%                    subject. It should be something like 'S_4'.
+%
+% OUTPUT: -Healthy_subjects = updated structure. 
 
 datas = Healthy_subjects.(subject);
 conditions = {'NO_FLOAT', 'FLOAT'};

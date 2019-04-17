@@ -1,4 +1,15 @@
 function [struct_events] = visual_detection(Healthy_2018,Healthy_2019)
+% This function performs the visual detection of the events on all the
+% signals for the Healthy subjects. The detection is performed manually and
+% the indices are stocked into a structure. 
+%
+% INPUT: - Healthy_2018 = structure containing all the data related to the
+%                         Healthy subjects 2018.
+%        - Healthy_2019 = structure containing all the data related to the
+%                         Healthy subjects 2019.
+%
+% OUTPUT: - struct_events = final structure containing all the gait events 
+%                           for healthy subjects.
 
 years = {'2018','2019'};
 conditions = {'FLOAT','NO_FLOAT'};
