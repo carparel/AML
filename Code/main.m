@@ -36,9 +36,15 @@ coeff_dilatation_19 = Fs_EMG_H19/Fs_Kin;
 Healthy_subjects_19 = correct_typo(Healthy_subjects_19);
 %% Structuring,filtering and normalizing the EMG data
 
-%To filter and normalize muscles with respect to maximal contraction
+% To filter and normalize muscles with respect to maximal contraction
 [Healthy_subjects_18,SCI_subjects] = structure_EMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
 [Healthy_subjects_19,~] = structure_EMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
+
+% To plot the filtered muscle signal for a specific Healthy subject
+
+% EMG_envelope = Healthy_subjects_19.S_1.FLOAT.T_01.Normalized.EMG.envelope;
+% EMG_no_envelope = Healthy_subjects_19.S_1.FLOAT.T_01.Normalized.EMG.noenvelope;
+% plot_EMG(EMG_envelope, EMG_no_envelope,Fs_EMG_H19)
 %% Structuring and filtering the Kin data
 
 %To filter the marker signals

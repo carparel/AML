@@ -22,7 +22,9 @@ else
     index_subject = [1, 2, 3];
 end
     for i = 1:length(index_subject)
-    subject = ['S_' num2str(index_subject(i))];
-    [Healthy_subjects,SCI_subjects] = create_Kin_struct_filtered(Healthy_subjects,SCI_subjects,subject,Fs_kin);
+        
+        subject = ['S_' num2str(index_subject(i))];
+        [Healthy_subjects,SCI_subjects] = create_Kin_struct_filtered(Healthy_subjects,SCI_subjects,subject,Fs_kin);
+        
     end
 end

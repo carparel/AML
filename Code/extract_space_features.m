@@ -12,11 +12,12 @@ trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
 conditions = {'NO_FLOAT','FLOAT'};
 
+% To initialize the vectors in which we are going to stock our labels 
+cond_H = []; % Is 1 if subject Healthy and is 0 if SCI
+cond_NO_F = [];% Is 1 if NO_FLOAT and is 0 if FLOAT
+
 % To initialize the vector in which we are going to stock our
 % features/variables
-cond_H = [];
-cond_NO_F = [];
-%Let's start with this ones..
 stride_length_right = [];
 stride_length_left = [];
 swing_length_right = [];

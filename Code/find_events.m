@@ -21,6 +21,36 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 %                     heel off or toe off, depending on which marker is 
 %                     considered.
 
+%% MAIN CODE OF THE FUNCTION
+
+if strcmp(condition,'NO_FLOAT')
+    % Experimental thresholds:
+    peak_distance = 100;
+    thr_strike = 0.5;
+    thr_off = 0.5;
+elseif strcmp(condition,'FLOAT')
+    % Experimental thresholds:
+    peak_distance = 100;
+    thr_strike = 0.3;
+    thr_off = 0.3;
+end
+
+der1 = diff(signal);
+der2 = diff(der1);
+der2 = movmean(der2,20);
+
+if (signal(end) > 0)
+    [~,idx_off] = findpeaks(der2,'MinPeakHeight',thr_off,'MinPeakDistance',peak_distance); 
+    [~,idx_strike] = findpeaks(-der2,'MinPeakHeight',thr_strike,'MinPeakDistance',peak_distance); 
+    strike_idx = idx_strike + 2;
+    off_idx = idx_off + 2;
+else
+    [~,idx_off] = findpeaks(-der2,'MinPeakHeight',thr_off,'MinPeakDistance',peak_distance); 
+    [~,idx_strike] = findpeaks(der2,'MinPeakHeight',thr_strike,'MinPeakDistance',peak_distance); 
+    strike_idx = idx_strike + 2;
+    off_idx = idx_off + 2;
+end
+
 %% TO PLOT ALL CASES 
 %Uncomment these lines if you want to plot all the figures in order to assess
 %how good the detection of the events is.
@@ -84,38 +114,6 @@ function [strike_idx, off_idx] = find_events(signal,condition)
 %         end
 %     end
 % end
-
-%% MAIN CODE OF THE FUNCTION
-
-if strcmp(condition,'NO_FLOAT')
-    % Experimental thresholds:
-    peak_distance = 100;
-    thr_strike = 0.5;
-    thr_off = 0.5;
-elseif strcmp(condition,'FLOAT')
-    % Experimental thresholds:
-    peak_distance = 100;
-    thr_strike = 0.3;
-    thr_off = 0.3;
-end
-
-der1 = diff(signal);
-der2 = diff(der1);
-der2 = movmean(der2,20);
-
-if (signal(end) > 0)
-    [~,idx_off] = findpeaks(der2,'MinPeakHeight',thr_off,'MinPeakDistance',peak_distance); 
-    [~,idx_strike] = findpeaks(-der2,'MinPeakHeight',thr_strike,'MinPeakDistance',peak_distance); 
-    strike_idx = idx_strike + 2;
-    off_idx = idx_off + 2;
-else
-    [~,idx_off] = findpeaks(-der2,'MinPeakHeight',thr_off,'MinPeakDistance',peak_distance); 
-    [~,idx_strike] = findpeaks(der2,'MinPeakHeight',thr_strike,'MinPeakDistance',peak_distance); 
-    strike_idx = idx_strike + 2;
-    off_idx = idx_off + 2;
-end
-
-
 end
 
 

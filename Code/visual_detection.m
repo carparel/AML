@@ -31,10 +31,15 @@ for year = 1:length(years)
     end
     
     for subject = 1:length(subjects)
+        
         current_subject = data.(['S_' num2str(subjects(subject))]);
+        
         for condition = 1:length(conditions)
+            
             for trial = 1:length(trials)
+                
                 current_trial = current_subject.(conditions{condition}).(trials{trial}).Filtered.Kin;
+                
                 for leg = 1:length(legs)
                     
                     if strcmp(legs{leg},'Right')
@@ -44,6 +49,7 @@ for year = 1:length(years)
                     end
                     
                     for marker = 1:length(markers)
+                        
                         current_marker = current_trial.(markers{marker});
                         Z_coordinate = current_marker(:,3);
                         
@@ -76,6 +82,7 @@ for year = 1:length(years)
                         % Press Return key to exit.
                         [struct_events.(['Year_' years{year}]).(['S_' num2str(subjects(subject))]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).(markers{marker}).OFF,~] = ginput();
                         struct_events.(['Year_' years{year}]).(['S_' num2str(subjects(subject))]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).(markers{marker}).OFF = round(struct_events.(['Year_' years{year}]).(['S_' num2str(subjects(subject))]).(conditions{condition}).(trials{trial}).Event.(legs{leg}).(markers{marker}).OFF);
+                        
                     end
                 end
             end
