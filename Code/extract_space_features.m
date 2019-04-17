@@ -1,6 +1,12 @@
 function [space_feat_table] = extract_space_features(struct,type)
-
-% BLABLABLA
+% This functions extracts the spatial features from the data.
+%
+% INPUT: - struct = Structure containing all the data.
+%        - type = a string parameter. It is either 'SCI' or 'Healthy'.
+%
+% OUTPUT: - space_feat_table = the resulting matrix containing all the
+%                              spatial features for all samples (all gait
+%                              cycles).
 
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
