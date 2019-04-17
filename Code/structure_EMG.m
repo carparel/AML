@@ -24,8 +24,10 @@ else
     index_subject = [1, 2, 3];
 end
     for i = 1:length(index_subject)
-    subject = ['S_' num2str(index_subject(i))];
-    [Healthy_subjects,SCI_subjects] = create_EMG_struct_filtered(Healthy_subjects,SCI_subjects,subject,Fs_EMG_S,Fs_EMG_H,year);
-    [Healthy_subjects,SCI_subjects] = normalize(Healthy_subjects,SCI_subjects,subject);
+        
+        subject = ['S_' num2str(index_subject(i))];
+        [Healthy_subjects,SCI_subjects] = create_EMG_struct_filtered(Healthy_subjects,SCI_subjects,subject,Fs_EMG_S,Fs_EMG_H,year);
+        [Healthy_subjects,SCI_subjects] = normalize(Healthy_subjects,SCI_subjects,subject);
+        
     end
 end

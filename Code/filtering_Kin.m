@@ -17,7 +17,6 @@ low_pass_cutoff = 10;
 lowpass_window = low_pass_cutoff/(Fs/2);
 
 % Order of the Butterworth filter
-% Literature-based choice
 order = 4; 
 
 % Lowpass filter
