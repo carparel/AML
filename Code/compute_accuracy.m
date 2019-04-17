@@ -1,14 +1,13 @@
 function [accuracy] = compute_accuracy(algorithm_struct,gt_struct,year)
-
 % This function computes the accuracy of our detection algorithm for S_4
-% subject of 2018 (to have a general idea)
+% subject of 2018 (to have an estimation).
 %
-% INPUTS: -algorithm_struct: is the struct with .Events computed with the
-%                            algorithm
-%         -gt_struct: is the struct with .Events computed with the ground
-%                     truth
-% OUTPUT: -accuracy: this is the measure of our accuracy
-
+% INPUTS: - algorithm_struct = is the struct with all the events computed 
+%                              with the event detection algorithm.                          
+%         - gt_struct = is the struct with all the events found by visual
+%                       detection
+% OUTPUT: - accuracy = this is our estimation of the accuracy of our
+%                      algorithm.
 
 conditions = {'NO_FLOAT', 'FLOAT'};
 trials = {'T_01', 'T_02', 'T_03'};

@@ -2,11 +2,17 @@ function [Healthy_subjects]= append_gait_events_ground_truth(Healthy_subjects,st
 % This function appends to the original structure all the gait events.
 %
 % INPUT: - Healthy_subjects = structure containing all the data from the
-%                              Healthy subjects
-%         - fs_Kin = sampling frequency for the markers
-%         - fs_EMG = sampling frequency for the EMG
+%                             Healthy subjects.
+%        - struct_all_events = structure containing all the events detected
+%                              by visual inspection. They are the ground
+%                              truth gait events.             
+%        - fs_Kin = sampling frequency for the markers
+%        - fs_EMG = sampling frequency for the EMG
+%        - year = A string variable indicating the year to which the
+%                 healthy patients belong to. It can be either '2018' or 
+%                 '2019'.
 %
-% OUTPUT: Healthy_subjects = updated structure
+% OUTPUT: Healthy_subjects = updated original structure
 
 if strcmp(year,'2018')
     index_subject = 4;

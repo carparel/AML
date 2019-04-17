@@ -4,13 +4,7 @@ function [subjects_struct] = clean_data(subjects_struct,coeff_dilatation,year)
 %
 % INPUT: - subjects_struct = the structure containing all the data for healthy
 %                            subjects.
-%        - coeff_dilatation = corresponding to the coefficient of
-%                             dilatation between kin and emg signals. It is 
-%                             equal to the ration between the emg sampling
-%                             frequency and the kin sampling frequency.
-%        - year = A string variable indicating the year to which the
-%                 healthy patients belong to. It can be either '2018' or 
-%                 '2019'.
+%        
 %
 % OUTPUT: - subjects_struct = same structure as the input one, with edges
 %                             removed

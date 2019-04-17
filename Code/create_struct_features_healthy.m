@@ -1,6 +1,21 @@
 function [struct_features_healthy,struct_labels_healthy] = create_struct_features_healthy(Healthy18,Healthy19)
-
-% Ciao
+% This function extracts the gait features (the gait parameters we are
+% looking for) for both 2018 and 2019 structures for each subject separately. 
+% Then, the different matrices are merged all together for each subject 
+% in order to have the final feature matrix for each healthy subject. These 
+% matrices are thus stocked in a structure, which is given as output.
+%
+% INPUT: - Healthy18 = structure containing all the data related to healthy
+%                      subjects of year 2018.
+%        - Healthy19 = structure containing all the data related to healthy
+%                      subjects of year 2019.
+%
+% OUTPUT: - struct_features_healthy = structure containing as fields the
+%                                     the vectors of labels of the gait 
+%                                     cycles (our samples) for each subject.
+%         - struct_labels_healthy = structure containing as fields the
+%                                     the vectors of labels of the gait 
+%                                     cycles (our samples) for each subject.
 
 number_subjects = length(fieldnames(Healthy19))+length(fieldnames(Healthy18));
 Fs_EMG_H19 = Healthy19.S_1.FLOAT.T_01.fsEMG;

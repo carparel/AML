@@ -3,8 +3,10 @@ function [Healthy_subjects]= append_gait_cycles(Healthy_subjects,year)
 % 
 % INPUT: - Healthy_subjects = structure containing all the data from the
 %                              Healthy subjects
-%
-% OUTPUT: - Healthy_subjects = updated structure
+%        - year = A string variable indicating the year to which the healthy
+%                 patients belong to. It can be either '2018' or '2019'.
+%                  
+% OUTPUT: - Healthy_subjects = updated original structure
 
 
 number_subjects = length(fieldnames(Healthy_subjects));
