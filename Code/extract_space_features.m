@@ -38,13 +38,7 @@ for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
-        nbr_events_HS_right = length(struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
-        nbr_events_HS_left = length(struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
-        nbr_events_TO_right = length(struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
-        nbr_events_TO_left = length(struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
-        
-        
-        min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
+        min_nbr_events = length(struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
         
         rank_y = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
         lank_y = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
@@ -163,6 +157,7 @@ end
 
 names = {'Condition_Healthy','Condition_NO_Float','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm','max_heel_clearance_right','max_heel_clearance_left','max_knee_clearance_right','max_knee_clearance_left','max_toe_clearance_right','max_toe_clearance_left'};
 space_feat_table = table(cond_H',cond_NO_F',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width',max_heel_clearance_right',max_heel_clearance_left',max_knee_clearance_right',max_knee_clearance_left',max_toe_clearance_right',max_toe_clearance_left','VariableNames',names);
+
 end
 % Step length is the distance between the heel strike of one foot and the heel strike of the opposite foot
 
