@@ -19,7 +19,7 @@ function [Healthy_subjects,SCI_subjects]= structure_EMG(Healthy_subjects,SCI_sub
 % OUTPUT: - Healthy_subjects = updated original structure
 %         - SCI_subjects = updated original structure
 
-if year == '2018'
+if strcmp(year,'2018')
     % Healthy subjects 2018 contain only subject 4
     index_subject = [4];
 else

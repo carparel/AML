@@ -16,7 +16,7 @@ conditions = {'FLOAT','NO_FLOAT'};
 trials = {'T_01','T_02','T_03'};
 legs = {'Right','Left'};
 
-% for plot titles (in order to not have the boring underscores)
+% To plot titles (in order to not have the boring underscores)
 types = {'FLOAT', 'NO FLOAT'};
 trials_title = {'Trial 1','Trial 2','Trial 3'};
 

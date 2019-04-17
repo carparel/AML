@@ -45,7 +45,6 @@ legend('Healthy NO FLOAT','Centroid Healthy NO FLOAT','Healthy FLOAT','Centroid 
 xlabel('PC_1','FontSize',15);
 ylabel('PC_2','FontSize',15);
 zlabel('PC_3','FontSize',15);
-%title('Distribution of our data once projected on the first 3 PCs','FontSize',15);
 title('Distribution of all our data projected on the first 3 PCs','FontSize',11);
 set(h,'Position',[0 0 680 480]);
 end

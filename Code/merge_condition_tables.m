@@ -22,6 +22,7 @@ whole_matrix = [whole_matrix_H;whole_matrix_SCI];
 
 % Defining the labels to keep trace of the characteristics of each gait
 % cycle
+
 labels_H = table2array(labels_H);
 labels_SCI = table2array(labels_SCI);
 labels = [labels_H;labels_SCI];
