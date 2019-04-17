@@ -40,13 +40,13 @@ Healthy_subjects_19 = correct_typo(Healthy_subjects_19);
 %% Structuring,filtering and normalizing the EMG data
 
 %To filter and normalize muscles with respect to maximal contraction
-[Healthy_subjects_18,SCI_subjects] = structureEMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
-[Healthy_subjects_19,~] = structureEMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
+[Healthy_subjects_18,SCI_subjects] = structure_EMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
+[Healthy_subjects_19,~] = structure_EMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
 %% Structuring and filtering the Kin data
 
 %To filter the marker signals
-[Healthy_subjects_18,SCI_subjects] = structureKin(Healthy_subjects_18,SCI_subjects,Fs_Kin,'2018');
-[Healthy_subjects_19,~] = structureKin(Healthy_subjects_19,SCI_subjects,Fs_Kin,'2019');
+[Healthy_subjects_18,SCI_subjects] = structure_Kin(Healthy_subjects_18,SCI_subjects,Fs_Kin,'2018');
+[Healthy_subjects_19,~] = structure_Kin(Healthy_subjects_19,SCI_subjects,Fs_Kin,'2019');
 
 %% Clean data by cutting edges
 
@@ -130,23 +130,28 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
 
 %% Extraction of Healthy features 
 
+% To extract the gait features for both 2018 and 2019 structures for each subject separately
 [struct_features_healthy,struct_labels_healthy] = create_struct_features_healthy(Healthy_subjects_18,Healthy_subjects_19);
+% To create the final matrix for Healthy subjects (samples x features)
 [~,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_features_healthy,struct_labels_healthy);
 %% Extraction of SCI features 
 
+% To extract the gait features for SCI subjects and create the final matrix
+% for SCI subjects (samples x features)
 [SCI_matrix,labels_SCI] = create_struct_features_SCI(SCI_subjects);
 
 %% Merging everything
 
+% Merging the final matrices for Healthy and for SCI subjects 
 [whole_table,whole_matrix,whole_labels] = merge_condition_tables(healthy_matrix,healthy_labels,SCI_matrix,labels_SCI);
 
-%% Applying PCA
+%% Applying Principal Component Analysis (PCA)
 
-% For all the parameters
+% PCA for all the kinematic + EMG parameters
 [PCA_data,~] = apply_PCA(whole_matrix);
 find_clusters(PCA_data,whole_labels);
 
-% Only for EMG
+% PCA only for the EMG parameters
 EMG_matrix = whole_matrix(:,1:12);
 [PCA_data,~] = apply_PCA(EMG_matrix);
 find_clusters(PCA_data,whole_labels);
