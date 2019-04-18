@@ -66,7 +66,7 @@ Healthy_subjects_19 = correct_typo(Healthy_subjects_19);
 load('Ground_truth.mat');
 
 % To visualize the results of the visual inspection:
-% check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
+%check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
 %% Duplicate Healthy subjects structures 
 
 % To duplicate the structure in order to use it to detect events with the
@@ -161,7 +161,7 @@ plot_angles(Healthy_subjects_18,SCI_subjects);
 % PCA for all the kinematic + EMG parameters
 [PCA_data,~] = apply_PCA(whole_matrix);
 find_clusters(PCA_data,whole_labels);
-
+%%
 % PCA only for the EMG parameters
 EMG_matrix = whole_matrix(:,1:12);
 [PCA_data,~] = apply_PCA(EMG_matrix);

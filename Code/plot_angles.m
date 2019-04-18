@@ -270,7 +270,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
   hold on;
   plot(timepoints_1,angle_FE_knee_subj,'LineWidth',1.2);
   plot(timepoints_1,angle_FE_ankle_subj,'LineWidth',1.2);
-  legend({'Hip','Knee','Ankle'},'FontSize',18)
+  legend({'Hip','Knee','Ankle'},'FontSize',18,'Location','Best')
   xlabel('Time [s]','FontSize',18);
   ylabel('Angle [deg]','FontSize',18);
   XMIN_1 = timepoints_1(1);
@@ -284,7 +284,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
   hold on;
   plot(timepoints_2,angle_FE_knee_subj_SCI,'LineWidth',1.2);
   plot(timepoints_2,angle_FE_ankle_subj_SCI,'LineWidth',1.2);
-  legend({'Hip','Knee','Ankle'},'FontSize',18);
+  legend({'Hip','Knee','Ankle'},'FontSize',18,'Location','Best');
   title('SCI','Fontsize',26);
   xlabel('Time [s]','FontSize',18);
   ylabel('Angle [deg]','FontSize',18);  
