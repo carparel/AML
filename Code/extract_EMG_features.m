@@ -65,79 +65,7 @@ for condition = 1:length(conditions)
                             onset2 = idx(end);
                             offset2 = length(current_signal);
                             
-%% Figure 3a: detection on one Healthy TA muscle that worked well (we took subject 1 from 2019)
-                             
-                            if condition == 1
-                                if trial == 3
-                                    if leg == 2
-                                        if muscle == 2
-                                            if gait == 2
-                                                f = figure();
-                                                XMIN = 0;
-                                                XMAX = length(current_signal);
-                                                YMIN = -inf;
-                                                YMAX = +inf;
-                                                plot(current_signal,'k','Linewidth',2.6);
-                                                hold on;
-                                                plot(movsignal,'k--');
-
-                                                scatter(onset1,current_signal(onset1),220,'filled','ro');
-                                                scatter(offset1,current_signal(offset1),220,'filled','bo');
-                                                scatter(offset2,current_signal(offset2),220,'filled','bo');
-                                                scatter(onset2,current_signal(onset2),220,'filled','ro');
-                                                
-                                                axis([XMIN XMAX YMIN YMAX]);
-                                                legend({'EMG signal','Moving average of EMG','Activity onsets','Activity offsets'},'Fontsize',35,'Location','Best');
-                                                xlabel('Time (ms)');
-                                                ylabel('EMG signal (normalized)');
-                                                a = gca;
-                                                a.FontSize = 40;
-                                     
-                                                title({'Correct detection of TA muscle activity on EMG signal'},'Fontsize',45);
-                                                
-                                            end
-                                        end
-                                    end
-                                end
-                            end
                             
-                            
-%% Figure 3b: detection on one Healthy TA muscle that didn't work well (we took subject 1 from 2019)
-                            if condition == 1
-                                if trial == 2
-                                    if leg == 2
-                                        if muscle == 2
-                                            if gait == 2
-                                                h = figure();
-                                                XMIN = 0;
-                                                XMAX = length(current_signal);
-                                                YMIN = -inf;
-                                                YMAX = +inf;
-                                                plot(current_signal,'k','Linewidth',2.6);
-                                                hold on;
-                                                plot(movsignal,'k--');
-                                                
-                                                scatter(onset1,current_signal(onset1),220,'filled','ro');
-                                                scatter(offset1,current_signal(offset1),220,'filled','bo');
-                                                scatter(offset2,current_signal(offset2),220,'filled','bo');
-                                                scatter(onset2,current_signal(onset2),220,'filled','ro');
-                                                
-                                                axis([XMIN XMAX YMIN YMAX]);
-                                                legend({'EMG signal','Moving average of EMG','Activity onsets','Activity offsets'},'Fontsize',35,'Location','Best');
-                                                xlabel('Time (ms)');
-                                                ylabel('EMG signal (normalized)');
-                                                a = gca;
-                                                a.FontSize = 40;
-                                                
-                                                title({'Incorrect detection of TA muscle activity on EMG signal'},'Fontsize',45);
-                                                
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                            
-%%
                             if strcmp(muscles{muscle},'LTA')
                                 if((onset1 == offset1) && (onset2 ==offset2))
                                     % Duration [s]
@@ -324,71 +252,7 @@ for condition = 1:length(conditions)
                             onset = idx(1);
                             offset = idx(end);
                             
-
                             
-%% Figure 3d: detection on SCI MG muscle that doesn't work as expected 
-%                             if (strcmp(type,'SCI'))
-%                                 if condition == 2
-%                                     if trial == 1
-%                                         if gait == 4
-%                                             if leg == 1
-%                                                 g = figure()
-%                                                 XMIN = 0;
-%                                                 XMAX = length(current_signal);
-%                                                 YMIN = -inf;
-%                                                 YMAX = +inf;
-%                                                 plot(current_signal,'k','Linewidth',2.4);
-%                                                 hold on
-%                                                 
-%                                                 scatter(onset,current_signal(onset),200,'filled','ro');
-%                                                 scatter(offset,current_signal(offset),200,'filled','bo');
-%                                                 axis([XMIN XMAX YMIN YMAX]);
-%                                          
-%                                                 legend({'EMG signal','Activity onset','Activity offset'},'Fontsize',30,'Location','Best');
-%                                                 xlabel('Time (ms)');
-%                                                 ylabel('EMG signal (normalized)');
-%                                                 a = gca;
-%                                                 a.FontSize = 30;
-%                                                 title({'Incorrect detection of MG muscle activity on EMG signal'},'Fontsize',35);
-%                                                 
-%                                             end
-%                                         end
-%                                     end
-%                                 end
-%                             end
-%                             
-%% Figure 3c: detection on MG muscle that works as expected (we took subject 3 from 2019)
-%                             if (strcmp(type,'Healthy'))
-%                                 if condition == 1
-%                                     if trial == 2
-%                                         if gait == 4
-%                                             if leg == 2
-%                                                 m = figure()
-%                                                 XMIN = 0;
-%                                                 XMAX = length(current_signal);
-%                                                 YMIN = -inf;
-%                                                 YMAX = +inf;
-%                                                 plot(current_signal,'k','Linewidth',2.4);
-%                                                 hold on
-%                                                 
-%                                                 scatter(onset,current_signal(onset),200,'filled','ro');
-%                                                 scatter(offset,current_signal(offset),200,'filled','bo');
-%                                                 axis([XMIN XMAX YMIN YMAX]);
-%                                                 %title([conditions{condition} ' ' trials{trial} ' ' legs{leg} ' Gait = ' num2str(gait) ' ' muscles{muscle}]);
-%                                                 legend({'EMG signal','Activity onset','Activity offset'},'Fontsize',30,'Location','Best');
-%                                                 xlabel('Time (ms)');
-%                                                 ylabel('EMG signal (normalized)');
-%                                                 a = gca;
-%                                                 a.FontSize = 30;
-%                                                 title({'Correct detection of MG muscle activity on EMG signal'},'Fontsize',35);
-%                                                 
-%                                             end
-%                                         end
-%                                     end
-%                                 end
-%                             end
-%                             
-%%
                             if strcmp(muscles{muscle},'LMG')
                                 % Duration [s]
                                 length_idx = offset - onset;
@@ -424,8 +288,6 @@ for condition = 1:length(conditions)
     end
 end
 
-
 names = {'Healthy_Condition','NO_Float_Condition','LMG_duration','LMG_max','LMG_mean','RMG_duration','RMG_max', 'RMG_mean','LTA_duration','LTA_max','LTA_mean','RTA_duration','RTA_max','RTA_mean'};
 EMG_feat_table = table(cond_H',cond_NO_F', LMG_time',LMG_max',LMG_mean',RMG_time',RMG_max',RMG_mean',LTA_time',LTA_max',LTA_mean',RTA_time',RTA_max',RTA_mean','VariableNames',names);
-
 end

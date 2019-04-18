@@ -71,5 +71,7 @@ for i = 1:number_subjects
         [~,struct_features_healthy.(subject),struct_labels_healthy.(subject)] = merge_feat_tables(EMG_feat_table_Healthy_18,Kin_feat_table_Healthy_18,Temporal_feat_table_Healthy_18,Spatial_feat_table_Healthy_18,Speed_feat_table_18);
     end
 end
+% Plot figures in the report
+plot_extract_EMG(Healthy19)
 end
 

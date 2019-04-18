@@ -6,7 +6,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
 % INPUT: -Healthy_subjects: struct containing data of the healthy subjects
 %        -SCI_subjects: struct containing data of the SCI subjects
 % 
-% OUTPUT: just the plot
+% OUTPUT: \\
 
     trials = {'T_01','T_02','T_03'};
     markers_healthy = {'LHIP','LKNE','LTOE','LANK'};
