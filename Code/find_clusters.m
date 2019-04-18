@@ -30,22 +30,24 @@ centroid_3 = nanmean(PCA_data(ground_truth_3,:,:));
 centroid_4 = nanmean(PCA_data(ground_truth_4,:,:));
 
 h = figure();
-plot3(true_cluster_1(:,1),true_cluster_1(:,2),true_cluster_1(:,3),'kx');
+plot3(true_cluster_1(:,1),true_cluster_1(:,2),true_cluster_1(:,3),'kx','MarkerSize',30);
 hold on;
 grid on;
-plot3(centroid_1(1),centroid_1(2),centroid_1(3),'ko','MarkerSize',10,'MarkerFaceColor','k')
+plot3(centroid_1(1),centroid_1(2),centroid_1(3),'ko','MarkerSize',35,'MarkerFaceColor','k')
 
-plot3(true_cluster_2(:,1),true_cluster_2(:,2),true_cluster_2(:,3),'gx');
-plot3(centroid_2(1),centroid_2(2),centroid_2(3),'go','MarkerSize',10,'MarkerFaceColor','g')
-plot3(true_cluster_3(:,1),true_cluster_3(:,2),true_cluster_3(:,3),'bx');
-plot3(centroid_3(1),centroid_3(2),centroid_3(3),'bo','MarkerSize',10,'MarkerFaceColor','b')
-plot3(true_cluster_4(:,1),true_cluster_4(:,2),true_cluster_4(:,3),'mx');
-plot3(centroid_4(1),centroid_4(2),centroid_4(3),'mo','MarkerSize',10,'MarkerFaceColor','m')
-legend('Healthy NO FLOAT','Centroid Healthy NO FLOAT','Healthy FLOAT','Centroid Healthy FLOAT','SCI NO FLOAT','Centroid SCI NO FLOAT','SCI FLOAT','Centroid SCI FLOAT','AutoUpdate','off');
-xlabel('PC_1','FontSize',15);
-ylabel('PC_2','FontSize',15);
-zlabel('PC_3','FontSize',15);
-title('Distribution of all our data projected on the first 3 PCs','FontSize',11);
-set(h,'Position',[0 0 680 480]);
+plot3(true_cluster_2(:,1),true_cluster_2(:,2),true_cluster_2(:,3),'gx','MarkerSize',30);
+plot3(centroid_2(1),centroid_2(2),centroid_2(3),'go','MarkerSize',35,'MarkerFaceColor','g')
+plot3(true_cluster_3(:,1),true_cluster_3(:,2),true_cluster_3(:,3),'bx','MarkerSize',30);
+plot3(centroid_3(1),centroid_3(2),centroid_3(3),'bo','MarkerSize',35,'MarkerFaceColor','b')
+plot3(true_cluster_4(:,1),true_cluster_4(:,2),true_cluster_4(:,3),'mx','MarkerSize',30);
+plot3(centroid_4(1),centroid_4(2),centroid_4(3),'mo','MarkerSize',35,'MarkerFaceColor','m')
+%legend('Healthy NO FLOAT','Centroid Healthy NO FLOAT','Healthy FLOAT','Centroid Healthy FLOAT','SCI NO FLOAT','Centroid SCI NO FLOAT','SCI FLOAT','Centroid SCI FLOAT','AutoUpdate','off','Location','BestOutside');
+xlabel('PC_1','FontSize',40);
+ylabel('PC_2','FontSize',4);
+zlabel('PC_3','FontSize',40);
+ax = gca;
+ax.FontSize = 40; 
+title('Distribution of all our data projected on the first 3 PCs','FontSize',55);
+%set(h,'Position',[0 0 680 480]);
 end
 
