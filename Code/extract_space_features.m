@@ -121,7 +121,7 @@ for condition = 1:length(conditions)
         end
         
         
-        % To compute the step length I need the hill strikes of both feet
+        % To compute the step length I need the heel strikes of both feet
         % to be stored
         
         

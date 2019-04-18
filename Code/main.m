@@ -41,11 +41,6 @@ Healthy_subjects_19 = correct_typo(Healthy_subjects_19);
 [Healthy_subjects_18,SCI_subjects] = structure_EMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
 [Healthy_subjects_19,~] = structure_EMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
 
-% To plot the filtered muscle signal for a specific Healthy subject
-
-% EMG_envelope = Healthy_subjects_19.S_1.FLOAT.T_01.Normalized.EMG.envelope;
-% EMG_no_envelope = Healthy_subjects_19.S_1.FLOAT.T_01.Normalized.EMG.noenvelope;
-% plot_EMG(EMG_envelope, EMG_no_envelope,Fs_EMG_H19)
 %% Structuring and filtering the Kin data
 
 %To filter the marker signals
@@ -66,7 +61,7 @@ Healthy_subjects_19 = correct_typo(Healthy_subjects_19);
 load('Ground_truth.mat');
 
 % To visualize the results of the visual inspection:
-%check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
+check_ground_truth_events(struct_events,Healthy_subjects_18,Healthy_subjects_19);
 %% Duplicate Healthy subjects structures 
 
 % To duplicate the structure in order to use it to detect events with the
@@ -132,9 +127,11 @@ Healthy_subjects_19_alg = Healthy_subjects_19;
  accuracy_18 = compute_accuracy(Healthy_subjects_18_alg,Healthy_subjects_18,'2018');
  accuracy_19 = compute_accuracy(Healthy_subjects_19_alg,Healthy_subjects_19,'2019');
  
- % To take the mean accuracy of the algorithm between the Healthy subjects 
- % 2018 and 2019 
- total_accuracy = mean([accuracy_18,accuracy_19]);
+% To take the mean accuracy of the algorithm between the Healthy subjects 
+% 2018 and 2019 
+total_accuracy = mean([accuracy_18,accuracy_19]);
+%% To get a plot showing the two muscles of the same leg (right) with the strike events
+plot_raw_EMG_events(Healthy_subjects_19, 'S_1', 'NO_FLOAT', 'T_02', Fs_EMG_H19)
 %% Extraction of Healthy features 
 
 % To extract the gait features for both 2018 and 2019 structures for each subject separately

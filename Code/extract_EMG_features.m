@@ -72,7 +72,7 @@ for condition = 1:length(conditions)
                                     if leg == 2
                                         if muscle == 2
                                             if gait == 2
-                                                f = figure()
+                                                f = figure();
                                                 XMIN = 0;
                                                 XMAX = length(current_signal);
                                                 YMIN = -inf;
@@ -108,7 +108,7 @@ for condition = 1:length(conditions)
                                     if leg == 2
                                         if muscle == 2
                                             if gait == 2
-                                                h = figure()
+                                                h = figure();
                                                 XMIN = 0;
                                                 XMAX = length(current_signal);
                                                 YMIN = -inf;

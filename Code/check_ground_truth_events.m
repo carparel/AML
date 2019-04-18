@@ -46,9 +46,8 @@ for year = 1:length(years)
                         markers = {'LTOE','LANK'};
                     end
                     
-                    for marker = 1:length(markers)
-                        
-                        %% Figure for the report
+                    for marker = 1:length(markers)                 
+%% Figure for the report
                         
                         if year == 2
                             if subject == 2
