@@ -17,21 +17,19 @@ for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
+        nbr_events_HS_right = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+        nbr_events_HS_left = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
+        nbr_events_TO_right = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
+        nbr_events_TO_left = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
+        % Taking the minimum number of events between right and left leg
+        min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
         for leg = 1:length(legs)
-            
-            nbr_events_HS_right = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
-            nbr_events_HS_left = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Left.HS_marker);
-            nbr_events_TO_right = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Right.TO_marker);
-            nbr_events_TO_left = length(SCI_struct.(conditions{condition}).(trials{trial}).Event.Left.TO_marker);
-            
-            % Taking the minimum number of events between right and left leg 
-            min_nbr_events = min([nbr_events_HS_right,nbr_events_HS_left,nbr_events_TO_right,nbr_events_TO_left]);
-            
-            % Cutting events for the Kin signals 
+
+            % Cutting events for the Kin signals
             SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events);
             SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(1:min_nbr_events);
             
-            % Cutting events for the EMG signals 
+            % Cutting events for the EMG signals
             SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_emg(1:min_nbr_events);
             SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg = SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_emg(1:min_nbr_events);
             
@@ -45,8 +43,8 @@ for condition = 1:length(conditions)
                 SCI_struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker = toe_offs(2:end);
             end
             
-        end 
-    end  
+        end
+    end
 end
 end
 

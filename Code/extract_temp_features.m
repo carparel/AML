@@ -31,6 +31,7 @@ for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
+        % Taking the right leg randomly as they all have the same indices
         min_nbr_events = length(struct_.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
         
         for leg = 1:length(legs)
@@ -100,8 +101,9 @@ for condition = 1:length(conditions)
                 elseif mod(gait,2) == 0
                     duration_idx(gait) = abs(toe_o(2,gait-1)-heel_s(1,gait));
                 end
-                duration= duration_idx / fs_Kin;
+                duration = duration_idx / fs_Kin;
             end
+            duration = duration_idx / fs_Kin;
             double_stance_duration = [double_stance_duration duration];
             
         elseif heel_s(2,1) < heel_s(1,1)
@@ -111,8 +113,8 @@ for condition = 1:length(conditions)
                 elseif mod(gait,2) == 0
                     duration_idx(gait) = abs(toe_o(1,gait-1)-heel_s(2,gait));
                 end
-                duration = duration_idx / fs_Kin;
             end
+            duration = duration_idx / fs_Kin;
             double_stance_duration = [double_stance_duration duration];
         end
     end
