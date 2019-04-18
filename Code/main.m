@@ -13,7 +13,7 @@ addpath(current_folder);
 %% Loading the data for the SCI and Healthy subjects (2018 and 2019)
 
 [SCI_subjects, Healthy_subjects_18,Healthy_subjects_19, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
-clf;
+clc;
 %% Global variables
 
 % To stock the sampling frequency for the EMG SCI patients

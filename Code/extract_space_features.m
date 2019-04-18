@@ -1,4 +1,4 @@
-function [space_feat_table] = extract_space_features(struct,type)
+function [space_feat_table,stride_length_right,stride_length_left] = extract_space_features(struct,type)
 % This functions extracts the spatial features from the data.
 %
 % INPUT: - struct = Structure containing all the data.
@@ -38,7 +38,7 @@ for condition = 1:length(conditions)
     
     for trial = 1:length(trials)
         
-        min_nbr_events = length(struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+        nbr_events = length(struct.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
         
         rank_y = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.RANK(:,2);
         lank_y = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.LANK(:,2);
@@ -58,7 +58,7 @@ for condition = 1:length(conditions)
             heel_strikes = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
             toe_offs = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
             
-            for gait = 1:min_nbr_events-1
+            for gait = 1:nbr_events-1
                 if strcmp(legs{leg},'Right')
                     marker = 'RANK';
                     
@@ -125,14 +125,14 @@ for condition = 1:length(conditions)
         % to be stored
         
         
-        heel_s = zeros(length(legs),min_nbr_events);
+        heel_s = zeros(length(legs),nbr_events);
         for leg = 1:length(legs)
-            heel_s(leg,:) = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events)';
+            heel_s(leg,:) = struct.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:nbr_events)';
         end
         
         
         if heel_s(1,1) < heel_s(2,1)
-            for gait = 1:min_nbr_events-1
+            for gait = 1:nbr_events-1
                 length_step_left = abs(lank_y(heel_s(2,gait))-rank_y(heel_s(1,gait)))/10;
                 length_step_right = abs(rank_y(heel_s(1,gait+1))-lank_y(heel_s(2,gait)))/10;
                 step_length_left = [step_length_left length_step_left];
@@ -142,7 +142,7 @@ for condition = 1:length(conditions)
             end
             
         elseif heel_s(2,1) < heel_s(1,1)
-            for gait = 1:min_nbr_events-1
+            for gait = 1:nbr_events-1
                 length_step_right = abs(rank_y(heel_s(1,gait))-lank_y(heel_s(2,gait)))/10;
                 length_step_left = abs(lank_y(heel_s(2,gait+1))-rank_y(heel_s(1,gait)))/10;
                 step_length_left = [step_length_left length_step_left];
