@@ -1,4 +1,4 @@
-function [temp_feat_table] = extract_temp_features(struct_,fs_Kin,type)
+function [temp_feat_table,gait_cycle_duration] = extract_temp_features(struct_,fs_Kin,type)
 % This functions extracts the temporal features from the data.
 %
 % INPUT: - struct_ = structure containing all the data.
@@ -32,14 +32,14 @@ for condition = 1:length(conditions)
     for trial = 1:length(trials)
         
         % Taking the right leg randomly as they all have the same indices
-        min_nbr_events = length(struct_.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
+        nbr_events = length(struct_.(conditions{condition}).(trials{trial}).Event.Right.HS_marker);
         
         for leg = 1:length(legs)
             
             heel_strikes = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker;
             toe_offs = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker;
             
-            for gait = 1:min_nbr_events-1
+            for gait = 1:nbr_events-1
                 
                 % This is if is used just to stock once and not twice the
                 % gait duration and the "labels" of the gait.
@@ -86,16 +86,16 @@ for condition = 1:length(conditions)
         end
         
         % Let's see which is the first heel strike, if right or left
-        heel_s = zeros(length(legs),min_nbr_events);
-        toe_o = zeros(length(legs),min_nbr_events);
+        heel_s = zeros(length(legs),nbr_events);
+        toe_o = zeros(length(legs),nbr_events);
         
         for leg = 1:length(legs)
-            heel_s(leg,:) = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:min_nbr_events)';
-            toe_o(leg,:) = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(1:min_nbr_events)';
+            heel_s(leg,:) = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).HS_marker(1:nbr_events)';
+            toe_o(leg,:) = struct_.(conditions{condition}).(trials{trial}).Event.(legs{leg}).TO_marker(1:nbr_events)';
         end
         
         if heel_s(1,1) < heel_s(2,1)
-            for gait = 1:min_nbr_events-1
+            for gait = 1:nbr_events-1
                 if mod(gait,2) == 1
                     duration_idx(gait) = abs(toe_o(1,gait)-heel_s(2,gait));
                 elseif mod(gait,2) == 0
@@ -107,7 +107,7 @@ for condition = 1:length(conditions)
             double_stance_duration = [double_stance_duration duration];
             
         elseif heel_s(2,1) < heel_s(1,1)
-            for gait = 1:min_nbr_events-1
+            for gait = 1:nbr_events-1
                 if mod(gait,2) == 1
                     duration_idx(gait) = abs(toe_o(2,gait)-heel_s(1,gait));
                 elseif mod(gait,2) == 0

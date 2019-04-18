@@ -1,4 +1,4 @@
-function [whole_feat_table,whole_feat_matrix,labels] = merge_feat_tables(EMG_table,Kin_table,temp_table,spatial_table)
+function [whole_feat_table,whole_feat_matrix,labels] = merge_feat_tables(EMG_table,Kin_table,temp_table,spatial_table,speed_table)
 % This function merges the different tables containing the different kinds
 % of features
 %
@@ -8,6 +8,7 @@ function [whole_feat_table,whole_feat_matrix,labels] = merge_feat_tables(EMG_tab
 %                       duration, swing duration, etc...)
 %        - spatial_table = table containing the spatial features (stride
 %                          length, step width, etc...)
+%        - speed_table = table containing the speed features
 %
 % OUTPUT: - whole_feat_table = the table with all the features. The names of
 %                             variables are indicated.
@@ -31,10 +32,13 @@ temp_matrix = temp_matrix_labels(:,3:end);
 spatial_matrix_labels = table2array(spatial_table);
 spatial_matrix = spatial_matrix_labels(:,3:end);
 
+speed_matrix_labels = table2array(speed_table);
+speed_matrix = speed_matrix_labels(:,3:end);
+
 labels_ = spatial_matrix_labels(:,1:2);
 labels = array2table(labels_,'VariableNames',{'Healthy_Condition','NO_FLOAT_Condition'});
 
-whole_feat_matrix = [emg_matrix,kin_matrix,temp_matrix,spatial_matrix];
+whole_feat_matrix = [emg_matrix,kin_matrix,temp_matrix,spatial_matrix,speed_matrix];
 
 names_variables = {'LMG_duration','LMG_max','LMG_mean','RMG_duration','RMG_max',...
     'RMG_mean','LTA_duration','LTA_max','LTA_mean','RTA_duration','RTA_max','RTA_mean',...
@@ -44,7 +48,8 @@ names_variables = {'LMG_duration','LMG_max','LMG_mean','RMG_duration','RMG_max',
     'gait_cycle_duration','cadence','stance_duration_right','swing_duration_right','stance_duration_left',...
     'swing_duration_left','double_stance_duration','stride_length_right_m','stride_length_left_m','swing_length_right_cm',...
     'swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm','max_heel_clearance_right',...
-    'max_heel_clearance_left','max_knee_clearance_right','max_knee_clearance_left','max_toe_clearance_right','max_toe_clearance_left'
+    'max_heel_clearance_left','max_knee_clearance_right','max_knee_clearance_left','max_toe_clearance_right','max_toe_clearance_left', ...
+    'speed_right','speed_left'
     };
 
 whole_feat_table = array2table(whole_feat_matrix,'VariableNames',names_variables);
