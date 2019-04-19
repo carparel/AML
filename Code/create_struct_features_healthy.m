@@ -41,10 +41,10 @@ for i = 1:number_subjects
         [Temporal_feat_table_Healthy_19,gait_cycle_duration] = extract_temp_features(Healthy19.(subject),Fs_Kin,'Healthy');
         
         % Extract spatial kinetic features
-        [Spatial_feat_table_Healthy_19,stride_length_right,stride_length_left] = extract_space_features(Healthy19.(subject),'Healthy');
+        [Spatial_feat_table_Healthy_19,stride_length] = extract_space_features(Healthy19.(subject),'Healthy');
         
         % Extract the speed feature
-        [Speed_feat_table_19] = extract_speed_feature(Healthy19.(subject),stride_length_right,stride_length_left,gait_cycle_duration,'Healthy');
+        [Speed_feat_table_19] = extract_speed_feature(Healthy19.(subject),stride_length,gait_cycle_duration,'Healthy');
         
         % Merging the tables for the different features
         [~,struct_features_healthy.(subject),struct_labels_healthy.(subject)] = merge_feat_tables(EMG_feat_table_Healthy_19,Kin_feat_table_Healthy_19,Temporal_feat_table_Healthy_19,Spatial_feat_table_Healthy_19,Speed_feat_table_19);
@@ -62,10 +62,10 @@ for i = 1:number_subjects
         [Temporal_feat_table_Healthy_18,gait_cycle_duration] = extract_temp_features(Healthy18.(subject),Fs_Kin,'Healthy');
         
         % Extract spatial kinetic features
-        [Spatial_feat_table_Healthy_18,stride_length_right,stride_length_left] = extract_space_features(Healthy18.(subject),'Healthy');
+        [Spatial_feat_table_Healthy_18,stride_length] = extract_space_features(Healthy18.(subject),'Healthy');
         
         % Extract the speed feature
-        [Speed_feat_table_18] = extract_speed_feature(Healthy18.(subject),stride_length_right,stride_length_left,gait_cycle_duration,'Healthy');
+        [Speed_feat_table_18] = extract_speed_feature(Healthy18.(subject),stride_length,gait_cycle_duration,'Healthy');
         
         % Merging the tables for the different features
         [~,struct_features_healthy.(subject),struct_labels_healthy.(subject)] = merge_feat_tables(EMG_feat_table_Healthy_18,Kin_feat_table_Healthy_18,Temporal_feat_table_Healthy_18,Spatial_feat_table_Healthy_18,Speed_feat_table_18);
