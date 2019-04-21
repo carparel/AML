@@ -1,8 +1,7 @@
-function [speed_feat_table] = extract_speed_feature(struct,stride_length_right,stride_length_left,gait_cycle_duration,type)
+function [speed_feat_table] = extract_speed_feature(struct,stride_length,gait_cycle_duration,type)
 % This functions calculate the speed feature
 %
-% INPUT: - stride_length_right  
-%        - stride_length_left 
+% INPUT: - stride_length  
 %        - gait_cycle_duration 
 %        - type = a string parameter. It is either 'SCI' or 'Healthy'.
 %
@@ -56,11 +55,10 @@ for condition = 1:length(conditions)
 end
 
 
-speed_right = stride_length_right./gait_cycle_duration;
-speed_left = stride_length_left./gait_cycle_duration;
+speed = stride_length./gait_cycle_duration;
 
 
-names = {'Condition_Healthy','Condition_NO_Float','speed_right','speed_left'};
-speed_feat_table = table(cond_H',cond_NO_F',speed_right',speed_left','VariableNames',names);
+names = {'Condition_Healthy','Condition_NO_Float','speed'};
+speed_feat_table = table(cond_H',cond_NO_F',speed','VariableNames',names);
 end
 

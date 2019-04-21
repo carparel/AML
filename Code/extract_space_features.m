@@ -1,4 +1,4 @@
-function [space_feat_table,stride_length_right,stride_length_left] = extract_space_features(struct,type)
+function [space_feat_table,stride_length] = extract_space_features(struct,type)
 % This functions extracts the spatial features from the data.
 %
 % INPUT: - struct = Structure containing all the data.
@@ -18,8 +18,7 @@ cond_NO_F = [];% Is 1 if NO_FLOAT and is 0 if FLOAT
 
 % To initialize the vector in which we are going to stock our
 % features/variables
-stride_length_right = [];
-stride_length_left = [];
+stride_length = [];
 swing_length_right = [];
 swing_length_left = [];
 step_length_right = [];
@@ -66,7 +65,7 @@ for condition = 1:length(conditions)
                     
                     current = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.(marker);
                     length_space_stride = abs(current(heel_strikes(gait+1),2)-current(heel_strikes(gait),2))/1000;
-                    stride_length_right = [stride_length_right length_space_stride];
+                    stride_length = [stride_length length_space_stride];
                     length_space_swing = abs(current(heel_strikes(gait+1),2)-current(toe_offs(gait),2))/10;
                     swing_length_right = [swing_length_right length_space_swing];
                     
@@ -102,8 +101,6 @@ for condition = 1:length(conditions)
                 elseif strcmp(legs{leg},'Left')
                     marker = 'LANK';
                     current = struct.(conditions{condition}).(trials{trial}).Filtered.Kin.(marker);
-                    length_space_stride = abs(current(heel_strikes(gait+1),2)-current(heel_strikes(gait),2))/1000;
-                    stride_length_left = [stride_length_left length_space_stride];
                     length_space_swing = abs(current(heel_strikes(gait+1),2)-current(toe_offs(gait),2))/10;
                     swing_length_left = [swing_length_left length_space_swing];
                     
@@ -155,8 +152,8 @@ for condition = 1:length(conditions)
     end
 end
 
-names = {'Condition_Healthy','Condition_NO_Float','stride_length_right_m','stride_length_left_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm','max_heel_clearance_right','max_heel_clearance_left','max_knee_clearance_right','max_knee_clearance_left','max_toe_clearance_right','max_toe_clearance_left'};
-space_feat_table = table(cond_H',cond_NO_F',stride_length_right',stride_length_left',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width',max_heel_clearance_right',max_heel_clearance_left',max_knee_clearance_right',max_knee_clearance_left',max_toe_clearance_right',max_toe_clearance_left','VariableNames',names);
+names = {'Condition_Healthy','Condition_NO_Float','stride_length_m','swing_length_right_cm','swing_length_left_cm','step_length_right_cm','step_length_left_cm','step_width_cm','max_heel_clearance_right','max_heel_clearance_left','max_knee_clearance_right','max_knee_clearance_left','max_toe_clearance_right','max_toe_clearance_left'};
+space_feat_table = table(cond_H',cond_NO_F',stride_length',swing_length_right',swing_length_left',step_length_right',step_length_left',step_width',max_heel_clearance_right',max_heel_clearance_left',max_knee_clearance_right',max_knee_clearance_left',max_toe_clearance_right',max_toe_clearance_left','VariableNames',names);
 
 end
 % Step length is the distance between the heel strike of one foot and the heel strike of the opposite foot

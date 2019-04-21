@@ -27,10 +27,10 @@ Kin_feat_table_SCI = extract_Kin_features(SCI_subjects,'SCI');
 [Temporal_feat_table_SCI,gait_cycle_duration] = extract_temp_features(SCI_subjects,Fs_Kin,'SCI');
 
 % Extract spatial kinetic features
-[Spatial_feat_table_SCI,stride_length_right,stride_length_left] = extract_space_features(SCI_subjects,'SCI');
+[Spatial_feat_table_SCI,stride_length] = extract_space_features(SCI_subjects,'SCI');
 
 % Extract the speed feature
-[Speed_feat_table_SCI] = extract_speed_feature(SCI_subjects,stride_length_right,stride_length_left,gait_cycle_duration,'SCI');
+[Speed_feat_table_SCI] = extract_speed_feature(SCI_subjects,stride_length,gait_cycle_duration,'SCI');
 
 % Merging the tables for the different features
 [~,SCI_matrix,labels_SCI] = merge_feat_tables(EMG_feat_table_SCI,Kin_feat_table_SCI,Temporal_feat_table_SCI,Spatial_feat_table_SCI,Speed_feat_table_SCI);
