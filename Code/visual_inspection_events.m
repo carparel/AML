@@ -89,18 +89,18 @@ h = figure();
 % We take out around 100 points because there is some noise at the end 
 %subplot(2,1,1)
 for t = 1:2:nbr_time_points-100
-    scatter(left_leg_Y(3,t),left_leg_Z(3,t),160,'ro');
-    scatter(left_leg_Y(4,t),left_leg_Z(4,t),160,'bo');
-    scatter(left_leg_Y(1:2,t),left_leg_Z(1:2,t),160,'ko');
-    plot(left_leg_Y(:,t),left_leg_Z(:,t),'k-','LineWidth',2.4);
+    scatter(left_leg_Y(3,t),left_leg_Z(3,t),170,'mo');
+    scatter(left_leg_Y(4,t),left_leg_Z(4,t),170,'go');
+    scatter(left_leg_Y(1:2,t),left_leg_Z(1:2,t),170,'bo');
+    plot(left_leg_Y(:,t),left_leg_Z(:,t),'k-','LineWidth',1.2);
     hold on;
 end
 xlabel('Y coordinate (the direction of movement)','FontSize',30);
 ylabel('Z coordinate (height of the foot)','FontSize',30);
 a = gca;
-a.FontSize = 38;
-title('Kinematic signal in ZY space for the left leg','FontSize',45);
-legend('','Ankle','Toe');
+a.FontSize = 40;
+title('Kinematic signal in ZY plane for the left leg','FontSize',45);
+legend('','Ankle','Toe','Knee and Hip','Location','Best');
 set(h,'Position',[0 0 1920 820]);
 % subplot(2,1,2)
 % for t = 1:2:nbr_time_points-100
