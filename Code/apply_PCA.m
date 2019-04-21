@@ -51,7 +51,7 @@ xticklabels(names_variables);
 xtickangle(90);
 yticks(1:1:3);
 yticklabels(names_PCs);
-title('Weights of EMG features for the first 3 PCs','FontSize',35);
+title('Weights of features for the first 3 PCs','FontSize',35);
 set(h,'Position',[0 0 1200 480]);
 
 end

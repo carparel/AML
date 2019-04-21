@@ -69,7 +69,7 @@ for year = 1:length(years)
                                                 XMAX = time_points(length(time_points));
                                                 YMIN = -4500;
                                                 YMAX = 3000;
-                                                figure();
+                                                h = figure();
                                                 
                                                 plot(time_points,Y_coordinate,'k-','LineWidth',2.4);
                                                 hold on;
@@ -89,7 +89,7 @@ for year = 1:length(years)
                                                 a = gca;
                                                 a.FontSize = 38;
                                                 title({'Events detection by visual inspection'},'Fontsize',45);
-                                                
+                                                set(h,'Position',[0 0 1920 820]);
                                             end
                                         end
                                     end

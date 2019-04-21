@@ -40,7 +40,6 @@ Healthy_subjects_19 = correct_typo(Healthy_subjects_19);
 % To filter and normalize muscles with respect to maximal contraction
 [Healthy_subjects_18,SCI_subjects] = structure_EMG(Healthy_subjects_18,SCI_subjects,Fs_EMG_S,Fs_EMG_H18,'2018');
 [Healthy_subjects_19,~] = structure_EMG(Healthy_subjects_19,SCI_subjects,Fs_EMG_S,Fs_EMG_H19,'2019');
-
 %% Structuring and filtering the Kin data
 
 %To filter the marker signals
@@ -55,6 +54,9 @@ Healthy_subjects_19 = correct_typo(Healthy_subjects_19);
 
 % ATTENTION: don't uncomment this lines if you don't want to repeat the visual detection.
 % struct_events = visual_detection(Healthy_subjects_18,Healthy_subjects_19);
+
+% To visualize the kin signals in a ZY space to see a projection of the dynamics
+visual_inspection_events(Healthy_subjects_19,'S_1','NO_FLOAT','T_02')
 
 % TO LOAD the saved structure containing all the ground truth events
 % previously detected:

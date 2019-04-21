@@ -47,7 +47,7 @@ ylabel('PC_2','FontSize',4);
 zlabel('PC_3','FontSize',40);
 ax = gca;
 ax.FontSize = 40; 
-title('Distribution of data projected on the first 3 PCs','FontSize',45);
-set(h,'Position',[0 0 1820 820]);
+title('Distribution of all our data projected on the first 3 PCs','FontSize',55);
+set(h,'Position',[0 0 1200 480]);
 end
 
