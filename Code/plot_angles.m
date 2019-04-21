@@ -17,7 +17,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
     % this is to find the shortest gait cycle
     for trial = 1:length(trials)
         
-        current = Healthy_subjects.S_4.NO_FLOAT.(trials{trial}).Parsed;
+        current = Healthy_subjects.S_1.NO_FLOAT.(trials{trial}).Parsed;
         
         for gait = 1:length(current)
             matrix(trial,gait) = length(current{1,gait}.Left.Kin.(markers_healthy{2}));
@@ -30,7 +30,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
     
     for trial = 1:length(trials) 
         
-            current = Healthy_subjects.S_4.NO_FLOAT.(trials{trial}).Parsed;
+            current = Healthy_subjects.S_1.NO_FLOAT.(trials{trial}).Parsed;
             
            % this adapts all the gait cycles to the shortest one 
            for gait=1:length(current)
@@ -105,7 +105,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
                     for i = 1:length(vec_ankle_toe(:,1))
                         
                         % angle btw two vectors for each time instant
-                        angle_FE_ankle(i) = 90 - acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))));
+                        angle_FE_ankle(i) = acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))))-90;
                     
                     end
                     
@@ -236,7 +236,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
                 for i = 1:length(vec_ankle_toe(:,1))
 
                     % angle btw two vectors for each time instant
-                    angle_FE_ankle_SCI(i) = 90 - acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))));
+                    angle_FE_ankle_SCI(i) = acosd(dot(vec_ankle_toe(i,:),vec_knee_ankle(i,:))/(norm(vec_ankle_toe(i,:))*(norm(vec_knee_ankle(i,:)))))-90;
 
                 end
                 
@@ -270,7 +270,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
   hold on;
   plot(timepoints_1,angle_FE_knee_subj,'LineWidth',1.2);
   plot(timepoints_1,angle_FE_ankle_subj,'LineWidth',1.2);
-  legend({'Hip','Knee','Ankle'},'FontSize',18,'Location','Best')
+  legend({'Hip','Knee','Ankle'},'FontSize',18,'Location','northwest')
   xlabel('Time [s]','FontSize',18);
   ylabel('Angle [deg]','FontSize',18);
   XMIN_1 = timepoints_1(1);
@@ -284,7 +284,7 @@ function [] = plot_angles(Healthy_subjects,SCI_subjects)
   hold on;
   plot(timepoints_2,angle_FE_knee_subj_SCI,'LineWidth',1.2);
   plot(timepoints_2,angle_FE_ankle_subj_SCI,'LineWidth',1.2);
-  legend({'Hip','Knee','Ankle'},'FontSize',18,'Location','Best');
+  legend({'Hip','Knee','Ankle'},'FontSize',18,'Location','northwest');
   title('SCI','Fontsize',26);
   xlabel('Time [s]','FontSize',18);
   ylabel('Angle [deg]','FontSize',18);  
