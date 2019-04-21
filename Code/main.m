@@ -144,7 +144,7 @@ plot_raw_EMG_events(Healthy_subjects_19, 'S_1', 'NO_FLOAT', 'T_02', Fs_EMG_H19)
 
 %% Plotting joint angles
 
-plot_angles(Healthy_subjects_18,SCI_subjects);
+plot_angles(Healthy_subjects_19,SCI_subjects);
 
 %% Extraction of SCI features 
 
