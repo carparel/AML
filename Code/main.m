@@ -155,12 +155,13 @@ plot_angles(Healthy_subjects_19,SCI_subjects);
 
 % Merging the final matrices for Healthy and for SCI subjects 
 [whole_table,whole_matrix,whole_labels] = merge_condition_tables(healthy_matrix,healthy_labels,SCI_matrix,labels_SCI);
-%% Applying Principal Component Analysis (PCA)
+%% Applying Principal Component Analysis (PCA) on all data
 
 % PCA for all the kinematic + EMG parameters
 [PCA_data,~] = apply_PCA(whole_matrix);
 find_clusters(PCA_data,whole_labels);
-%%
+%% Applying Principal Component Analysis (PCA) only on EMG data
+
 % PCA only for the EMG parameters
 EMG_matrix = whole_matrix(:,1:12);
 [PCA_data,~] = apply_PCA(EMG_matrix);
