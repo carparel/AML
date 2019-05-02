@@ -71,10 +71,10 @@ for year = 1:length(years)
                                                 YMAX = 3000;
                                                 h = figure();
                                                 
-                                                plot(time_points,Y_coordinate,'k-','LineWidth',2.4);
+                                                plot(time_points,Y_coordinate,'k-','LineWidth',1.4);
                                                 hold on;
                                                 grid on;
-                                                plot(time_points,Z_coordinate,'k-','LineWidth',2.4);
+                                                plot(time_points,Z_coordinate,'k-','LineWidth',3);
                                                 
                                                 scatter(time_points(current_marker_event.OFF),Z_coordinate(current_marker_event.OFF),160,'filled','bo');
                                                 scatter(time_points(current_marker_event.STRIKE),Z_coordinate(current_marker_event.STRIKE),160,'filled','ro');
