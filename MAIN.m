@@ -7,9 +7,14 @@
 %                 - Leonardo Pollina
 
 clear;
+
 clc;
-current_folder = genpath('AML');
-addpath(current_folder);
+% To add the folder containing the data
+data_folder = genpath('Data');
+addpath(data_folder);
+% To add the folder containing all MATLAB functions
+functions_folder = genpath('Functions');
+addpath(functions_folder);
 %% Loading the data for the SCI and Healthy subjects (2018 and 2019)
 
 [SCI_subjects, Healthy_subjects_18,Healthy_subjects_19, csv_files_FLOAT_NO_CRUTCHES,csv_files_NO_FLOAT_CRUTCHES] = load_data();
@@ -141,11 +146,9 @@ plot_raw_EMG_events(Healthy_subjects_19, 'S_1', 'NO_FLOAT', 'T_02', Fs_EMG_H19)
 
 % To create the final matrix for Healthy subjects (samples x features)
 [~,healthy_matrix,healthy_labels] = merge_healthy_subjects(struct_features_healthy,struct_labels_healthy);
-
 %% Plotting joint angles
 
 plot_angles(Healthy_subjects_19,SCI_subjects);
-
 %% Extraction of SCI features 
 
 % To extract the gait features for SCI subjects and create the final matrix
